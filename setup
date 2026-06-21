@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+usage() {
+	echo "usage: setup <link|install>"
+	echo ""
+	echo "link - symlink configuraion files"
+	echo "install - install system packages"
+}
+
+link() {
+	ln -s "$PWD/shell/.bashrc" "$HOME/.bashrc"
+	ln -s "$PWD/shell/.profile" "$HOME/.profile"
+	ln -s "$PWD/shell/.inputrc" "$HOME/.inputrc"
+	ln -s "$PWD/emacs/init.el" "$XDG_CONFIG_HOME/emacs/init.el"
+	ln -s "$PWD/git" "$XDG_CONFIG_HOME/git"
+}
+
+install() {
+	sudo apt install -y $(xargs <packages)
+}
+
+case "$1" in
+	link) link;;
+	install) install;;
+	*) usage;;
+esac

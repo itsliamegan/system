@@ -1,0 +1,19 @@
+[user]
+	name = Liam Egan
+	email = liam@liamegan.com
+[core]
+	excludesfile = ~/.config/git/ignore
+[init]
+	defaultBranch = main
+[diff]
+	algorithm = histogram
+[push]
+	autosetupremote = true
+[alias]
+	cm = "commit --message"
+	ce = "commit --amend --no-edit"
+	df = "diff"
+	lg = "log --oneline"
+	ps = "push"
+	pf = "push --force"
+	st = "status"
