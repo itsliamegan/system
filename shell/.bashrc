@@ -38,6 +38,3 @@ indicate_git_status() {
 
 	printf "(%s%s)" "$branch" "$changes"
 }
-
-# Added by `rbenv init` on Sat Jun 20 08:22:13 AM EDT 2026
-eval "$(rbenv init - --no-rehash bash)"
