@@ -10,6 +10,7 @@ wget
 greybird-gtk-theme
 elementary-xfce-icon-theme
 
+libbz2-dev
 libffi-dev
 libgmp-dev
 libreadline-dev
