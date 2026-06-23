@@ -34,7 +34,7 @@
 (load-theme 'modus-operandi t)
 
 ;; Use a default font and line height.
-(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 140)
+(set-face-attribute 'default nil :family "Inconsolata" :height 160)
 (add-to-list 'default-frame-alist '(line-spacing . nil))
 
 ;; Use a simple window title.
