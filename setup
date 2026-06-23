@@ -11,6 +11,7 @@ usage() {
 }
 
 link() {
+	mkdir -p "$XDG_CONFIG_HOME/emacs"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
 
 	ln -s "$PWD/shell/.bashrc" "$HOME/.bashrc"
