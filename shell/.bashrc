@@ -21,6 +21,8 @@ export PATH="$HOME/.zig:$PATH"
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 export LESSHISTFILE="$XDG_STATE_HOME/less/history"
 
+alias ls="ls --color --classify --group-directories-first"
+
 indicate_git_status() {
 	branch=$(git branch 2>/dev/null | grep "^*" | sed "s/* \(.*\)/\1/")
 	unstaged_changes=$(git diff HEAD 2>/dev/null)
