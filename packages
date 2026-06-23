@@ -2,9 +2,10 @@ blueman
 build-essential
 coreutils
 curl
+ffmpeg
+firefox
 git
 tree
-firefox
 wget
 
 greybird-gtk-theme
