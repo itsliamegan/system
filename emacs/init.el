@@ -199,6 +199,9 @@ the front and back of the string."
 ;; Open a file from the current git project.
 (define-key global-map (kbd "C-c p") 'project-find-file)
 
+;; Manage the current git repository.
+(define-key global-map (kbd "C-c g") 'magit-status)
+
 (setq harmony--font-lock-defaults
       '(("type\\|module\\|import\\|def\\|func\\|var\\|case\\|cond\\|match\\|do\\|end\\|if\\|else\\|and\\|or\\|not\\|return\\|print" . 'font-lock-keyword-face)
         ("[A-Z][A-Za-z]*" . 'font-lock-type-face)
