@@ -33,8 +33,13 @@
 ;; Use an accessible, high-contrast theme.
 (load-theme 'modus-operandi t)
 
+;; Set appropriate font size based on screen resolution.
+(setq font-size (if (> (frame-height) 50)
+                    150
+                  110))
+
 ;; Use a default font and line height.
-(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 130)
+(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height font-size)
 (add-to-list 'default-frame-alist '(line-spacing . nil))
 
 ;; Use a simple window title.
