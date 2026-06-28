@@ -186,6 +186,9 @@ the front and back of the string."
 ;; Indent with spaces in Emacs Lisp mode.
 (add-hook 'emacs-lisp-mode-hook (lambda () (indent-tabs-mode -1)))
 
+;; Center the viewport in Markdown mode.
+(add-hook 'markdown-mode-hook (lambda () (olivetti-mode)))
+
 ;; -----------
 ;; Keybindings
 ;; -----------
