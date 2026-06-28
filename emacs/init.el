@@ -117,7 +117,7 @@ the front and back of the string."
 ;; F - Add indicators to different types of file.
 ;; G - Don't show the group that owns the file.
 ;; h - Show human readable file sizes.
-(setq dired-listing-switches "-aFGhl")
+(setq dired-listing-switches "-aFGhl --group-directories-first")
 
 ;; Don't play a sound when encountering an error or an impossible action.
 (setq ring-bell-function 'ignore)
