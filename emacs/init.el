@@ -35,7 +35,7 @@
 
 ;; Set appropriate font size based on screen resolution.
 (setq font-size (if (> (frame-height) 50)
-                    150
+                    140
                   110))
 
 ;; Use a default font and line height.
