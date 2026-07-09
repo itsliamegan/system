@@ -20,6 +20,8 @@
 (setq initial-major-mode 'fundamental-mode)
 (defun startup-echo-area-message () "")
 
+(exec-path-from-shell-initialize)
+
 ;; ---------
 ;; Interface
 ;; ---------
