@@ -6,6 +6,9 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
+;; Store custom themes in a subdirectory.
+(setq custom-theme-directory (expand-file-name "themes" user-emacs-directory))
+
 ;; Store backups in the system temporary directory.
 (setq backup-directory-alist `(("." . ,temporary-file-directory)))
 
