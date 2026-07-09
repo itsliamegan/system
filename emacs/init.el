@@ -35,8 +35,14 @@
 ;; Maximize the window.
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
+;; Set appropriate theme based on system theme.
+(setq theme (if (string= (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")
+                         "\'prefer-dark\'\n")
+                'modus-vivendi
+              'modus-operandi))
+
 ;; Use an accessible, high-contrast theme.
-(load-theme 'modus-operandi t)
+(load-theme theme t)
 
 ;; Set appropriate font size based on screen resolution.
 (setq font-size (if (> (frame-height) 50)
