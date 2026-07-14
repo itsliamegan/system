@@ -7,6 +7,7 @@
 (package-refresh-contents)
 
 (let ((packages '(avy
+                  go-mode
                   magit
                   markdown-mode
                   olivetti
