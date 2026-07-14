@@ -194,7 +194,8 @@ the front and back of the string."
 (add-hook 'zig-mode-hook (lambda ()
                            (indent-tabs-mode +1)
                            (setq-local tab-width 4)
-                           (setq-local zig-indent-offset 4)))
+                           (setq-local zig-indent-offset 4)
+                           (zig-format-on-save-mode -1)))
 
 ;; Indent with spaces in Emacs Lisp mode.
 (add-hook 'emacs-lisp-mode-hook (lambda () (indent-tabs-mode -1)))
