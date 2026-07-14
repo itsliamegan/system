@@ -12,6 +12,8 @@
 ;; Store backups in the system temporary directory.
 (setq backup-directory-alist `(("." . ,temporary-file-directory)))
 
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+
 ;; Show a blank buffer on startup.
 (setq inhibit-startup-screen t)
 (setq inhibit-startup-message t)
