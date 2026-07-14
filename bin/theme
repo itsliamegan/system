@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# theme - change the current desktop theme (XFCE) to light or dark. other
+#         programs should update automatically.
+#
+# usage: theme <light|dark>
+
+set -euo pipefail
+
+LIGHT_THEME=Greybird
+DARK_THEME=Greybird-dark
+
+usage() {
+	echo "usage: theme <light|dark>"
+	exit 1
+}
+
+set_theme() {
+	xfconf-query -c xfwm4 -p /general/theme -s $1
+	xfconf-query -c xsettings -p /Net/ThemeName -s $1
+}
+
+case ${1-} in
+	light) set_theme $LIGHT_THEME;;
+	dark) set_theme $DARK_THEME;;
+	*) usage;;
+esac

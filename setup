@@ -11,12 +11,14 @@ usage() {
 }
 
 link() {
+	mkdir -p "$HOME/.local/"
 	mkdir -p "$XDG_CONFIG_HOME/emacs"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
 
 	ln -s "$PWD/shell/.bashrc" "$HOME/.bashrc"
 	ln -s "$PWD/shell/.profile" "$HOME/.profile"
 	ln -s "$PWD/shell/.inputrc" "$HOME/.inputrc"
+	ln -s "$PWD/bin" "$HOME/.local/bin"
 	ln -s "$PWD/fonts/archives" "$XDG_DATA_HOME/fonts"
 	ln -s "$PWD/emacs/init.el" "$XDG_CONFIG_HOME/emacs/init.el"
 	ln -s "$PWD/emacs/themes" "$XDG_CONFIG_HOME/emacs/themes"
