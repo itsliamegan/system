@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# rwin-to-compose - remap RCtrl to Compose using XKB
+#
+# usage: rctrl-to-compose
+
+setxkbmap -option compose:rctrl

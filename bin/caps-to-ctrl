@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# caps-to-ctrl - remap CapsLock to Ctrl using XKB
+#
+# usage: caps-to-ctrl
+
+setxkbmap -option ctrl:nocaps
