@@ -2,6 +2,7 @@ blueman
 build-essential
 coreutils
 curl
+emacs
 ffmpeg
 firefox
 git
