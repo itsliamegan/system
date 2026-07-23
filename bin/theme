@@ -16,12 +16,21 @@ usage() {
 }
 
 set_theme() {
-	xfconf-query -c xfwm4 -p /general/theme -s $1
-	xfconf-query -c xsettings -p /Net/ThemeName -s $1
+	xfconf-query -c xfwm4 -p /general/theme -s "$1"
+	xfconf-query -c xsettings -p /Net/ThemeName -s "$1"
+	gsettings set org.gnome.desktop.interface color-scheme "$2"
+}
+
+set_light_theme() {
+	set_theme $LIGHT_THEME default
+}
+
+set_dark_theme() {
+	set_theme $DARK_THEME prefer-dark
 }
 
 case ${1-} in
-	light) set_theme $LIGHT_THEME;;
-	dark) set_theme $DARK_THEME;;
+	light) set_light_theme;;
+	dark) set_dark_theme;;
 	*) usage;;
 esac
