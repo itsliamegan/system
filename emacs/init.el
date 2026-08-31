@@ -219,6 +219,18 @@ the front and back of the string."
 ;; Highlight code snippets with the appropriate major mode.
 (setq markdown-fontify-code-blocks-natively t)
 
+;; --------
+;; Projects
+;; --------
+
+(defun project-vterm ()
+  "Open a vterm buffer in the current project."
+  (interactive)
+  (let* ((project (project-current t))
+         (default-directory (project-root project))
+         (vterm-buffer-name (format "*vterm %s*" (project-name project))))
+    (vterm vterm-buffer-name)))
+
 ;; -----------
 ;; Keybindings
 ;; -----------
@@ -226,10 +238,13 @@ the front and back of the string."
 ;; Jump to a sequence of two characters on screen.
 (define-key global-map (kbd "C-c j") 'avy-goto-char-2)
 
-;; Open a file from the current git project.
+;; Open a file from the current project.
 (define-key global-map (kbd "C-c p f") 'project-find-file)
 
-;; Search the current git project.
+;; Open a shell in the current project.
+(define-key global-map (kbd "C-c p t") 'project-vterm)
+
+;; Search the current project.
 (define-key global-map (kbd "C-c p s") 'project-find-regexp)
 
 ;; Move between compiler errors.
