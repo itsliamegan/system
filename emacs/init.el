@@ -102,6 +102,10 @@ the front and back of the string."
                         1
                         20))))
 
+;; Scroll before reaching the frame edge.
+(setq scroll-conservatively 10)
+(setq scroll-margin 15)
+
 ;; --------
 ;; Behavior
 ;; --------
