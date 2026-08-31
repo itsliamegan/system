@@ -1,5 +1,6 @@
 blueman
 build-essential
+cmake
 coreutils
 curl
 emacs
@@ -19,5 +20,7 @@ libffi-dev
 libgmp-dev
 libreadline-dev
 libssl-dev
+libtool-bin
+libvterm-dev
 libyaml-dev
 zlib1g-dev
