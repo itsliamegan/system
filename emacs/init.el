@@ -166,6 +166,9 @@ the front and back of the string."
 ;; Always accept abbreviated answers "y" and "n" instead of "yes" and "no".
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Search across a project with Ripgrep.
+(setq xref-search-program 'ripgrep)
+
 ;; ---------
 ;; Languages
 ;; ---------
