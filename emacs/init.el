@@ -123,6 +123,9 @@ the front and back of the string."
 ;; Show more information about completions.
 (setq completions-detailed t)
 
+;; Show previously used completions first.
+(setq completions-sort 'historical)
+
 ;; Don't wait to display completions.
 (setq icomplete-compute-delay 0)
 
