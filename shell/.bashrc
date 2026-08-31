@@ -27,6 +27,8 @@ export LESSHISTFILE="$XDG_STATE_HOME/less/history"
 alias ls="ls --color --classify --group-directories-first"
 alias grep="grep --color"
 
+source /usr/share/bash-completion/completions/git
+
 indicate_git_status() {
 	branch=$(git branch 2>/dev/null | grep "^*" | sed "s/* \(.*\)/\1/")
 	unstaged_changes=$(git diff HEAD 2>/dev/null)
