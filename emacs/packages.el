@@ -9,11 +9,9 @@
 (let ((packages '(avy
                   eglot
                   exec-path-from-shell
-                  go-mode
                   magit
                   markdown-mode
                   olivetti
                   rust-mode
-                  zig-mode)))
   (dolist (package packages)
     (package-install package)))
