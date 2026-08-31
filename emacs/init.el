@@ -227,16 +227,26 @@ the front and back of the string."
 (define-key global-map (kbd "C-c j") 'avy-goto-char-2)
 
 ;; Open a file from the current git project.
-(define-key global-map (kbd "C-c p") 'project-find-file)
+(define-key global-map (kbd "C-c p f") 'project-find-file)
+
+;; Search the current git project.
+(define-key global-map (kbd "C-c p s") 'project-find-regexp)
+
+;; Move between compiler errors.
+(define-key global-map (kbd "C-c t n") 'flymake-goto-next-error)
+(define-key global-map (kbd "C-c t p") 'flymake-goto-prev-error)
 
 ;; Manage the current git repository.
-(define-key global-map (kbd "C-c g") 'magit-status)
+(define-key global-map (kbd "C-c g s") 'magit-status)
 
 (setq harmony--font-lock-defaults
       '(("type\\|module\\|import\\|def\\|func\\|var\\|case\\|cond\\|match\\|do\\|end\\|if\\|else\\|and\\|or\\|not\\|return\\|print" . 'font-lock-keyword-face)
         ("[A-Z][A-Za-z]*" . 'font-lock-type-face)
         ("\".*\"" . 'font-lock-string-face)
         ("'.*'" . 'font-lock-string-face)
+;; View git blame for the current file.
+(define-key global-map (kbd "C-c g b") 'magit-blame)
+
         (":[a-zA-Z_?!]+" . 'font-lock-constant-face)
         ("@[a-zA-Z_?!]+" . 'font-lock-constant-face)
         ("nil\\|true\\|false" . 'font-lock-constant-face)
