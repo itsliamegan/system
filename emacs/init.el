@@ -235,6 +235,9 @@ the front and back of the string."
 ;; Keybindings
 ;; -----------
 
+;; Kill the current buffer.
+(define-key global-map (kbd "C-x x") 'kill-current-buffer)
+
 ;; Jump to a sequence of two characters on screen.
 (define-key global-map (kbd "C-c j") 'avy-goto-char-2)
 
