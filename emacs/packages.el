@@ -13,5 +13,6 @@
                   markdown-mode
                   olivetti
                   rust-mode
+                  vterm)))
   (dolist (package packages)
     (package-install package)))
