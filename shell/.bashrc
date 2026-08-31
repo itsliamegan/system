@@ -1,7 +1,7 @@
 export NAME="Liam Egan"
 export EMAIL="liam@liamegan.com"
 
-export EDITOR="emacs"
+export EDITOR="emacs -nw"
 
 export PS1="[\u@\h] \w\$(indicate_git_status) > "
 
