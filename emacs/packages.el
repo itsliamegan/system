@@ -7,6 +7,7 @@
 (package-refresh-contents)
 
 (let ((packages '(avy
+                  eglot
                   exec-path-from-shell
                   go-mode
                   magit
