@@ -11,15 +11,9 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 export PATH="$HOME/.local/bin:$PATH"
 
-export PATH="$HOME/.go/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.zig:$PATH"
-export PATH="$HOME/.pyenv/bin:$PATH"
-export PATH="$HOME/.pyenv/shims:$PATH"
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="$HOME/.rbenv/shims:$PATH"
+export PATH="$HOME/.local/share/mise/shims:$PATH"
 
-export GOPATH="$HOME/.go"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 export LESSHISTFILE="$XDG_STATE_HOME/less/history"
