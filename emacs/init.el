@@ -206,7 +206,7 @@ the front and back of the string."
 (add-hook 'emacs-lisp-mode-hook (lambda () (indent-tabs-mode -1)))
 
 
-;; -- Markdown Mode -- ;;
+;; -- Markdown -- ;;
 
 ;; Center the viewport.
 (add-hook 'markdown-mode-hook (lambda () (olivetti-mode)))
