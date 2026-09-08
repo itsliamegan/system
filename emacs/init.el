@@ -31,6 +31,7 @@
 
 ;; Store custom themes in a subdirectory.
 (setq custom-theme-directory (expand-file-name "themes" user-emacs-directory))
+(add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
 
 ;; Store backups in the system temporary directory.
 (setq backup-directory-alist `(("." . ,temporary-file-directory)))
@@ -65,8 +66,8 @@
 ;; Set appropriate theme based on system theme.
 (setq theme (if (string= (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")
                          "\'prefer-dark\'\n")
-                'modus-vivendi
-              'modus-operandi))
+                'chalk
+              'paper))
 
 ;; Use an accessible, high-contrast theme.
 (load-theme theme t)
