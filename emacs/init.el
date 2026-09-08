@@ -129,6 +129,12 @@ the front and back of the string."
 ;; Don't wait to display completions.
 (setq icomplete-compute-delay 0)
 
+;; Don't redraw vterm for the minibuffer. Prevents flickering in TUIs.
+(advice-add 'vterm--window-adjust-process-window-size :around
+			(lambda (orig-fun &rest args)
+			  (unless (active-minibuffer-window)
+				(apply orig-fun args))))
+
 ;; Indent using four-space tabs.
 (setq-default tab-width 4)
 (indent-tabs-mode +1)
