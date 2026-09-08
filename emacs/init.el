@@ -2,6 +2,29 @@
 ;; Startup
 ;; -------
 
+(defconst *16-mb* (* 16 1024 1024))
+
+;; Increase the garbage collection threshold at startup, then set it to a
+;; reasonable amount after Emacs has initialized.
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold *16-mb*
+                  gc-cons-percentage 0.1)))
+
+;; Increase the garbage collection threshold when using the minibuffer, then
+;; restore it afterwards.
+(add-hook 'minibuffer-setup-hook
+          (lambda ()
+            (setq gc-cons-threshold most-positive-fixnum)))
+
+(add-hook 'minibuffer-exit-hook
+          (lambda ()
+            (run-at-time 1 nil (lambda ()
+                                 (setq gc-cons-threshold *16-mb*)))))
+
 ;; Store user customizations in a separate file.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
