@@ -9,8 +9,12 @@ firefox
 git
 mugshot
 ripgrep
+rsync
+thunderbird
+tmux
 tree
 wget
+yt-dlp
 
 greybird-gtk-theme
 elementary-xfce-icon-theme
