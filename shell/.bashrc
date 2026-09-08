@@ -13,8 +13,6 @@ export PATH="$HOME/.local/bin:$PATH"
 
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 
-export PATH="$HOME/.cargo/bin:$PATH"
-
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 export LESSHISTFILE="$XDG_STATE_HOME/less/history"
 
