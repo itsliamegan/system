@@ -85,6 +85,8 @@ the front and back of the string."
                   ((and (listp mode-name)
                         (member "JavaScript" mode-name)) "javascript")
                   ((and (listp mode-name)
+                        (member "JSON" mode-name)) "json")
+                  ((and (listp mode-name)
                         (member "ELisp" mode-name)) "elisp")
                   (t mode-name))))
 
