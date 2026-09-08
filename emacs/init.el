@@ -22,6 +22,8 @@
 (setq initial-major-mode 'fundamental-mode)
 (defun startup-echo-area-message () "")
 
+;; Load PATH from .bashrc.
+(setq exec-path-from-shell-arguments '("-l" "-i"))
 (exec-path-from-shell-initialize)
 
 ;; ---------
