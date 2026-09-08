@@ -217,10 +217,6 @@ the front and back of the string."
                             (indent-tabs-mode +1)
                             (setq-local tab-width 4)
                             (setq-local sgml-basic-offset 4)))
-(add-hook 'python-mode-hook (lambda ()
-                              (indent-tabs-mode +1)
-                              (setq-local tab-width 4)
-                              (setq-local python-indent-offset 4)))
 (add-hook 'ruby-mode-hook (lambda ()
                             (indent-tabs-mode +1)
                             (setq-local tab-width 4)
@@ -251,6 +247,31 @@ the front and back of the string."
 
 ;; Highlight code snippets with the appropriate major mode.
 (setq markdown-fontify-code-blocks-natively t)
+
+;; -- Python -- ;;
+
+;; Use TreeSitter when it's available.
+(when (treesit-language-available-p 'python)
+  (add-to-list 'major-mode-remap-alist
+               '(python-mode . python-ts-mode)))
+
+;; Use LSP with Ruff.
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(python-base-mode . ("uv" "run" "ruff" "server"))))
+
+;; Indent with four-space tabs.
+(add-hook 'python-base-mode-hook
+          (lambda ()
+            (indent-tabs-mode +1)
+            (setq-local tab-width 4)
+            (setq-local python-indent-offset 4)))
+
+;; Format on save.
+(add-hook 'python-base-mode-hook
+          (lambda ()
+            (eglot-ensure)
+            (add-hook 'before-save-hook 'eglot-format nil t)))
 
 ;; --------
 ;; Projects
@@ -290,19 +311,28 @@ the front and back of the string."
 ;; Manage the current git repository.
 (define-key global-map (kbd "C-c g s") 'magit-status)
 
-(setq harmony--font-lock-defaults
-      '(("type\\|module\\|import\\|def\\|func\\|var\\|case\\|cond\\|match\\|do\\|end\\|if\\|else\\|and\\|or\\|not\\|return\\|print" . 'font-lock-keyword-face)
-        ("[A-Z][A-Za-z]*" . 'font-lock-type-face)
-        ("\".*\"" . 'font-lock-string-face)
-        ("'.*'" . 'font-lock-string-face)
 ;; View git blame for the current file.
 (define-key global-map (kbd "C-c g b") 'magit-blame)
 
+(setq mesa--font-lock-defaults
+      '(("\\_<\\(module\\|import\\|export\\|type\\|proto\\|impl\\|case\\|extern\\|def\\|each\\|loop\\|do\\|in\\|when\\|then\\|else\\|rescue\\|end\\|return\\|break\\|raise\\|and\\|or\\|not\\)\\_>" . 'font-lock-keyword-face)
+        ("[A-Z][a-zA-Z]*" . 'font-lock-type-face)
         (":[a-zA-Z_?!]+" . 'font-lock-constant-face)
         ("@[a-zA-Z_?!]+" . 'font-lock-constant-face)
         ("nil\\|true\\|false" . 'font-lock-constant-face)
         ("[0-9]\\(\\.[0-9]+\\)?" . 'font-lock-number-face)))
 
-(define-derived-mode harmony-mode prog-mode "harmony"
+(defvar mesa-mode-syntax-table
+  (let ((table (make-syntax-table)))
+	(modify-syntax-entry ?\# "<" table)
+	(modify-syntax-entry ?\n ">" table)
+	(modify-syntax-entry ?\" "\"" table)
+	(modify-syntax-entry ?' "/" table)
+    table))
+
+(define-derived-mode mesa-mode prog-mode "Mesa"
   ""
-  (setq font-lock-defaults '(harmony--font-lock-defaults)))
+  (set-syntax-table mesa-mode-syntax-table)
+  (setq font-lock-defaults '(mesa--font-lock-defaults)))
+
+(add-to-list 'auto-mode-alist '("\\.ms\\'" . mesa-mode))
