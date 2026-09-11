@@ -266,10 +266,14 @@ the front and back of the string."
   (add-to-list 'major-mode-remap-alist
                '(python-mode . python-ts-mode)))
 
-;; Use LSP with Ruff.
+;; Use LSP with Ruff and Ty.
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               '(python-base-mode . ("uv" "run" "ruff" "server"))))
+               `(python-base-mode .
+                 ,(eglot-alternatives
+                   '(("uv" "run" "rass" "--" "ty" "server" "--" "ruff" "server")
+                     ("uv" "run" "ty" "server")
+                     ("uv" "run" "ruff" "server"))))))
 
 ;; Indent with four-space tabs.
 (add-hook 'python-base-mode-hook
