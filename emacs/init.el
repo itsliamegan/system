@@ -202,7 +202,7 @@ the front and back of the string."
 (setq vc-follow-symlinks t)
 
 ;; Always accept abbreviated answers "y" and "n" instead of "yes" and "no".
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 
 ;; Integrate with the system clipboard.
 (setq select-enable-clipboard t)
