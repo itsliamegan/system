@@ -185,7 +185,11 @@ the front and back of the string."
 ;; Trim trailing whitespace on save.
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;; Refresh files from disk when they update.
+;; Refresh files from disk when they update, using the system interface rather
+;; than polling.
+(setq auto-revert-avoid-polling t)
+(setq auto-revert-interval 5)
+(setq auto-revert-check-vc-info t)
 (global-auto-revert-mode +1)
 
 ;; Treat CamelCase words as separate.
