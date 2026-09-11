@@ -211,6 +211,10 @@ the front and back of the string."
 ;; Do not save duplicates to the clipboard.
 (setq kill-do-not-save-duplicates t)
 
+;; Always assume left-to-right text.
+(setq-default bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
+
 ;; Search across a project with Ripgrep.
 (setq xref-search-program 'ripgrep)
 
