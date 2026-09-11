@@ -208,6 +208,9 @@ the front and back of the string."
 (setq select-enable-clipboard t)
 (setq save-interprogram-paste-before-kill t)
 
+;; Do not save duplicates to the clipboard.
+(setq kill-do-not-save-duplicates t)
+
 ;; Search across a project with Ripgrep.
 (setq xref-search-program 'ripgrep)
 
