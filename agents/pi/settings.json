@@ -1,0 +1,9 @@
+{
+  "lastChangelogVersion": "0.85.1",
+  "theme": "ansi",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-sol",
+  "hideThinkingBlock": true,
+  "tuiMode": "fullscreen",
+  "quietStartup": true
+}
