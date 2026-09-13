@@ -7,6 +7,7 @@ emacs
 ffmpeg
 firefox
 git
+imagemagick
 mugshot
 ripgrep
 rsync
