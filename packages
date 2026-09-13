@@ -10,6 +10,7 @@ firefox
 git
 imagemagick
 mugshot
+pandoc
 ripgrep
 rsync
 thunderbird
