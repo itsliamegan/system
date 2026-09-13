@@ -329,6 +329,15 @@ the front and back of the string."
 ;; View git blame for the current file.
 (define-key global-map (kbd "C-c g b") 'magit-blame)
 
+(with-eval-after-load 'magit
+  ;; Open diffs in the other window.
+  (define-key magit-file-section-map (kbd "RET") 'magit-diff-visit-file-other-window)
+  (define-key magit-hunk-section-map (kbd "RET") 'magit-diff-visit-file-other-window)
+
+  ;; Open diffs in the same window.
+  (define-key magit-file-section-map (kbd "M-RET") 'magit-diff-visit-file)
+  (define-key magit-hunk-section-map (kbd "M-RET") 'magit-diff-visit-file))
+
 (setq mesa--font-lock-defaults
       '(("\\_<\\(module\\|import\\|export\\|type\\|proto\\|impl\\|case\\|extern\\|def\\|each\\|loop\\|do\\|in\\|when\\|then\\|else\\|rescue\\|end\\|return\\|break\\|raise\\|and\\|or\\|not\\)\\_>" . 'font-lock-keyword-face)
         ("[A-Z][a-zA-Z]*" . 'font-lock-type-face)
