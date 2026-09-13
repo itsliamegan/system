@@ -66,8 +66,8 @@
 ;; Set appropriate theme based on system theme.
 (setq theme (if (string= (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")
                          "\'prefer-dark\'\n")
-                'chalk
-              'paper))
+                'modus-vivendi
+              'modus-operandi))
 
 ;; Use an accessible, high-contrast theme.
 (load-theme theme t)
