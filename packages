@@ -4,6 +4,7 @@ cmake
 coreutils
 curl
 emacs
+fd-find
 ffmpeg
 firefox
 git
