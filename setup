@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
 
+# setup - setup system packages and configuration files.
+#
+# usage: setup <link|install>
+#
+# link - symlink configuration files
+# install - install system packages and tools
+
 set -euo errexit
 
 tools=("https://mise.run")
 
 usage() {
+	echo "setup - setup system packages and configuration files."
 	echo "usage: setup <link|install>"
 	echo ""
 	echo "link - symlink configuraion files"
@@ -12,7 +20,7 @@ usage() {
 }
 
 link() {
-	mkdir -p "$HOME/.local/"
+	mkdir -p "$HOME/.local"
 	mkdir -p "$XDG_CONFIG_HOME/emacs"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
 	mkdir -p "$XDG_CONFIG_HOME/tmux"
@@ -32,6 +40,11 @@ link() {
 	ln -s "$PWD/fonts/archives" "$XDG_DATA_HOME/fonts"
 
 	ln -s "$PWD/langs/rust/rustfmt.toml" "$XDG_CONFIG_HOME/rustfmt/rustfmt.toml"
+
+	cp "$PWD/xfce/xfwm4.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml"
+	cp "$PWD/xfce/xfce4-panel.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+	cp "$PWD/xfce/xfce4-keyboard-shortcuts.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
+	cp "$PWD/xfce/xfce4-terminal.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfce4-terminal.xml"
 }
 
 install() {
