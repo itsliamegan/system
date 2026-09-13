@@ -9,7 +9,10 @@
 
 set -euo errexit
 
-tools=("https://mise.run")
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
 
 usage() {
 	echo "setup - setup system packages and configuration files."
@@ -21,16 +24,25 @@ usage() {
 
 link() {
 	mkdir -p "$HOME/.local"
+	mkdir -p "$HOME/.local/bin"
+	mkdir -p "$XDG_CONFIG_HOME/autostart"
 	mkdir -p "$XDG_CONFIG_HOME/emacs"
+	mkdir -p "$XDG_CONFIG_HOME/mise"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
 	mkdir -p "$XDG_CONFIG_HOME/tmux"
 
-	ln -s "$PWD/bin" "$HOME/.local/bin"
+	ln -s "$PWD/bin/caps-to-ctrl" "$HOME/.local/bin/caps-to-ctrl"
+	ln -s "$PWD/bin/rctrl-to-compose" "$HOME/.local/bin/rctrl-to-compose"
+	ln -s "$PWD/bin/theme" "$HOME/.local/bin/theme"
 
 	ln -s "$PWD/shell/.bashrc" "$HOME/.bashrc"
 	ln -s "$PWD/shell/.profile" "$HOME/.profile"
 	ln -s "$PWD/shell/.inputrc" "$HOME/.inputrc"
-	ln -s "$PWD/shell/tmux" "$XDG_CONFIG_HOME/tmux"
+	ln -s "$PWD/shell/tmux.conf" "$XDG_CONFIG_HOME/tmux/tmux.conf"
+
+	sudo cp "$PWD/shell/disable-admin-flag" /etc/sudoers.d/disable-admin-flag
+	sudo chown root:root /etc/sudoers.d/disable-admin-flag
+	sudo chmod 0440 /etc/sudoers.d/disable-admin-flag
 
 	ln -s "$PWD/emacs/init.el" "$XDG_CONFIG_HOME/emacs/init.el"
 	ln -s "$PWD/emacs/themes" "$XDG_CONFIG_HOME/emacs/themes"
@@ -39,7 +51,13 @@ link() {
 
 	ln -s "$PWD/fonts/archives" "$XDG_DATA_HOME/fonts"
 
+	ln -s "$PWD/agents/pi" "$XDG_CONFIG_HOME/pi"
+
+	ls -s "$PWD/langs/mise/config.toml" "$XDG_CONFIG_HOME/mise/config.toml"
 	ln -s "$PWD/langs/rust/rustfmt.toml" "$XDG_CONFIG_HOME/rustfmt/rustfmt.toml"
+
+	ln -s "$PWD/xfce/caps-to-ctrl.desktop" "$XDG_CONFIG_HOME/autostart/caps-to-ctrl.desktop"
+	ln -s "$PWD/xfce/rctrl-to-compose.desktop" "$XDG_CONFIG_HOME/autostart/ctrl-to-compose.desktop"
 
 	cp "$PWD/xfce/xfwm4.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml"
 	cp "$PWD/xfce/xfce4-panel.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
@@ -49,7 +67,7 @@ link() {
 
 install() {
 	sudo apt install -y $(xargs <packages)
-	for tool in "${tools[@]}"; do
+	for tool in "$(cat tools);" do
 		curl -fsS "$tool" | sh
 	done
 }

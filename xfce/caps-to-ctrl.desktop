@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=CapsLock to Ctrl
+Comment=A script that maps CapsLock to Ctrl
+Exec=/home/liam/.local/bin/caps-to-ctrl
+Terminal=false
+NoDisplay=true
+StartupNotify=false
+Hidden=false

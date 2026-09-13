@@ -6,18 +6,30 @@ export EDITOR="emacs -nw"
 export PS1="[\u@\h] \w\$(indicate_git_status) > "
 
 export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 export PATH="$HOME/.local/bin:$PATH"
-
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 export LESSHISTFILE="$XDG_STATE_HOME/less/history"
 
+export ASPELL_CONF="home-dir $XDG_DATA_HOME/aspell"
+
+export PI_CODING_AGENT_DIR="$XDG_CONFIG_HOME/pi"
+export PI_CODING_AGENT_SESSION_DIR="$XDG_STATE_HOME/pi/sessions"
+
+export PYTHON_HISTORY="$XDG_STATE_HOME/python/history"
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+export NODE_REPL_HISTORY="$XDG_STATE_HOME/node/repl_history"
+export npm_config_cache="$XDG_CACHE_HOME/npm"
+
 alias ls="ls --color --classify --group-directories-first"
 alias grep="grep --color"
+alias fd="fdfind --color=never"
 
 source /usr/share/bash-completion/completions/git
 

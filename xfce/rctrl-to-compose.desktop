@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=RCtrl to Compose
+Comment=A script that maps RCtrl to Compose
+Exec=/home/liam/.local/bin/rctrl-to-compose
+Terminal=false
+NoDisplay=true
+StartupNotify=false
+Hidden=false

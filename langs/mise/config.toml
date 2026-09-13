@@ -1,0 +1,9 @@
+[tools]
+node = "26.8"
+python = "3.14"
+rust = "1.98"
+rust-analyzer = "latest"
+uv = "latest"
+
+[settings.python]
+uv_venv_auto = "create|source"
