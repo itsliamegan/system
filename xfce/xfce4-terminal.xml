@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<channel name="xfce4-terminal" version="1.0">
+	<property name="misc-default-geometry" type="string" value="160x50"/>
+	<property name="title-mode" type="string" value="TERMINAL_TITLE_HIDE"/>
+	<property name="font-name" type="string" value="Monospace 14"/>
+	<property name="color-palette" type="string" value="rgb(0,0,0);rgb(255,95,89);rgb(106,228,185);rgb(254,196,63);rgb(121,168,255);rgb(182,160,255);rgb(192,222,255);rgb(170,170,170);rgb(85,85,85);rgb(255,85,85);rgb(106,228,185);rgb(254,196,63);rgb(121,168,255);rgb(182,160,255);rgb(192,222,255);rgb(255,255,255)"/>
+	<property name="shortcuts-no-mnemonics" type="bool" value="true"/>
+</channel>
