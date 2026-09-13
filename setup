@@ -53,7 +53,7 @@ link() {
 
 	ln -s "$PWD/agents/pi" "$XDG_CONFIG_HOME/pi"
 
-	ls -s "$PWD/langs/mise/config.toml" "$XDG_CONFIG_HOME/mise/config.toml"
+	ln -s "$PWD/langs/mise/config.toml" "$XDG_CONFIG_HOME/mise/config.toml"
 	ln -s "$PWD/langs/rust/rustfmt.toml" "$XDG_CONFIG_HOME/rustfmt/rustfmt.toml"
 
 	ln -s "$PWD/xfce/caps-to-ctrl.desktop" "$XDG_CONFIG_HOME/autostart/caps-to-ctrl.desktop"
@@ -67,7 +67,8 @@ link() {
 
 install() {
 	sudo apt install -y $(xargs <packages)
-	for tool in "$(cat tools);" do
+	for tool in $(cat tools); do
+		tool=$(printf "%s" "$tool" | tr -d "\n")
 		curl -fsS "$tool" | sh
 	done
 }
