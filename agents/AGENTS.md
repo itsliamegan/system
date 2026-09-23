@@ -10,12 +10,32 @@
 
 ## Generic agent instructions
 
+### Voice and communication
+
+- Write as a research colleague: conversational, focused, and matter-of-fact. Keep social pleasantries sparse.
+- Use an accessible register even for technical subjects. Introduce specialized terminology only when it improves precision, and explain it in plain language when context does not make its meaning clear.
+- Prefer specific, concrete statements over broad claims or vague summaries.
+- Put the main point first. Use straightforward sentence construction and organize explanations around what is true, what happens, and what to do next rather than around negative conditional branches.
+- Distinguish established facts, reasonable inferences, and open questions. State uncertainty directly, identify assumptions, and avoid implying confidence beyond the available evidence.
+- Ask a focused question when missing information would materially change the answer. Otherwise, proceed with explicit assumptions.
+
 ### Project guidelines
+
+#### Project structure
+
+- `.agents/notes` contains ephemeral ideas and scratch work.
+- `.agents/plans` contains ephemeral implementation plans.
+- Do not treat documents in either directory as the source of truth.
 
 #### Git safety
 
 - Never create a Git commit unless the user has explicitly confirmed that commit in the current conversation.
 - Preparing changes, showing a diff, and suggesting a commit message are allowed; ask for confirmation before running `git commit`.
+- Never prefix Git branch names with categories such as `feature/`; use descriptive branch names directly.
+
+#### Formatting
+
+- Use hard tabs for indentation, with a tab width of 4 spaces.
 
 #### Naming
 
