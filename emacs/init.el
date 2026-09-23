@@ -79,13 +79,25 @@
 (load-theme theme t)
 
 ;; Set appropriate font size based on screen resolution.
-(setq font-size (if (> (frame-height) 50)
-                    140
-                  110))
+(setq relative-screen-size (if (> (frame-height) 50)
+                               'large
+                             'small))
+(setq fixed-pitch-font-size (pcase relative-screen-size
+                              ('large 140)
+                              ('small 110)))
+(setq variable-pitch-font-size (pcase relative-screen-size
+                                 ('large 160)
+                                 ('small 120)))
 
-;; Use a default font and line height.
-(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height font-size)
-(add-to-list 'default-frame-alist '(line-spacing . nil))
+;; Use a monospaced font with no line spacing by default.
+(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height fixed-pitch-font-size)
+(set-face-attribute 'fixed-pitch nil :inherit 'default)
+(setq variable-pitch-line-spacing 0)
+(setq-default line-spacing variable-pitch-line-spacing)
+
+;; Use a sans serif font with light line spacing for prose.
+(set-face-attribute 'variable-pitch nil :family "Helvetica Neue" :height variable-pitch-font-size)
+(setq variable-pitch-line-spacing 0.15)
 
 ;; Use a simple window title.
 (setq frame-title-format "Emacs")
