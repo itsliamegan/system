@@ -7,6 +7,7 @@
 (package-refresh-contents)
 
 (let ((packages '(avy
+                  dockerfile-mode
                   eglot
                   exec-path-from-shell
                   magit
