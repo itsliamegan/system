@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# theme - change the current desktop theme (XFCE) to light or dark. other
-#         programs should update automatically.
+# theme - change the current desktop theme (XFCE) to light, dark, or based on
+#         the time of day. other programs should update automatically.
 #
-# usage: theme <light|dark>
+# usage: theme <light|dark|auto>
 
 set -euo pipefail
 
@@ -11,7 +11,7 @@ LIGHT_THEME=Greybird
 DARK_THEME=Greybird-dark
 
 usage() {
-	echo "usage: theme <light|dark>"
+	echo "usage: theme <light|dark|auto>"
 	exit 1
 }
 
@@ -29,8 +29,19 @@ set_dark_theme() {
 	set_theme $DARK_THEME prefer-dark
 }
 
+set_auto_theme() {
+	current_time=$(date +"%s")
+	time_for_dark=$(date -d "18:00" +"%s")
+	if [ "$current_time" -gt "$time_for_dark" ]; then
+		set_dark_theme
+	else
+		set_light_theme
+	fi
+}
+
 case ${1-} in
 	light) set_light_theme;;
 	dark) set_dark_theme;;
+	auto) set_auto_theme;;
 	*) usage;;
 esac
