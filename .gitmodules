@@ -1,0 +1,3 @@
+[submodule "fonts/archives"]
+	path = fonts/archives
+	url = git@github.com:itsliamegan/fonts.git
