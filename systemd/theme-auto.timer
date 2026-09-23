@@ -1,0 +1,10 @@
+[Unit]
+Description=Run theme auto daily at 18:00 and on login
+
+[Timer]
+OnCalendar=*-*-* 18:00:00
+OnStartupSec=30
+Persistent=true
+
+[Install]
+WantedBy=timers.target

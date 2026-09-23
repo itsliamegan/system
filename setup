@@ -30,6 +30,7 @@ link() {
 	mkdir -p "$XDG_CONFIG_HOME/fontconfig"
 	mkdir -p "$XDG_CONFIG_HOME/mise"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
+	mkdir -p "$XDG_CONFIG_HOME/systemd/user"
 	mkdir -p "$XDG_CONFIG_HOME/tmux"
 
 	ln -s "$PWD/bin/caps-to-ctrl" "$HOME/.local/bin/caps-to-ctrl"
@@ -58,6 +59,9 @@ link() {
 
 	ln -s "$PWD/langs/mise/config.toml" "$XDG_CONFIG_HOME/mise/config.toml"
 	ln -s "$PWD/langs/rust/rustfmt.toml" "$XDG_CONFIG_HOME/rustfmt/rustfmt.toml"
+
+	ln -s "$PWD/systemd/theme-auto.service" "$XDG_CONFIG_HOME/systemd/user/theme-auto.service"
+	ln -s "$PWD/systemd/theme-auto.timer" "$XDG_CONFIG_HOME/systemd/user/theme-auto.timer"
 
 	ln -s "$PWD/xfce/caps-to-ctrl.desktop" "$XDG_CONFIG_HOME/autostart/caps-to-ctrl.desktop"
 	ln -s "$PWD/xfce/rctrl-to-compose.desktop" "$XDG_CONFIG_HOME/autostart/ctrl-to-compose.desktop"
