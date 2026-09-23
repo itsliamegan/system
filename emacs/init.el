@@ -62,8 +62,12 @@
 (scroll-bar-mode -1)
 (fringe-mode 0)
 
-;; Maximize the window.
+;; Maximize the default window.
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+;; Open new frames with reasonable dimensions.
+(add-to-list 'default-frame-alist '(width . 100))
+(add-to-list 'default-frame-alist '(height . 52))
 
 ;; Set appropriate theme based on system theme.
 (setq theme (if (string= (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")
