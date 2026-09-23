@@ -6,7 +6,8 @@
 
 (package-refresh-contents)
 
-(let ((packages '(avy
+(let ((packages '(apheleia
+                  avy
                   dockerfile-mode
                   eglot
                   exec-path-from-shell

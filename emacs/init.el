@@ -282,14 +282,14 @@ the front and back of the string."
   (add-to-list 'major-mode-remap-alist
                '(python-mode . python-ts-mode)))
 
-;; Use LSP with Ruff and Ty.
+;; Use LSP with Ty.
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               `(python-base-mode .
-                 ,(eglot-alternatives
-                   '(("uv" "run" "rass" "--" "ty" "server" "--" "ruff" "server")
-                     ("uv" "run" "ty" "server")
-                     ("uv" "run" "ruff" "server"))))))
+               `((python-base-mode) "uv run ty server")))
+
+(add-hook 'python-base-mode-hook
+          (lambda ()
+            (eglot-ensure)))
 
 ;; Indent with four-space tabs.
 (add-hook 'python-base-mode-hook
@@ -298,8 +298,14 @@ the front and back of the string."
             (setq-local tab-width 4)
             (setq-local python-indent-offset 4)))
 
-;; Format on save.
+;; Format on save with Ruff.
+(with-eval-after-load 'apheleia
+  (setf (alist-get 'python-mode apheleia-mode-alist) '(ruff-isort ruff)))
+
 (add-hook 'python-base-mode-hook
+          (lambda ()
+            (aphelia-mode +1)))
+
 ;; -- Markdown -- ;;
 
 (add-hook 'markdown-mode-hook
