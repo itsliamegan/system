@@ -306,6 +306,70 @@ the front and back of the string."
           (lambda ()
             (aphelia-mode +1)))
 
+;; -- TypeScript -- ;;
+
+;; Use TreeSitter.
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+
+;; Use LSP with typescript-language-server.
+(add-hook 'typescript-ts-mode-hook
+          (lambda ()
+            (eglot-ensure)))
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '((typescript-ts-mode)
+                 "typescript-language-server" "--stdio")))
+
+;; Indent with four-space tabs.
+(add-hook 'typescript-ts-mode-hook
+          (lambda ()
+            (indent-tabs-mode +1)
+            (setq-local tab-width 4)
+            (setq-local typescript-ts-mode-indent-offset 4)))
+
+;; Format on save with Biome.
+(with-eval-after-load 'apheleia
+  (setf (alist-get 'typescript-ts-mode apheleia-mode-alist) 'biome))
+
+(add-hook 'typescript-ts-mode-hook
+          (lambda ()
+            (apheleia-mode +1)))
+
+;; -- Svelte -- ;;
+
+(add-to-list 'auto-mode-alist '("\\.svelte\\'" . svelte-ts-mode))
+
+(with-eval-after-load 'svelte-ts-mode
+  (setq svelte-ts-mode-ts-languages '(svelte typescript css html)))
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '((svelte-ts-mode)
+                 "svelteserver" "--stdio")))
+
+(add-hook 'svelte-ts-mode-hook
+          (lambda ()
+            (eglot-ensure)))
+
+(add-hook 'svelte-ts-mode-hook
+          (lambda ()
+            (indent-tabs-mode +1)
+            (setq-local tab-width 4)
+            (setq-local svelte-ts-mode-indent-offset 4)
+            (setq-local js-ts-mode-indent-offset 4)
+            (setq-local typescript-ts-mode-indent-offset 4)
+            (setq-local css-indent-offset 4)
+            (setq-local sgml-basic-offset 4)))
+
+(with-eval-after-load 'apheleia
+  (setf (alist-get 'svelte-ts-mode apheleia-mode-alist) 'biome))
+
+(add-hook 'svelte-ts-mode-hook
+          (lambda ()
+            (apheleia-mode +1)))
+
 ;; -- Markdown -- ;;
 
 (add-hook 'markdown-mode-hook

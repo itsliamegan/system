@@ -18,3 +18,7 @@
                   vterm)))
   (dolist (package packages)
     (package-install package)))
+
+(let ((vc-packages '(svelte-ts-mode)))
+  (unless (package-installed-p 'svelte-ts-mode)
+    (package-vc-install '(svelte-ts-mode :url "https://github.com/leafOfTree/svelte-ts-mode"))))
