@@ -304,7 +304,7 @@ the front and back of the string."
 
 (add-hook 'python-base-mode-hook
           (lambda ()
-            (aphelia-mode +1)))
+            (apheleia-mode +1)))
 
 ;; -- TypeScript -- ;;
 
