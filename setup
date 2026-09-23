@@ -27,6 +27,7 @@ link() {
 	mkdir -p "$HOME/.local/bin"
 	mkdir -p "$XDG_CONFIG_HOME/autostart"
 	mkdir -p "$XDG_CONFIG_HOME/emacs"
+	mkdir -p "$XDG_CONFIG_HOME/fontconfig"
 	mkdir -p "$XDG_CONFIG_HOME/mise"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
 	mkdir -p "$XDG_CONFIG_HOME/tmux"
@@ -50,6 +51,7 @@ link() {
 	ln -s "$PWD/git" "$XDG_CONFIG_HOME/git"
 
 	ln -s "$PWD/fonts/archives" "$XDG_DATA_HOME/fonts"
+	ln -s "$PWD/fonts/fonts.conf" "$XDG_CONFIG_HOME/fontconfig/fonts.conf"
 
 	ln -s "$PWD/agents/claude" "$XDG_CONFIG_HOME/claude"
 	ln -s "$PWD/agents/pi" "$XDG_CONFIG_HOME/pi"
