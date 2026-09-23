@@ -233,6 +233,12 @@ the front and back of the string."
 (setq-default bidi-paragraph-direction 'left-to-right)
 (setq bidi-inhibit-bpa t)
 
+;; Use aspell for spellcheck and load from a custom directory.
+(setq ispell-program-name "aspell")
+(let* ((conf-val (getenv "ASPELL_CONF"))
+       (dir-path (nth 1 (split-string conf-val " " t))))
+  (setq ispell-personal-dictionary (concat dir-path "/.aspell.en.pws")))
+
 ;; Search across a project with Ripgrep.
 (setq xref-search-program 'ripgrep)
 
