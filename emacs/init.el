@@ -275,14 +275,6 @@ the front and back of the string."
 (add-hook 'emacs-lisp-mode-hook (lambda () (indent-tabs-mode -1)))
 
 
-;; -- Markdown -- ;;
-
-;; Center the viewport.
-(add-hook 'markdown-mode-hook (lambda () (olivetti-mode)))
-
-;; Highlight code snippets with the appropriate major mode.
-(setq markdown-fontify-code-blocks-natively t)
-
 ;; -- Python -- ;;
 
 ;; Use TreeSitter when it's available.
@@ -308,6 +300,28 @@ the front and back of the string."
 
 ;; Format on save.
 (add-hook 'python-base-mode-hook
+;; -- Markdown -- ;;
+
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            ;; Wrap text at 90 characters.
+            (setq-local fill-column 90)
+
+            ;; Use a sans serif font and a bar cursor.
+            (variable-pitch-mode +1)
+            (setq-local line-spacing variable-pitch-line-spacing)
+            (setq-local cursor-type 'bar)
+
+            ;; Use spellcheck.
+            (flyspell-mode +1)
+
+            ;; Center the viewport.
+            (olivetti-mode +1)
+            ))
+
+;; Highlight code snippets with the appropriate major mode.
+(setq markdown-fontify-code-blocks-natively t)
+
           (lambda ()
             (eglot-ensure)
             (add-hook 'before-save-hook 'eglot-format nil t)))
