@@ -46,8 +46,10 @@
 (setq initial-major-mode 'fundamental-mode)
 (defun startup-echo-area-message () "")
 
-;; Load PATH from .bashrc.
+;; Load environment variables from .bashrc.
+(require 'exec-path-from-shell)
 (setq exec-path-from-shell-arguments '("-l" "-i"))
+(add-to-list 'exec-path-from-shell-variables "ASPELL_CONF")
 (exec-path-from-shell-initialize)
 
 ;; ---------
