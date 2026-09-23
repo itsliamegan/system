@@ -322,6 +322,24 @@ the front and back of the string."
 ;; Highlight code snippets with the appropriate major mode.
 (setq markdown-fontify-code-blocks-natively t)
 
+;; -- YAML -- ;;
+
+;; Use TreeSitter.
+(add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
+
+;; Use LSP with yaml-language-server.
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(yaml-ts-mode . ("yaml-language-server" "--stdio"))))
+
+;; Indent with two spaces.
+(add-hook 'yaml-ts-mode-hook
+          (lambda ()
+            (indent-tabs-mode -1)
+            (setq-local tab-width 2)))
+
+;; Format on save.
+(add-hook 'yaml-ts-mode-hook
           (lambda ()
             (eglot-ensure)
             (add-hook 'before-save-hook 'eglot-format nil t)))
