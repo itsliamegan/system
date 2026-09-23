@@ -60,10 +60,11 @@ link() {
 	ln -s "$PWD/xfce/caps-to-ctrl.desktop" "$XDG_CONFIG_HOME/autostart/caps-to-ctrl.desktop"
 	ln -s "$PWD/xfce/rctrl-to-compose.desktop" "$XDG_CONFIG_HOME/autostart/ctrl-to-compose.desktop"
 
-	cp "$PWD/xfce/xfwm4.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml"
-	cp "$PWD/xfce/xfce4-panel.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
 	cp "$PWD/xfce/xfce4-keyboard-shortcuts.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
+	cp "$PWD/xfce/xfce4-panel.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
 	cp "$PWD/xfce/xfce4-terminal.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfce4-terminal.xml"
+	cp "$PWD/xfce/xfwm4.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml"
+	cp "$PWD/xfce/xsettings.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml"
 }
 
 install() {
