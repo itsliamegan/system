@@ -7,6 +7,9 @@ emacs
 fd-find
 ffmpeg
 firefox
+firmware-iwlwifi
+firmware-linux-nonfree
+firmware-realtek
 git
 imagemagick
 mugshot
