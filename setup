@@ -51,6 +51,7 @@ link() {
 
 	ln -s "$PWD/fonts/archives" "$XDG_DATA_HOME/fonts"
 
+	ln -s "$PWD/agents/claude" "$XDG_CONFIG_HOME/claude"
 	ln -s "$PWD/agents/pi" "$XDG_CONFIG_HOME/pi"
 
 	ln -s "$PWD/langs/mise/config.toml" "$XDG_CONFIG_HOME/mise/config.toml"

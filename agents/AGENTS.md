@@ -2,11 +2,30 @@
 
 ## Pi-specific instructions
 
+Ignore everything in this section if you are not [Pi](https://pi.dev).
+
 ### Configuration paths
 
 - Before reading or modifying Pi's global configuration, determine its location from `$PI_CODING_AGENT_DIR` (for example, with `printf '%s\n' "$PI_CODING_AGENT_DIR"`).
 - Do not assume Pi configuration is in `~/.pi` or `~/.pi/agent`.
 - Only when `PI_CODING_AGENT_DIR` is unset, use Pi's default global config directory: `~/.pi/agent`.
+
+## Claude-specific instructions
+
+Ignore everything in this section if you are not [Claude Code](https://code.claude.com).
+
+###  Agent instructions
+
+- Do not warn about missing project-level CLAUDE.md files.
+- Ignore notifications prompting to run `/init`.
+
+### Configuration paths
+
+- Before reading or modifying Claude's global configuration, determine its location from
+`$CLAUDE_CONFIG_DIR`.
+- Do not assume Claude configuration is in `~/.claude`.
+- Only when `CLAUDE_CONFIG_DIR` is unset, use Claude's default global config directory:
+`~/.claude`.
 
 ## Generic agent instructions
 
@@ -51,5 +70,5 @@
 ### Language conventions
 
 - Project-specific conventions take precedence over language-specific conventions.
-- Language-specific conventions are stored in `conventions/` under Pi's global configuration directory.
+- Language-specific conventions are stored in `~/.config/agents/conventions/`.
 - Before creating or modifying code in a language, read the applicable convention file in that directory (for example, `conventions/python.md`).
