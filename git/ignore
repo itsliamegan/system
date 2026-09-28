@@ -1,2 +1,5 @@
 .agents/
 .claude/settings.local.json
+
+__pycache__
+*.py[co]
