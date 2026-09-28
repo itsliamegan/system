@@ -277,34 +277,36 @@ the front and back of the string."
 
 ;; -- Python -- ;;
 
-;; Use TreeSitter when it's available.
-(when (treesit-language-available-p 'python)
-  (add-to-list 'major-mode-remap-alist
-               '(python-mode . python-ts-mode)))
+;; Use TreeSitter.
+(add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))
 
-;; Use LSP with Ty.
+;; Use Ty as the LSP server.
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               `((python-base-mode) "uv run ty server")))
+               `((python-ts-mode) "uv" "run" "ty" "server")))
 
-(add-hook 'python-base-mode-hook
-          (lambda ()
-            (eglot-ensure)))
+;; Use Ruff as the formatter.
+(with-eval-after-load 'apheleia
+  (setf (alist-get 'ruff apheleia-formatters)
+        '("uv" "run" "ruff" "format" "--stdin-filename" filepath "-"))
+  (setf (alist-get 'ruff-isort apheleia-formatters)
+        '("uv" "run" "ruff" "check" "--select" "I" "--fix" "--stdin-filename" filepath "-"))
+  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(ruff-isort ruff)))
 
-;; Indent with four-space tabs.
-(add-hook 'python-base-mode-hook
+
+(add-hook 'python-ts-mode-hook
           (lambda ()
+            ;; Use LSP.
+            (eglot-ensure)
+
+            ;; Indent with four-space tabs.
             (indent-tabs-mode +1)
             (setq-local tab-width 4)
-            (setq-local python-indent-offset 4)))
+            (setq-local python-indent-offset 4)
 
-;; Format on save with Ruff.
-(with-eval-after-load 'apheleia
-  (setf (alist-get 'python-mode apheleia-mode-alist) '(ruff-isort ruff)))
-
-(add-hook 'python-base-mode-hook
-          (lambda ()
-            (apheleia-mode +1)))
+            ;; Format on save.
+            (apheleia-mode +1)
+            ))
 
 ;; -- TypeScript -- ;;
 
