@@ -36,6 +36,7 @@ link() {
 	mkdir -p "$XDG_CONFIG_HOME/tmux"
 
 	ln -s "$PWD/bin/caps-to-ctrl" "$HOME/.local/bin/caps-to-ctrl"
+	ln -s "$PWD/bin/dl-music" "$HOME/.local/bin/dl-music"
 	ln -s "$PWD/bin/rctrl-to-compose" "$HOME/.local/bin/rctrl-to-compose"
 	ln -s "$PWD/bin/theme" "$HOME/.local/bin/theme"
 

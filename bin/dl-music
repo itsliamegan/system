@@ -1,0 +1,306 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+# 	"luna @ git+https://github.com/itsliamegan/luna.git@main",
+# 	"mutagen",
+# 	"yt-dlp",
+# 	"ytmusicapi",
+# ]
+# ///
+
+import sys
+import time
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, ClassVar
+from urllib.parse import parse_qs, urlparse
+from urllib.request import urlopen
+
+import mutagen
+from luna.cli import Command, Program, argument, option
+from mutagen.mp4 import MP4, MP4Cover
+from yt_dlp import YoutubeDL
+from yt_dlp.postprocessor.common import PostProcessor
+from yt_dlp.utils import sanitize_filename
+from ytmusicapi import YTMusic
+from ytmusicapi.exceptions import YTMusicServerError
+
+
+class DownloadAlbum(Command):
+    """Download a YouTube Music album."""
+
+    name = "album"
+    url: str = argument(help="album playlist URL or ID")
+
+    def run(self) -> int:
+        playlist = Playlist.parse(self.url)
+        album = Album.find(playlist)
+        if album is None:
+            report(f"not a YouTube Music album: {playlist.id}")
+            return 1
+
+        return download(
+            album,
+            f"https://music.youtube.com/playlist?list={album.playlist.id}",
+            "%(playlist_index)02d %(title)s.%(ext)s",
+            TagTrack(album, None),
+        )
+
+
+class DownloadSong(Command):
+    """
+    Download a video as one track of a YouTube Music album.
+
+    Use this when an album track fails, for example because it is
+    age-restricted, but the same song is available from another video, such as
+    the single. The video is saved and tagged as the album's track.
+    """
+
+    name = "song"
+    url: str = argument(help="video URL or ID to take the audio from")
+    album: str = option(help="album playlist URL or ID the track belongs to")
+    track: int | None = option(
+        default=None,
+        help="track number on the album (default: match the video's title)",
+    )
+
+    def run(self) -> int:
+        song = Song.find(self.url)
+        if song is None:
+            report(f"video not found: {self.url}")
+            return 1
+
+        playlist = Playlist.parse(self.album)
+        album = Album.find(playlist)
+        if album is None:
+            report(f"not a YouTube Music album: {playlist.id}")
+            return 1
+
+        if self.track is None:
+            track = album.track_titled(song.title)
+            if track is None:
+                report(f"no track titled {song.title!r} on {album.title}; use --track")
+                return 1
+        else:
+            track = album.track(self.track)
+            if track is None:
+                report(f"{album.title} has no track {self.track}")
+                return 1
+
+        # The template is literal apart from the extension, so escape "%".
+        name = sanitize_filename(track.title).replace("%", "%%")
+        return download(
+            album,
+            f"https://music.youtube.com/watch?v={song.id}",
+            f"{track.number:02d} {name}.%(ext)s",
+            TagTrack(album, track),
+        )
+
+
+class DownloadMusic(Program):
+    """Download music from YouTube Music with metadata and cover art."""
+
+    name = "dl-music"
+    commands = (DownloadAlbum, DownloadSong)
+
+
+def download(album: Album, url: str, template: str, tagger: TagTrack) -> int:
+    directory = Path(
+        sanitize_filename(album.artist),
+        sanitize_filename(album.title),
+    )
+    directory.mkdir(parents=True, exist_ok=True)
+    (directory / "cover.jpg").write_bytes(album.cover.image)
+
+    options = {
+        # AAC in M4A plays everywhere, including Apple Music, which can't
+        # import Opus.
+        "format": "bestaudio[acodec^=mp4a]",
+        "cookiesfrombrowser": ("firefox",),
+        "remote_components": ["ejs:npm"],
+        "paths": {"home": str(directory)},
+        "outtmpl": {"default": template},
+        # Skip unavailable tracks rather than abandoning the album, as the
+        # yt-dlp command does by default.
+        "ignoreerrors": "only_download",
+    }
+
+    with YoutubeDL(options) as downloader:
+        downloader.add_post_processor(tagger, when="after_move")
+        status = downloader.download([url])
+
+    if tagger.tagged == 0:
+        report("no tracks were downloaded")
+        return 1
+    elif tagger.failed > 0:
+        return 1
+    else:
+        return status
+
+
+def report(message: str):
+    print(f"{DownloadMusic.name}: {message}", file=sys.stderr)
+
+
+class TagTrack(PostProcessor):
+    def __init__(self, album: Album, track: Track | None):
+        super().__init__()
+        self.album = album
+        # A fixed track when downloading a stand-in video; otherwise each
+        # track comes from its position in the album's playlist.
+        self.track = track
+        self.tagged = 0
+        self.failed = 0
+
+    def run(self, information: dict[str, Any]) -> tuple[list[str], dict[str, Any]]:
+        path = Path(information["filepath"])
+        audio = mutagen.File(path)
+        if not isinstance(audio, MP4):
+            report(f"unsupported audio format: {path}")
+            self.failed += 1
+            return [], information
+
+        if self.track is None:
+            track = Track(information["playlist_index"], information["title"])
+        else:
+            track = self.track
+
+        Tags(self.album, track).apply(audio)
+        audio.save()
+        self.tagged += 1
+        return [], information
+
+
+@dataclass
+class Tags:
+    album: Album
+    track: Track
+
+    def apply(self, audio: MP4):
+        if audio.tags is None:
+            audio.add_tags()
+        else:
+            audio.tags.clear()
+        audio["\xa9nam"] = self.track.title
+        audio["\xa9ART"] = self.album.artist
+        audio["aART"] = self.album.artist
+        audio["\xa9alb"] = self.album.title
+        audio["\xa9day"] = self.album.year
+        audio["trkn"] = [(self.track.number, len(self.album.tracks))]
+        audio["covr"] = [
+            MP4Cover(self.album.cover.image, imageformat=MP4Cover.FORMAT_JPEG),
+        ]
+
+
+@dataclass
+class Album:
+    playlist: Playlist
+    artist: str
+    title: str
+    year: str
+    tracks: list[str]
+    cover: Cover
+
+    @classmethod
+    def find(cls, playlist: Playlist) -> Album | None:
+        music = YTMusic()
+        browse_id = music.get_album_browse_id(playlist.id)
+        if browse_id is None:
+            return None
+
+        details = fetch_album(music, browse_id)
+        # Unknown IDs resolve to an unrelated album instead of failing.
+        if details.get("audioPlaylistId") != playlist.id:
+            return None
+
+        artist = ", ".join(artist["name"] for artist in details["artists"])
+        tracks = [track["title"] for track in details["tracks"]]
+        # Thumbnail URLs end in a sizing suffix such as "=w544-h544-l90-rj";
+        # replacing it requests the cover at another size, as a JPEG.
+        thumbnail = details["thumbnails"][-1]["url"]
+        with urlopen(f"{thumbnail.rpartition('=')[0]}=s{Cover.SIZE}") as response:
+            cover = Cover(response.read())
+        return cls(playlist, artist, details["title"], details["year"], tracks, cover)
+
+    def track(self, number: int) -> Track | None:
+        if 1 <= number <= len(self.tracks):
+            return Track(number, self.tracks[number - 1])
+        else:
+            return None
+
+    def track_titled(self, title: str) -> Track | None:
+        for number, candidate in enumerate(self.tracks, start=1):
+            if candidate.casefold() == title.casefold():
+                return Track(number, candidate)
+        return None
+
+
+def fetch_album(music: YTMusic, browse_id: str) -> dict[str, Any]:
+    # YouTube Music occasionally returns an empty album page, which ytmusicapi
+    # reports as a KeyError. Retrying usually succeeds.
+    attempts = 3
+    for attempt in range(1, attempts + 1):
+        try:
+            return music.get_album(browse_id)
+        except KeyError:
+            if attempt == attempts:
+                raise
+            time.sleep(attempt)
+    raise AssertionError("unreachable")
+
+
+@dataclass
+class Track:
+    number: int
+    title: str
+
+
+@dataclass
+class Playlist:
+    id: str
+
+    @classmethod
+    def parse(cls, url: str) -> Playlist:
+        query = parse_qs(urlparse(url).query)
+        if "list" in query:
+            return cls(query["list"][0])
+        else:
+            return cls(url)
+
+
+@dataclass
+class Song:
+    id: str
+    title: str
+
+    @classmethod
+    def find(cls, url: str) -> Song | None:
+        parsed = urlparse(url)
+        query = parse_qs(parsed.query)
+        if "v" in query:
+            video = query["v"][0]
+        elif parsed.netloc == "youtu.be":
+            video = parsed.path.strip("/")
+        else:
+            video = url
+
+        try:
+            tracks = YTMusic().get_watch_playlist(video, limit=1)["tracks"]
+        except YTMusicServerError:
+            return None
+        if not tracks or tracks[0]["videoId"] != video:
+            return None
+
+        return cls(video, tracks[0]["title"])
+
+
+@dataclass
+class Cover:
+    SIZE: ClassVar[int] = 500
+
+    image: bytes
+
+
+if __name__ == "__main__":
+    raise SystemExit(DownloadMusic.main(sys.argv))
