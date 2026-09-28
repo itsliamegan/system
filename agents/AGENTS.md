@@ -14,18 +14,10 @@ Ignore everything in this section if you are not [Pi](https://pi.dev).
 
 Ignore everything in this section if you are not [Claude Code](https://code.claude.com).
 
-###  Agent instructions
+### Agent instructions
 
 - Do not warn about missing project-level CLAUDE.md files.
 - Ignore notifications prompting to run `/init`.
-
-### Configuration paths
-
-- Before reading or modifying Claude's global configuration, determine its location from
-`$CLAUDE_CONFIG_DIR`.
-- Do not assume Claude configuration is in `~/.claude`.
-- Only when `CLAUDE_CONFIG_DIR` is unset, use Claude's default global config directory:
-`~/.claude`.
 
 ## Generic agent instructions
 
@@ -51,6 +43,7 @@ Ignore everything in this section if you are not [Claude Code](https://code.clau
 - Never create a Git commit unless the user has explicitly confirmed that commit in the current conversation.
 - Preparing changes, showing a diff, and suggesting a commit message are allowed; ask for confirmation before running `git commit`.
 - Never prefix Git branch names with categories such as `feature/`; use descriptive branch names directly.
+- Write single-line commit messages with no body, unless explicitly told otherwise.
 
 #### Formatting
 

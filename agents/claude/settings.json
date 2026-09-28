@@ -4,7 +4,10 @@
     "pr": "",
     "sessionUrl": false
   },
-  "model": "sonnet",
+  "model": "opus",
+  "worktree": {
+    "bgIsolation": "none"
+  },
   "spinnerTipsEnabled": false,
   "spinnerVerbs": {
     "mode": "replace",
@@ -12,10 +15,13 @@
       "Thinking"
     ]
   },
-  "theme": "dark-ansi",
   "modelSettings": {
     "claude-sonnet-5": {
       "effortLevel": "medium"
     }
-  }
+  },
+  "promptSuggestionEnabled": false,
+  "theme": "dark-ansi",
+  "agentPushNotifEnabled": true,
+  "awaySummaryEnabled": false
 }

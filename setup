@@ -7,7 +7,7 @@
 # link - symlink configuration files
 # install - install system packages and tools
 
-set -euo errexit
+set -euo pipefail
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -25,6 +25,8 @@ usage() {
 link() {
 	mkdir -p "$HOME/.local"
 	mkdir -p "$HOME/.local/bin"
+	mkdir -p "$HOME/.claude"
+	mkdir -p "$XDG_CONFIG_HOME/agents"
 	mkdir -p "$XDG_CONFIG_HOME/autostart"
 	mkdir -p "$XDG_CONFIG_HOME/emacs"
 	mkdir -p "$XDG_CONFIG_HOME/fontconfig"
@@ -54,7 +56,10 @@ link() {
 	ln -s "$PWD/fonts/archives" "$XDG_DATA_HOME/fonts"
 	ln -s "$PWD/fonts/fonts.conf" "$XDG_CONFIG_HOME/fontconfig/fonts.conf"
 
-	ln -s "$PWD/agents/claude" "$XDG_CONFIG_HOME/claude"
+	ln -s "$PWD/agents/AGENTS.md" "$XDG_CONFIG_HOME/agents/AGENTS.md"
+	ln -s "$PWD/agents/conventions" "$XDG_CONFIG_HOME/agents/conventions"
+	ln -s "$PWD/agents/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+	ln -s "$PWD/agents/claude/settings.json" "$HOME/.claude/settings.json"
 	ln -s "$PWD/agents/pi" "$XDG_CONFIG_HOME/pi"
 
 	ln -s "$PWD/langs/mise/config.toml" "$XDG_CONFIG_HOME/mise/config.toml"
