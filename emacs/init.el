@@ -90,7 +90,7 @@
                                  ('small 120)))
 
 ;; Use a monospaced font with no line spacing by default.
-(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height fixed-pitch-font-size)
+(set-face-attribute 'default nil :family "Roboto Mono" :height fixed-pitch-font-size)
 (set-face-attribute 'fixed-pitch nil :inherit 'default)
 (setq variable-pitch-line-spacing 0)
 (setq-default line-spacing variable-pitch-line-spacing)
