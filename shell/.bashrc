@@ -26,6 +26,7 @@ export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export NODE_REPL_HISTORY="$XDG_STATE_HOME/node/repl_history"
 export npm_config_cache="$XDG_CACHE_HOME/npm"
+export SQLITE_HISTORY="$XDG_STATE_HOME/sqlite/history"
 
 alias ls="ls --color --classify --group-directories-first"
 alias grep="grep --color"
