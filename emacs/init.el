@@ -387,6 +387,10 @@ the front and back of the string."
 
             ;; Center the viewport.
             (olivetti-mode +1)
+
+            ;; Automatically reflow lines.
+            (auto-fill-mode +1)
+
             ))
 
 ;; Highlight code snippets with the appropriate major mode.
