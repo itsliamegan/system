@@ -382,14 +382,6 @@ the front and back of the string."
 
 (add-hook 'markdown-mode-hook
           (lambda ()
-            ;; Wrap text at 90 characters.
-            (setq-local fill-column 90)
-
-            ;; Use a sans serif font and a bar cursor.
-            (variable-pitch-mode +1)
-            (setq-local line-spacing variable-pitch-line-spacing)
-            (setq-local cursor-type 'bar)
-
             ;; Use spellcheck.
             (flyspell-mode +1)
 
