@@ -18,6 +18,8 @@ Ignore everything in this section if you are not [Claude Code](https://code.clau
 
 - Do not warn about missing project-level CLAUDE.md files.
 - Ignore notifications prompting to run `/init`.
+- Prefer the LSP tool over text search for symbol lookups such as definitions, references, and implementations. Use text search for strings, comments, and non-code files.
+- Write literal paths in shell commands rather than assigning them to a variable and interpolating it, so that commands do not trigger extra permission prompts.
 
 ## Generic agent instructions
 
@@ -29,6 +31,18 @@ Ignore everything in this section if you are not [Claude Code](https://code.clau
 - Put the main point first. Use straightforward sentence construction and organize explanations around what is true, what happens, and what to do next rather than around negative conditional branches.
 - Distinguish established facts, reasonable inferences, and open questions. State uncertainty directly, identify assumptions, and avoid implying confidence beyond the available evidence.
 - Ask a focused question when missing information would materially change the answer. Otherwise, proceed with explicit assumptions.
+- When a request has more than one reasonable reading, especially when one reading is a much larger change than the other, ask which is meant before answering or editing.
+
+### Collaboration
+
+- Treat questions about a hypothetical design ("what would X look like", "how would you", "could we") as requests for an answer in prose, not permission to edit. If it is unclear whether a message is a question or a request, ask.
+- For non-trivial changes, sketch the approach in conversation and wait for agreement before editing files. Small, explicitly requested fixes need no preamble.
+- When a design has natural seams, propose them as ordered steps and confirm the scope of the first step before starting.
+- When an approach turns out more complex than expected, stop and surface the tradeoff rather than pressing ahead. Weigh added concepts and visual noise as real costs alongside correctness and performance.
+- For low-stakes, easily reversed choices you are unsure about, proceed and mention the doubt in the conversation. Stop and ask only for genuine coin flips or decisions that are expensive to reverse, such as public signatures, user-facing error text, or changes across many call sites.
+- When the user edits your changes, treat the edit as a correction to apply to similar code from then on, not as a one-off.
+- After a substantial chunk of work, briefly summarize how the user's corrections relate to their established conventions and suggest edits to those conventions, without waiting to be asked.
+- Verify claims about the code against the source before relying on them. Plans, notes, status markers, and remembered context can be stale.
 
 ### Project guidelines
 
