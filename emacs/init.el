@@ -79,7 +79,7 @@
 (load-theme theme t)
 
 ;; Set appropriate font size based on screen resolution.
-(setq relative-screen-size (if (> (frame-height) 50)
+(setq relative-screen-size (if (> (display-pixel-width) 1440)
                                'large
                              'small))
 (setq fixed-pitch-font-size (pcase relative-screen-size
