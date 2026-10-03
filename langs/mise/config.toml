@@ -2,7 +2,7 @@
 deno = "latest"
 node = "26.8"
 python = "3.14"
-rust = "1.98"
+rust = "1.99"
 rust-analyzer = "latest"
 uv = "latest"
 
