@@ -12,13 +12,18 @@
                   eglot
                   exec-path-from-shell
                   magit
+                  marginalia
                   markdown-mode
                   olivetti
+                  orderless
                   rust-mode
+                  vertico
                   vterm)))
   (dolist (package packages)
     (package-install package)))
 
-(let ((vc-packages '(svelte-ts-mode)))
-  (unless (package-installed-p 'svelte-ts-mode)
-    (package-vc-install '(svelte-ts-mode :url "https://github.com/leafOfTree/svelte-ts-mode"))))
+(let ((vc-packages '((svelte-ts-mode :url "https://github.com/leafOfTree/svelte-ts-mode"))))
+  (dolist (package vc-packages)
+    (let ((name (car package)))
+      (unless (package-installed-p name)
+        (package-vc-install package)))))

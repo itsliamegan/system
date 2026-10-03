@@ -157,23 +157,29 @@ the front and back of the string."
 ;; --------
 
 ;; Display minibuffer completions vertically.
-(fido-vertical-mode +1)
+(vertico-mode +1)
 
 ;; Match completions using the following algorithms:
+;; orderless - Match each space-separated item without regard to the order of
+;;             the items; see below.
 ;; basic - Something between fuzzy and substring matching.
 ;; partial-completion - Use the query as a series of arbitrary length prefixes.
 ;; initials - Use the query as single letters composing a set of prefixes.
-;; substring - Match a substring of the query.
-(setq completion-styles '(basic partial-completion initials substring))
+(setq completion-styles '(orderless basic partial-completion initials))
 
-;; Show more information about completions.
-(setq completions-detailed t)
+;; Match orderless completions using the following algorithms:
+;; orderless-literal - Match each item as a literal substring of the string.
+;; orderless-prefixes - Match each item as a partial list of prefixes, similar
+;;                      to partial-completion.
+(setq orderless-matching-styles '(orderless-literal orderless-prefixes))
 
-;; Show previously used completions first.
-(setq completions-sort 'historical)
+;; Annotate minibuffer completions with more information.
+(marginalia-mode +1)
 
-;; Don't wait to display completions.
-(setq icomplete-compute-delay 0)
+;; Do not add minibuffer annotations when switching files or buffers.
+(dolist (annotator '(file project-file buffer))
+  (setq marginalia-annotators
+        (assq-delete-all annotator marginalia-annotators)))
 
 ;; Don't redraw vterm for the minibuffer. Prevents flickering in TUIs.
 (advice-add 'vterm--window-adjust-process-window-size :around
