@@ -8,6 +8,7 @@
 
 (let ((packages '(apheleia
                   avy
+                  citar
                   dockerfile-mode
                   eglot
                   exec-path-from-shell

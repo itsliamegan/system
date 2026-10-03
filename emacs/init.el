@@ -391,6 +391,10 @@ the front and back of the string."
             ;; Automatically reflow lines.
             (auto-fill-mode +1)
 
+            ;; Insert citations from the global bibliography.
+            (setq citar-bibliography '("~/Documents/Bibliography.json"))
+            (setq citar-markdown-prompt-for-extra-arguments nil)
+            (define-key markdown-mode-map (kbd "C-c [") 'citar-insert-citation)
             ))
 
 ;; Highlight code snippets with the appropriate major mode.
