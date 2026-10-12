@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-# rctrl-to-compose - remap RCtrl to Compose using XKB
-#
-# usage: rctrl-to-compose
-
-setxkbmap -option compose:rctrl

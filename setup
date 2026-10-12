@@ -2,10 +2,10 @@
 
 # setup - setup system packages and configuration files.
 #
-# usage: setup <link|install>
+# usage: setup <install|configure>
 #
-# link - symlink configuration files
 # install - install system packages and tools
+# configure - symlink and write configuration files
 
 set -euo pipefail
 
@@ -14,30 +14,26 @@ XDG_DATA_HOME="$HOME/.local/share"
 
 usage() {
 	echo "setup - setup system packages and configuration files."
-	echo "usage: setup <link|install>"
+	echo "usage: setup <install|configure>"
 	echo ""
-	echo "link - symlink configuraion files"
 	echo "install - install system packages and tools"
+	echo "configure - symlink and write configuration files"
 }
 
-link() {
+configure() {
 	mkdir -p "$HOME/.local"
 	mkdir -p "$HOME/.local/bin"
 	mkdir -p "$HOME/.claude"
 	mkdir -p "$XDG_CONFIG_HOME/agents"
-	mkdir -p "$XDG_CONFIG_HOME/autostart"
 	mkdir -p "$XDG_CONFIG_HOME/emacs"
 	mkdir -p "$XDG_CONFIG_HOME/environment.d"
 	mkdir -p "$XDG_CONFIG_HOME/fontconfig"
 	mkdir -p "$XDG_CONFIG_HOME/mise"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
-	mkdir -p "$XDG_CONFIG_HOME/systemd/user"
 	mkdir -p "$XDG_CONFIG_HOME/tmux"
+	mkdir -p "$XDG_DATA_HOME/konsole"
 
-	ln -s "$PWD/bin/caps-to-ctrl" "$HOME/.local/bin/caps-to-ctrl"
 	ln -s "$PWD/bin/dl-music" "$HOME/.local/bin/dl-music"
-	ln -s "$PWD/bin/rctrl-to-compose" "$HOME/.local/bin/rctrl-to-compose"
-	ln -s "$PWD/bin/theme" "$HOME/.local/bin/theme"
 
 	ln -s "$PWD/shell/.bashrc" "$HOME/.bashrc"
 	ln -s "$PWD/shell/.profile" "$HOME/.profile"
@@ -67,17 +63,11 @@ link() {
 	ln -s "$PWD/langs/mise/config.toml" "$XDG_CONFIG_HOME/mise/config.toml"
 	ln -s "$PWD/langs/rust/rustfmt.toml" "$XDG_CONFIG_HOME/rustfmt/rustfmt.toml"
 
-	ln -s "$PWD/systemd/theme-auto.service" "$XDG_CONFIG_HOME/systemd/user/theme-auto.service"
-	ln -s "$PWD/systemd/theme-auto.timer" "$XDG_CONFIG_HOME/systemd/user/theme-auto.timer"
+	ln -s "$PWD/kde/konsole/Profile.profile" "$XDG_DATA_HOME/konsole/Profile.profile"
+	ln -s "$PWD/kde/konsole/Chalk.colorscheme" "$XDG_DATA_HOME/konsole/Chalk.colorscheme"
 
-	ln -s "$PWD/xfce/caps-to-ctrl.desktop" "$XDG_CONFIG_HOME/autostart/caps-to-ctrl.desktop"
-	ln -s "$PWD/xfce/rctrl-to-compose.desktop" "$XDG_CONFIG_HOME/autostart/ctrl-to-compose.desktop"
-
-	cp "$PWD/xfce/xfce4-keyboard-shortcuts.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
-	cp "$PWD/xfce/xfce4-panel.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
-	cp "$PWD/xfce/xfce4-terminal.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfce4-terminal.xml"
-	cp "$PWD/xfce/xfwm4.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml"
-	cp "$PWD/xfce/xsettings.xml" "$XDG_CONFIG_HOME/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml"
+	cp "$PWD/kde/plasma-org.kde.plasma.desktop-appletsrc" "$XDG_CONFIG_HOME/plasma-org.kde.plasma.desktop-appletsrc"
+	"$PWD/kde/configure"
 }
 
 install() {
@@ -89,7 +79,7 @@ install() {
 }
 
 case "${1:-}" in
-	link) link;;
 	install) install;;
+	configure) configure;;
 	*) usage;;
 esac

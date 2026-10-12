@@ -1,4 +1,4 @@
-blueman
+bluedevil
 build-essential
 cmake
 coreutils
@@ -12,7 +12,8 @@ firmware-linux-nonfree
 firmware-realtek
 git
 imagemagick
-mugshot
+kde-plasma-desktop
+konsole
 pandoc
 ripgrep
 rsync
@@ -22,9 +23,6 @@ tmux
 tree
 wget
 yt-dlp
-
-greybird-gtk-theme
-elementary-xfce-icon-theme
 
 libbz2-dev
 libffi-dev
