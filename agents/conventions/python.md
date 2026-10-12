@@ -20,8 +20,18 @@
   uses typing; do not introduce a new typing style into an established codebase.
 - Do not annotate `-> None`.
 - Do not use positional-only `/` markers.
-- Import names explicitly (`from .codec import Codec`) rather than importing a
-  module and qualifying names with it (`codec.Codec`).
+- Import names explicitly (`from .codec import Codec`) when they make sense on
+  their own. When a module is a collection of helpers whose names lean on the
+  module for context, import the module and qualify each call (`from luna
+  import inflect`, then `inflect.title(name)`).
+- Module imports also suit a family whose variants live in their own modules
+  and share role names. Import the variant module and qualify the class (`from
+  .format import html`, then `html.Format()`). Inside a variant module, import
+  the base classes by name and subclass each under the same name (`from .format
+  import Format`, then `class Format(Format)`).
+- Apply this only when the variants are interchangeable implementations of one
+  role. When each subclass is a distinct thing named for what it does, such as
+  a command, name the class for it.
 - Keep imports organized according to the project's tooling. Do not leave unused
   imports.
 

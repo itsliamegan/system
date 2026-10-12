@@ -106,6 +106,10 @@ Before writing code, ask:
   locally obvious.
 - When a new type mirrors an existing distinction, reuse the existing type's
   variant or case names rather than inventing synonyms.
+- When each variant of a family lives in its own module, name the variant's
+  types after the roles they fill (`Format`, `Compiled`) and let the module
+  name carry the variant (`html`, `markdown`). Do not repeat the variant in
+  the type name.
 - Name a function for the narrowest question it answers. Do not let one
   function silently answer a wider question than its name says.
 - Keep plan and roadmap vocabulary out of identifiers. Name an operation for
@@ -153,6 +157,8 @@ Before writing code, ask:
   and let the reader find its callers.
 - Comment the line that can fail or depends on a hidden assumption, not the
   line that plainly does what it says.
+- Put a comment that explains one branch of a conditional inside that branch,
+  not above the condition.
 - Write plain sentences joined with "because" and "but", not em-dashes.
 - Keep comments on enum variants or cases to one short line saying what the
   case is.
@@ -195,7 +201,9 @@ Before writing code, ask:
   clear and separate.
 - Structure tests as a pyramid: detailed cases beside the module that owns the
   behavior, and fewer, broader cases at higher levels.
-- Combine tests that exercise the same behavior with closely related inputs.
+- Give each case its own test function, even when cases share setup. Do not
+  loop over inputs inside a test. Combine assertions into one test only when
+  they check the same case.
 - Do not assert on error message text. Assert the specific error type.
 - Do not test behavior that a library or language feature generates, such as
   dataclass equality or repr.
