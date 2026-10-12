@@ -159,7 +159,9 @@ the front and back of the string."
 ;; basic - Something between fuzzy and substring matching.
 ;; partial-completion - Use the query as a series of arbitrary length prefixes.
 ;; initials - Use the query as single letters composing a set of prefixes.
-(setq completion-styles '(orderless basic partial-completion initials))
+;; flex - Match each of the characters from the query in order with any number
+;;        of characters between them.
+(setq completion-styles '(orderless basic partial-completion initials flex))
 
 ;; Match orderless completions using the following algorithms:
 ;; orderless-literal - Match each item as a literal substring of the string.
