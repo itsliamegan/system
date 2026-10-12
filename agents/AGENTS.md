@@ -74,22 +74,39 @@ Ignore this section if you are not [Claude Code](https://code.claude.com).
 - After a substantial chunk of work, briefly summarize how my corrections
   relate to my established conventions and suggest edits to those conventions,
   without waiting to be asked.
-- Verify claims about the code against the source before relying on them.
-  Plans, notes, status markers, and remembered context can be stale.
+- Verify claims about the code against the source, and claims about other
+  tools against their documentation, before relying on them. Plans, notes,
+  status markers, remembered context, and search summaries can be stale or
+  wrong.
 
 ## Planning and design
 
 - When a plan or design depends on an unclear instruction or requirement, ask
   about it rather than proceeding on an assumption.
+- Early in a design, explore with concrete examples, such as sample directory
+  trees or templates, before proposing decisions.
 - Settle a design one decision at a time. Start from the decision I name, give
   its direct consequences and at most one or two follow-up questions, then
   wait.
+- When a design question comes from a concrete case, survey every way to meet
+  that case, including ones outside the mechanism under discussion, before
+  narrowing.
+- When recommending between options, say which is simpler to implement and to
+  model.
+- When an implementation is temporary, weigh each option's cost in both the
+  interim and the intended implementation, and let the contract follow the
+  long-term one.
+- When a decision has precedent in comparable tools or frameworks, say what
+  they do before recommending.
+- Before introducing a term for a concept in a design, check that it does not
+  already name something else in the project or its sibling projects.
 - Write plans and design documents clearly and concisely. Begin with a
   high-level overview, continue with the plan or design itself, and conclude
   with consequences and open questions.
 - Plans and design documents describe the current plan or design. Revise
   them in place when it changes, and never include history, rejected
-  reasoning, or counterfactuals unless asked.
+  reasoning, or counterfactuals unless asked. After editing one, reread the
+  changed passages for contrasts with options not taken.
 - Do not plan conservatively unless asked. Make ambitious functional and
   interface changes when they improve the design, and state plainly when you
   are making them. Do not make such changes for their own sake.

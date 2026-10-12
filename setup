@@ -9,10 +9,8 @@
 
 set -euo pipefail
 
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_STATE_HOME="$HOME/.local/state"
+XDG_CONFIG_HOME="$HOME/.config"
+XDG_DATA_HOME="$HOME/.local/share"
 
 usage() {
 	echo "setup - setup system packages and configuration files."
@@ -29,6 +27,7 @@ link() {
 	mkdir -p "$XDG_CONFIG_HOME/agents"
 	mkdir -p "$XDG_CONFIG_HOME/autostart"
 	mkdir -p "$XDG_CONFIG_HOME/emacs"
+	mkdir -p "$XDG_CONFIG_HOME/environment.d"
 	mkdir -p "$XDG_CONFIG_HOME/fontconfig"
 	mkdir -p "$XDG_CONFIG_HOME/mise"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
@@ -42,6 +41,8 @@ link() {
 
 	ln -s "$PWD/shell/.bashrc" "$HOME/.bashrc"
 	ln -s "$PWD/shell/.profile" "$HOME/.profile"
+	ln -s "$PWD/shell/environment.conf" "$XDG_CONFIG_HOME/environment.d/environment.conf"
+	ln -s "$PWD/shell/.xsessionrc" "$HOME/.xsessionrc"
 	ln -s "$PWD/shell/.inputrc" "$HOME/.inputrc"
 	ln -s "$PWD/shell/tmux.conf" "$XDG_CONFIG_HOME/tmux/tmux.conf"
 

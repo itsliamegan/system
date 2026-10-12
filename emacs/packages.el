@@ -11,7 +11,6 @@
                   citar
                   dockerfile-mode
                   eglot
-                  exec-path-from-shell
                   magit
                   marginalia
                   markdown-mode
