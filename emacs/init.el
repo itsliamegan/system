@@ -56,12 +56,10 @@
 (scroll-bar-mode -1)
 (fringe-mode 0)
 
-;; Maximize the default window.
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-
-;; Open new frames with reasonable dimensions.
-(add-to-list 'default-frame-alist '(width . 100))
+;; Open new frames with dimensions resembling A4 paper.
+(add-to-list 'default-frame-alist '(width . 120))
 (add-to-list 'default-frame-alist '(height . 52))
+(set-frame-size (selected-frame) 120 52)
 
 ;; Set appropriate theme based on system theme.
 (setq theme (if (string= (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")
