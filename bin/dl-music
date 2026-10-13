@@ -117,6 +117,10 @@ def download(album: Album, url: str, template: str, tagger: TagTrack) -> int:
         # AAC in M4A plays everywhere, including Apple Music, which can't
         # import Opus.
         "format": "bestaudio[acodec^=mp4a]",
+        # yt-dlp remuxes YouTube's audio into an MP4 container whose brand
+        # says generic MP4, but players that detect the type from a file's
+        # contents only accept the audio brand.
+        "postprocessor_args": {"fixupm4a": ["-brand", "M4A "]},
         "cookiesfrombrowser": ("firefox",),
         "remote_components": ["ejs:npm"],
         "paths": {"home": str(directory)},
