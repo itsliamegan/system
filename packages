@@ -24,13 +24,7 @@ tree
 wget
 yt-dlp
 
-libbz2-dev
-libffi-dev
-libgmp-dev
-libreadline-dev
 librsvg2-bin
 libssl-dev
 libtool-bin
 libvterm-dev
-libyaml-dev
-zlib1g-dev
