@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defconst chalk-theme-palette
   '((white . "#ffffff")
     (white-bright . "#1e1e1e")

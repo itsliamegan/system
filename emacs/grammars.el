@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (setq treesit-language-source-alist
       '((python "https://github.com/tree-sitter/tree-sitter-python")
         (yaml "https://github.com/tree-sitter-grammars/tree-sitter-yaml")

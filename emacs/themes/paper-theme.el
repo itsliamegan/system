@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defconst paper-theme-palette
   '((white . "#ffffff")
     (white-bright . "#e7e7e7")

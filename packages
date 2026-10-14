@@ -3,7 +3,6 @@ build-essential
 cmake
 coreutils
 curl
-emacs
 fd-find
 ffmpeg
 firefox
@@ -24,7 +23,25 @@ tree
 wget
 yt-dlp
 
+libdbus-1-dev
+libgccjit-16-dev
+libgif-dev
+libgmp-dev
+libgnutls28-dev
+libgtk-3-dev
+libharfbuzz-dev
+libjpeg-dev
+liblcms2-dev
+libncurses-dev
+libpng-dev
 librsvg2-bin
+librsvg2-dev
+libsqlite3-dev
 libssl-dev
+libtiff-dev
 libtool-bin
+libtree-sitter-dev
 libvterm-dev
+libwebp-dev
+libxml2-dev
+zlib1g-dev

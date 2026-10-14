@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# build-emacs - build Emacs from a release tarball and install it to
+#               ~/.local/opt.
+#
+# usage: build-emacs
+
+set -euo pipefail
+
+VERSION="31.1"
+
+src_dir="$HOME/.local/src"
+prefix="$HOME/.local/opt/emacs-$VERSION"
+tarball="emacs-$VERSION.tar.xz"
+
+mkdir -p "$src_dir" "$HOME/.local/bin" "$HOME/.local/share/applications"
+cd "$src_dir"
+
+curl -fLO "https://ftpmirror.gnu.org/emacs/$tarball"
+curl -fLO "https://ftpmirror.gnu.org/emacs/$tarball.sig"
+curl -fLO "https://ftp.gnu.org/gnu/gnu-keyring.gpg"
+gpgv --keyring ./gnu-keyring.gpg "$tarball.sig" "$tarball"
+
+rm -rf "emacs-$VERSION"
+tar -xJf "$tarball"
+cd "emacs-$VERSION"
+
+./configure \
+	--prefix="$prefix" \
+	--with-pgtk \
+	--with-native-compilation \
+	--with-tree-sitter \
+	--with-modules \
+	--without-sound \
+	--without-libsystemd \
+	CFLAGS="-O2 -march=native"
+make -j"$(nproc)"
+make install
+
+ln -sfn "$prefix" "$HOME/.local/opt/emacs"
+ln -sf "$HOME/.local/opt/emacs/bin/emacs" "$HOME/.local/bin/emacs"
+ln -sf "$HOME/.local/opt/emacs/share/applications/emacs.desktop" "$HOME/.local/share/applications/emacs.desktop"
