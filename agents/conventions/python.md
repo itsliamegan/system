@@ -13,13 +13,17 @@
 - Build collections and compute results with explicit `for` loops rather than
   comprehensions, `any`, `all`, `map`, or `filter`. A generator expression
   passed directly to a call, such as `", ".join(...)`, is fine.
-- Default optional arguments with `value = value or default` on its own line.
-  Do not write `if value is None:` blocks for this, and do not inline
-  `(value or default)` into a call or a `**` expansion.
+- Write an immutable literal default, such as a string or a number, in the
+  signature (`format: str = "%b %-d, %Y"`).
+- Default other optional arguments, such as mutable collections and objects
+  that must be constructed, with `value or default`. Do not write
+  `if value is None:` blocks for this.
+- Defer a short call with a `lambda` rather than `functools.partial`.
 - Add type annotations for public APIs and non-obvious values when the project
   uses typing; do not introduce a new typing style into an established codebase.
 - Do not annotate `-> None`.
 - Do not use positional-only `/` markers.
+- Build paths with `Path(a, b)` rather than the `/` operator.
 - Import names explicitly (`from .codec import Codec`) when they make sense on
   their own. When a module is a collection of helpers whose names lean on the
   module for context, import the module and qualify each call (`from luna
@@ -60,3 +64,8 @@
 - Do not use `frozen=True`. Leave `eq` on unless there is a specific reason to
   turn it off.
 - Pass flags and optional parts to constructors as keyword arguments.
+- Give a class a docstring when its contract is not plain from its members.
+  State the contract in short, plain sentences.
+- Shape docstrings as PEP 257 does. Put a short one on one line with its
+  quotes. Start a longer one with a one-line summary on the opening quote's
+  line, then a blank line, then the detail, and close it on a line of its own.

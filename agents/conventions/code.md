@@ -26,6 +26,8 @@ Before writing code, ask:
   functions that take the concept as their first argument.
 - Keep data with the object it belongs to. Do not pass a value as a separate
   argument alongside an object that should carry it.
+- When two attributes only make sense together, such as two halves of one
+  ordering, give them a class instead of parallel names.
 - Represent structure as data. Build objects (statements, clauses, trees) and
   turn them into output in one place. Do not assemble strings or nested
   formats piece by piece where they are used.
@@ -44,6 +46,10 @@ Before writing code, ask:
   general operation (an existence check as a limited select) rather than
   adding a parallel method beside it. If the general path cannot express the
   variant, extend the general path.
+- Decide at the top and pass down. The code that knows the context, such as a
+  command or an entry point, constructs the objects and values that depend on
+  it and hands them to what needs them. Nothing below is told which context
+  it is in, looks up what it needs, or builds it through a hook.
 
 ### Consistency
 
@@ -72,6 +78,8 @@ Before writing code, ask:
   data (enums, dispatch tables, callbacks) when control flow can express it.
 - Minimal machinery means fewer structural indirections, not fewer lines.
   Prefer explicit cases over compact shortcuts.
+- Least machinery counts concepts in this codebase, not dependencies avoided.
+  Prefer an established library to a hand-written version of the same thing.
 - Before adding a computed or derived value, check whether changing an
   upstream invariant or boundary condition removes the need for it.
 - Do not extract a helper whose only shared content is a literal. Collapse
@@ -144,6 +152,9 @@ Before writing code, ask:
   change, including rarely touched error paths.
 - Keep argument and field order consistent across parallel types: the
   receiver first, and data fields before behavior fields.
+- When methods, tests, or other lists mirror a type's fields, keep them in
+  the fields' order, as `script` before `style` follows `scripts` before
+  `styles`.
 
 ## Comments
 
@@ -173,6 +184,8 @@ Before writing code, ask:
 - Order files and classes top-down: the highest-level concept first, then
   what it uses, breadth-first. Put supporting constants, type aliases, and
   helpers after the code that uses them.
+- When adding to a file, place the new code and the declarations beside it in
+  top-down order, even if that moves existing lines.
 
 ## Types and validation
 
@@ -207,6 +220,7 @@ Before writing code, ask:
 - Do not assert on error message text. Assert the specific error type.
 - Do not test behavior that a library or language feature generates, such as
   dataclass equality or repr.
+- Do not test a module's dependencies or what importing it loads.
 - Use one small, consistent set of domain fixtures across test files.
 - Generate identifiers and similar values in each test and assert against the
   generated value. Do not hard-code constants.
