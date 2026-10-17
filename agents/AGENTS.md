@@ -83,6 +83,9 @@ Ignore this section if you are not [Claude Code](https://code.claude.com).
 
 - When a plan or design depends on an unclear instruction or requirement, ask
   about it rather than proceeding on an assumption.
+- Treat sample or demo material, such as example sites or a project that is
+  not live, as a reference for scope, not as something the plan must build,
+  migrate, or keep working.
 - Early in a design, explore with concrete examples, such as sample directory
   trees or templates, before proposing decisions.
 - Settle a design one decision at a time. Start from the decision I name, give
@@ -110,6 +113,8 @@ Ignore this section if you are not [Claude Code](https://code.claude.com).
 - Do not plan conservatively unless asked. Make ambitious functional and
   interface changes when they improve the design, and state plainly when you
   are making them. Do not make such changes for their own sake.
+- Order work serially, one repository and one step at a time. Propose
+  parallel tracks or work interleaved across repositories only when asked.
 
 ## Knowledge base
 
