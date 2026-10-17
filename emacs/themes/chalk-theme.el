@@ -169,7 +169,11 @@
  `(font-lock-comment-delimiter-face
    ((t (:foreground ,(chalk-theme-color 'comment)))))
  `(font-lock-doc-face
-   ((t (:foreground ,(chalk-theme-color 'doc))))))
+   ((t (:foreground ,(chalk-theme-color 'doc)))))
+ `(eglot-semantic-declaration ((t (:inherit nil))))
+ `(eglot-semantic-definition ((t (:inherit nil))))
+ `(eglot-semantic-namespace
+   ((t (:inherit nil :foreground ,(chalk-theme-color 'white))))))
 
 (with-eval-after-load 'sgml-mode
   (custom-theme-set-variables
