@@ -125,7 +125,7 @@ the front and back of the string."
                   ((and (listp mode-name)
                         (member "JSON" mode-name)) "json")
                   ((and (listp mode-name)
-                        (member "ELisp" mode-name)) "elisp")
+                        (member "Elisp" mode-name)) "elisp")
                   (t mode-name))))
 
 ;; Render a simple modeline: file name, mode name, modification indicator, line and
