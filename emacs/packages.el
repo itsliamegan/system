@@ -24,7 +24,8 @@
   (dolist (package packages)
     (package-install package)))
 
-(let ((vc-packages '((svelte-ts-mode :url "https://github.com/leafOfTree/svelte-ts-mode"))))
+(let ((vc-packages '((svelte-ts-mode :url "https://github.com/leafOfTree/svelte-ts-mode")
+                     (typst-ts-mode :url "https://codeberg.org/meow_king/typst-ts-mode"))))
   (dolist (package vc-packages)
     (let ((name (car package)))
       (unless (package-installed-p name)

@@ -396,6 +396,18 @@ the front and back of the string."
 ;; Highlight code snippets with the appropriate major mode.
 (setq markdown-fontify-code-blocks-natively t)
 
+;; -- Typst -- ;;
+
+(add-to-list 'auto-mode-alist '("\\.typst" . typst-ts-mode))
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(typst-ts-mode . ("tinymist" "lsp"))))
+
+(add-hook 'typst-ts-mode-hook
+          (lambda ()
+            (eglot-ensure)))
+
 ;; -- YAML -- ;;
 
 ;; Use TreeSitter.

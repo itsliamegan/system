@@ -3,6 +3,7 @@
 (setq treesit-language-source-alist
       '((python "https://github.com/tree-sitter/tree-sitter-python")
         (yaml "https://github.com/tree-sitter-grammars/tree-sitter-yaml")
+        (typst "https://github.com/uben0/tree-sitter-typst")
         (html "https://github.com/tree-sitter/tree-sitter-html")
         (css "https://github.com/tree-sitter/tree-sitter-css")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
