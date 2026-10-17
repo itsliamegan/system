@@ -1,8 +1,10 @@
+ark
 bluedevil
 build-essential
 cmake
 coreutils
 curl
+elisa
 fd-find
 ffmpeg
 firefox
@@ -10,9 +12,14 @@ firmware-iwlwifi
 firmware-linux-nonfree
 firmware-realtek
 git
+gwenview
+haruna
 imagemagick
 kde-plasma-desktop
+kde-spectacle
 konsole
+libspa-0.2-bluetooth
+okular
 pandoc
 ripgrep
 rsync
