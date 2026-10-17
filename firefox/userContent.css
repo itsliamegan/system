@@ -1,0 +1,8 @@
+@-moz-document domain(github.com) {
+	:root,
+	[data-color-mode],
+	[data-color-mode] body {
+		--fontStack-sansSerif: "Helvetica Neue", sans-serif !important;
+		--fontStack-monospace: "Roboto Mono", monospace !important;
+	}
+}

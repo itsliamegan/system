@@ -54,6 +54,12 @@ configure() {
 	ln -s "$PWD/fonts/archives" "$XDG_DATA_HOME/fonts"
 	ln -s "$PWD/fonts/fonts.conf" "$XDG_CONFIG_HOME/fontconfig/fonts.conf"
 
+	for profile in $(sed -n 's/^Path=//p' "$HOME/.mozilla/firefox/profiles.ini"); do
+		mkdir -p "$HOME/.mozilla/firefox/$profile/chrome"
+		ln -s "$PWD/firefox/userChrome.css" "$HOME/.mozilla/firefox/$profile/chrome/userChrome.css"
+		ln -s "$PWD/firefox/userContent.css" "$HOME/.mozilla/firefox/$profile/chrome/userContent.css"
+	done
+
 	ln -s "$PWD/agents/AGENTS.md" "$XDG_CONFIG_HOME/agents/AGENTS.md"
 	ln -s "$PWD/agents/conventions" "$XDG_CONFIG_HOME/agents/conventions"
 	ln -s "$PWD/agents/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
