@@ -1,7 +1,7 @@
 [tools]
 deno = "latest"
 node = "26.8"
-python = "3.14"
+python = "3.15"
 rust = "1.99"
 rust-analyzer = "latest"
 uv = "latest"
