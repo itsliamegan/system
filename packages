@@ -2,7 +2,6 @@ build-essential
 cmake
 coreutils
 curl
-fd-find
 ffmpeg
 firefox
 firmware-iwlwifi
@@ -11,9 +10,7 @@ firmware-realtek
 git
 imagemagick
 pandoc
-ripgrep
 rsync
-sd
 thunderbird
 tmux
 tree

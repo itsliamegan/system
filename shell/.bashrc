@@ -2,7 +2,7 @@ PS1="[\u@\h] \w\$(indicate_git_status) > "
 
 alias ls="ls --color --classify --group-directories-first"
 alias grep="grep --color"
-alias fd="fdfind --color=never"
+alias fd="fd --color=never"
 
 source /usr/share/bash-completion/completions/git
 
