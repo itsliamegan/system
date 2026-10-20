@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
 
-# install - install the latest Node release in a minor version, and its global
-#           packages, to ~/.local/opt.
+# install - install the latest Node release in a minor version to ~/.local/opt.
 #
 # usage: langs/node/install
 
 set -euo pipefail
 
 VERSION="26.12"
-
-packages=$(xargs <"$(dirname "$0")/packages")
 
 # The index lists releases newest first.
 release=$(curl -fsS https://nodejs.org/dist/index.json | grep -o "\"v$VERSION\.[0-9]*\"" | head -1 | tr -d '"')
@@ -30,9 +27,6 @@ rm -rf "$prefix"
 mkdir -p "$prefix"
 tar -xJf "$tarball" -C "$prefix" --strip-components=1
 ln -sfn "$prefix" "$HOME/.local/opt/node"
-
-# npm and the packages it installs run under whichever node is first on PATH.
-PATH="$HOME/.local/opt/node/bin:$PATH" npm install -g $packages
 
 for command in "$HOME"/.local/opt/node/bin/*; do
 	ln -sf "$command" "$HOME/.local/bin/$(basename "$command")"

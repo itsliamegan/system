@@ -95,6 +95,7 @@ install() {
 	"$PWD/langs/typst/install"
 	"$PWD/shell/install"
 	"$PWD/emacs/install"
+	"$PWD/emacs/servers"
 }
 
 case "${1:-}" in

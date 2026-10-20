@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# servers - install the language servers Emacs uses with npm, uv, and Cargo.
+#
+# usage: emacs/servers
+
+set -euo pipefail
+
+TINYMIST_REVISION="5e62f1a9205b4c08a3892ecc89844cbadf8ae1bf"
+
+export CARGO_HOME="${CARGO_HOME:-$HOME/.local/share/cargo}"
+export RUSTUP_HOME="${RUSTUP_HOME:-$HOME/.local/share/rustup}"
+export npm_config_prefix="${npm_config_prefix:-$HOME/.local}"
+
+# npm and the servers it installs run under whichever node is first on PATH.
+PATH="$HOME/.local/bin:$PATH" npm install -g \
+	svelte-language-server@0.18.4 \
+	typescript@7.0.2 \
+	typescript-language-server@6.0.0 \
+	yaml-language-server@1.24.0
+"$HOME/.local/bin/uv" tool install rassumfrassum@0.3.4
+"$CARGO_HOME/bin/cargo" install --locked --git https://github.com/Myriad-Dreamin/tinymist --rev "$TINYMIST_REVISION" tinymist-cli
