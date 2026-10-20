@@ -1,6 +1,7 @@
 PS1="[\u@\h] \w\$(indicate_git_status) > "
 
 alias ls="ls --color --classify --group-directories-first"
+alias tree="tree -FC"
 alias grep="grep --color"
 alias fd="fd --color=never"
 
