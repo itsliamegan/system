@@ -88,6 +88,7 @@ install() {
 	sudo apt install -y $(xargs <packages)
 	"$PWD/kde/install"
 	"$PWD/firefox/install"
+	"$PWD/thunderbird/install"
 	for tool in $(cat tools); do
 		tool=$(printf "%s" "$tool" | tr -d "\n")
 		curl -fsS "$tool" | sh
