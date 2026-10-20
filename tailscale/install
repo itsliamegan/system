@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# install - install Tailscale from Tailscale's apt repository.
+#
+# usage: tailscale/install
+
+set -euo pipefail
+
+keyring="/usr/share/keyrings/tailscale-archive-keyring.gpg"
+
+# The tailscale-archive-keyring package owns the key once it is installed and
+# replaces it when Tailscale rotates keys, so only a new system downloads it.
+if [ ! -e "$keyring" ]; then
+	sudo curl -fsSL https://pkgs.tailscale.com/stable/debian/forky.noarmor.gpg -o "$keyring"
+fi
+sudo install -m 0644 "$(dirname "$0")/tailscale.sources" /etc/apt/sources.list.d/tailscale.sources
+
+sudo apt update
+sudo apt install -y tailscale tailscale-archive-keyring
