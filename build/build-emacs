@@ -13,6 +13,8 @@ src_dir="$HOME/.local/src"
 prefix="$HOME/.local/opt/emacs-$VERSION"
 tarball="emacs-$VERSION.tar.xz"
 
+sudo apt install -y $(xargs <"$(dirname "$0")/emacs-packages")
+
 mkdir -p "$src_dir" "$HOME/.local/bin" "$HOME/.local/share/applications"
 cd "$src_dir"
 
