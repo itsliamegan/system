@@ -12,4 +12,4 @@ PYTHON_VERSION="3.15"
 # The installer otherwise appends to the shell profile, which is a link into
 # this repository.
 curl -fsSL "https://astral.sh/uv/$UV_VERSION/install.sh" | env UV_NO_MODIFY_PATH=1 sh
-uv python install "$PYTHON_VERSION" --upgrade --default
+uv python install "$PYTHON_VERSION" --upgrade --default --preview-features python-install-default
