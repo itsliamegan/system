@@ -31,6 +31,7 @@ configure() {
 	mkdir -p "$XDG_CONFIG_HOME/mise"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
 	mkdir -p "$XDG_CONFIG_HOME/tmux"
+	mkdir -p "$XDG_CONFIG_HOME/yt-dlp"
 	mkdir -p "$XDG_DATA_HOME/konsole"
 
 	ln -s "$PWD/agents/AGENTS.md" "$XDG_CONFIG_HOME/agents/AGENTS.md"
@@ -69,6 +70,7 @@ configure() {
 	ln -s "$PWD/shell/.xsessionrc" "$HOME/.xsessionrc"
 	ln -s "$PWD/shell/environment.conf" "$XDG_CONFIG_HOME/environment.d/environment.conf"
 	ln -s "$PWD/shell/tmux.conf" "$XDG_CONFIG_HOME/tmux/tmux.conf"
+	ln -s "$PWD/shell/yt-dlp.conf" "$XDG_CONFIG_HOME/yt-dlp/config"
 
 	sudo cp "$PWD/shell/disable-admin-flag" /etc/sudoers.d/disable-admin-flag
 	sudo chown root:root /etc/sudoers.d/disable-admin-flag
@@ -82,6 +84,8 @@ install() {
 		curl -fsS "$tool" | sh
 	done
 	"$PWD/langs/rust/install"
+	"$PWD/langs/python/install"
+	"$PWD/langs/node/install"
 	"$PWD/langs/typst/install"
 	"$PWD/shell/install"
 	"$PWD/emacs/install"

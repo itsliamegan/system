@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# install - install uv and the default Python with uv.
+#
+# usage: langs/python/install
+
+set -euo pipefail
+
+UV_VERSION="0.13.3"
+PYTHON_VERSION="3.15"
+
+# The installer otherwise appends to the shell profile, which is a link into
+# this repository.
+curl -fsSL "https://astral.sh/uv/$UV_VERSION/install.sh" | env UV_NO_MODIFY_PATH=1 sh
+"$HOME/.local/bin/uv" python install "$PYTHON_VERSION" --default --preview-features python-install-default

@@ -4,7 +4,7 @@
 # dependencies = [
 # 	"luna @ git+https://github.com/itsliamegan/luna.git@main",
 # 	"mutagen",
-# 	"yt-dlp",
+# 	"yt-dlp[default]",
 # 	"ytmusicapi",
 # ]
 # ///
@@ -122,7 +122,7 @@ def download(album: Album, url: str, template: str, tagger: TagTrack) -> int:
         # contents only accept the audio brand.
         "postprocessor_args": {"fixupm4a": ["-brand", "M4A "]},
         "cookiesfrombrowser": ("firefox",),
-        "remote_components": ["ejs:npm"],
+        "js_runtimes": {"node": {}},
         "paths": {"home": str(directory)},
         "outtmpl": {"default": template},
         # Skip unavailable tracks rather than abandoning the album, as the
