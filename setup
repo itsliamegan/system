@@ -81,7 +81,7 @@ install() {
 		tool=$(printf "%s" "$tool" | tr -d "\n")
 		curl -fsS "$tool" | sh
 	done
-	"$PWD/build/build-emacs"
+	"$PWD/emacs/install"
 }
 
 case "${1:-}" in

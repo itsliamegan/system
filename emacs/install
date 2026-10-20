@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# build-emacs - build Emacs from a release tarball and install it to
-#               ~/.local/opt.
+# install - build Emacs from a release tarball and install it to
+#           ~/.local/opt.
 #
-# usage: build-emacs
+# usage: emacs/install
 
 set -euo pipefail
 
@@ -13,7 +13,7 @@ src_dir="$HOME/.local/src"
 prefix="$HOME/.local/opt/emacs-$VERSION"
 tarball="emacs-$VERSION.tar.xz"
 
-sudo apt install -y $(xargs <"$(dirname "$0")/emacs-packages")
+sudo apt install -y $(xargs <"$(dirname "$0")/packages")
 
 mkdir -p "$src_dir" "$HOME/.local/bin" "$HOME/.local/share/applications"
 cd "$src_dir"
