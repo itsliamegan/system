@@ -93,6 +93,7 @@ install() {
 	"$PWD/agents/claude/install"
 	"$PWD/git/install"
 	"$PWD/tailscale/install"
+	"$PWD/ivpn/install"
 	"$PWD/langs/rust/install"
 	"$PWD/langs/python/install"
 	"$PWD/langs/node/install"

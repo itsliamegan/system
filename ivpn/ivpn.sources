@@ -1,0 +1,5 @@
+Types: deb
+URIs: https://repo.ivpn.net/stable/debian/
+Suites: ./generic
+Components: main
+Signed-By: /etc/apt/keyrings/ivpn.asc
