@@ -3,7 +3,6 @@ cmake
 coreutils
 curl
 ffmpeg
-firefox
 firmware-iwlwifi
 firmware-linux-nonfree
 firmware-realtek
