@@ -7,7 +7,7 @@
 
 set -euo pipefail
 
-EMACS_VERSION="31.1"
+EMACS_VERSION="31.1" # gnu:emacs
 
 DIRECTORY="$(dirname "$(realpath "$0")")"
 SOURCE="$HOME/.local/src/emacs-$EMACS_VERSION"

@@ -7,6 +7,7 @@ firmware-iwlwifi
 firmware-linux-nonfree
 firmware-realtek
 imagemagick
+jq
 pandoc
 pciutils
 rsync
