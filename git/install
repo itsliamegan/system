@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# install - install the GitHub CLI from GitHub's apt repository.
+# install - install Git, and the GitHub CLI from GitHub's apt repository.
 #
 # usage: git/install
 
@@ -11,4 +11,4 @@ sudo curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg -o
 sudo install -m 0644 "$(dirname "$0")/github-cli.sources" /etc/apt/sources.list.d/github-cli.sources
 
 sudo apt update
-sudo apt install -y gh
+sudo apt install -y git gh

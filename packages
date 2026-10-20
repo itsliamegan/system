@@ -7,7 +7,6 @@ firefox
 firmware-iwlwifi
 firmware-linux-nonfree
 firmware-realtek
-git
 imagemagick
 pandoc
 pciutils
