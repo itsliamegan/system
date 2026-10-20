@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# install - install KDE Plasma, the services it manages, and KDE applications.
+#
+# usage: kde/install
+
+set -euo pipefail
+
+sudo apt install -y $(xargs <"$(dirname "$0")/packages")

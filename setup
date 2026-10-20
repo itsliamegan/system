@@ -86,6 +86,7 @@ configure() {
 
 install() {
 	sudo apt install -y $(xargs <packages)
+	"$PWD/kde/install"
 	for tool in $(cat tools); do
 		tool=$(printf "%s" "$tool" | tr -d "\n")
 		curl -fsS "$tool" | sh
