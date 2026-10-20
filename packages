@@ -10,6 +10,7 @@ firmware-realtek
 git
 imagemagick
 pandoc
+pciutils
 rsync
 thunderbird
 tmux

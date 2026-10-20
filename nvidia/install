@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# install - install the NVIDIA driver from NVIDIA's apt repository on systems
+#           with an NVIDIA card.
+#
+# usage: nvidia/install
+
+set -euo pipefail
+
+KEYRING_VERSION="1.1-1"
+
+# 10de is NVIDIA's PCI vendor ID.
+if [ -z "$(lspci -d 10de:)" ]; then
+	echo "nvidia/install: no NVIDIA card found"
+	exit 0
+fi
+
+# The cuda-keyring package installs NVIDIA's key and source, and replaces them
+# when NVIDIA rotates keys.
+package="cuda-keyring_${KEYRING_VERSION}_all.deb"
+mkdir -p "$HOME/.local/src"
+cd "$HOME/.local/src"
+curl -fLO "https://developer.download.nvidia.com/compute/cuda/repos/debian13/x86_64/$package"
+sudo apt install -y "./$package"
+
+sudo apt update
+sudo apt install -y nvidia-open firmware-nvidia-graphics
