@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# install - install the latest Pi with its installer.
+#
+# usage: agents/pi/install
+
+set -euo pipefail
+
+# The installer puts Pi in this directory, but environment.d only sets it after
+# setup configure and a new login.
+export PI_CODING_AGENT_DIR="${PI_CODING_AGENT_DIR:-$HOME/.config/pi}"
+
+# The installer offers to start Pi when its output is a terminal, which would
+# stop setup until Pi exits.
+curl -fsSL https://pi.dev/install.sh | sh | cat

@@ -29,6 +29,7 @@ configure() {
 	mkdir -p "$XDG_CONFIG_HOME/environment.d"
 	mkdir -p "$XDG_CONFIG_HOME/fontconfig"
 	mkdir -p "$XDG_CONFIG_HOME/mise"
+	mkdir -p "$XDG_CONFIG_HOME/pi"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
 	mkdir -p "$XDG_CONFIG_HOME/tmux"
 	mkdir -p "$XDG_CONFIG_HOME/yt-dlp"
@@ -38,7 +39,11 @@ configure() {
 	ln -s "$PWD/agents/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 	ln -s "$PWD/agents/claude/settings.json" "$HOME/.claude/settings.json"
 	ln -s "$PWD/agents/conventions" "$XDG_CONFIG_HOME/agents/conventions"
-	ln -s "$PWD/agents/pi" "$XDG_CONFIG_HOME/pi"
+	ln -s "$PWD/agents/pi/AGENTS.md" "$XDG_CONFIG_HOME/pi/AGENTS.md"
+	ln -s "$PWD/agents/pi/extensions" "$XDG_CONFIG_HOME/pi/extensions"
+	ln -s "$PWD/agents/pi/keybindings.json" "$XDG_CONFIG_HOME/pi/keybindings.json"
+	ln -s "$PWD/agents/pi/settings.json" "$XDG_CONFIG_HOME/pi/settings.json"
+	ln -s "$PWD/agents/pi/themes" "$XDG_CONFIG_HOME/pi/themes"
 
 	ln -s "$PWD/bin/dl-music" "$HOME/.local/bin/dl-music"
 
@@ -86,6 +91,7 @@ install() {
 	"$PWD/langs/rust/install"
 	"$PWD/langs/python/install"
 	"$PWD/langs/node/install"
+	"$PWD/agents/pi/install"
 	"$PWD/langs/typst/install"
 	"$PWD/shell/install"
 	"$PWD/emacs/install"
