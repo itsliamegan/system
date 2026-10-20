@@ -28,6 +28,7 @@ configure() {
 	mkdir -p "$XDG_CONFIG_HOME/emacs"
 	mkdir -p "$XDG_CONFIG_HOME/environment.d"
 	mkdir -p "$XDG_CONFIG_HOME/fontconfig"
+	mkdir -p "$XDG_CONFIG_HOME/git"
 	mkdir -p "$XDG_CONFIG_HOME/mise"
 	mkdir -p "$XDG_CONFIG_HOME/pi"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
@@ -59,7 +60,8 @@ configure() {
 	ln -s "$PWD/fonts/archives" "$XDG_DATA_HOME/fonts"
 	ln -s "$PWD/fonts/fonts.conf" "$XDG_CONFIG_HOME/fontconfig/fonts.conf"
 
-	ln -s "$PWD/git" "$XDG_CONFIG_HOME/git"
+	ln -s "$PWD/git/config" "$XDG_CONFIG_HOME/git/config"
+	ln -s "$PWD/git/ignore" "$XDG_CONFIG_HOME/git/ignore"
 
 	ln -s "$PWD/kde/konsole/Chalk.colorscheme" "$XDG_DATA_HOME/konsole/Chalk.colorscheme"
 	ln -s "$PWD/kde/konsole/Profile.profile" "$XDG_DATA_HOME/konsole/Profile.profile"
@@ -89,6 +91,7 @@ install() {
 		curl -fsS "$tool" | sh
 	done
 	"$PWD/agents/claude/install"
+	"$PWD/git/install"
 	"$PWD/langs/rust/install"
 	"$PWD/langs/python/install"
 	"$PWD/langs/node/install"
