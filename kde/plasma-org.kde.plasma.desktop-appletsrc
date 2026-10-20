@@ -6,6 +6,7 @@ RightButton;NoModifier=org.kde.contextmenu
 
 [Containments][1]
 ItemGeometries-1829x1029=
+ItemGeometries-2560x1440=
 ItemGeometriesHorizontal=
 activityId=647b0148-d092-444c-ad6d-5f7a864124ec
 formfactor=0
@@ -35,7 +36,7 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][2][Applets][21][Configuration]
-popupHeight=450
+popupHeight=451
 popupWidth=560
 
 [Containments][2][Applets][21][Configuration][Appearance]
@@ -57,7 +58,7 @@ immutability=1
 plugin=org.kde.plasma.kicker
 
 [Containments][2][Applets][29][Configuration]
-popupHeight=408
+popupHeight=356
 popupWidth=366
 
 [Containments][2][Applets][29][Configuration][General]
@@ -79,6 +80,23 @@ DialogWidth=810
 launchers=
 sortingStrategy=SortDisabled
 taskMaxWidth=Narrow
+
+[Containments][2][Applets][34]
+immutability=1
+plugin=org.kde.plasma.weather
+
+[Containments][2][Applets][34][Configuration]
+popupHeight=376
+popupWidth=417
+
+[Containments][2][Applets][34][Configuration][ConfigDialog]
+DialogHeight=630
+DialogWidth=810
+
+[Containments][2][Applets][34][Configuration][WeatherStation]
+placeDisplayName=Boston, Logan International Airport, MA
+placeInfo=Boston, Logan International Airport, MA
+provider=noaa
 
 [Containments][2][Applets][6]
 immutability=1
@@ -119,10 +137,6 @@ plugin=org.kde.plasma.keyboardlayout
 immutability=1
 plugin=org.kde.plasma.keyboardindicator
 
-[Containments][2][Applets][7][Applets][16]
-immutability=1
-plugin=org.kde.plasma.clipboard
-
 [Containments][2][Applets][7][Applets][17]
 immutability=1
 plugin=org.kde.plasma.manage-inputmethod
@@ -162,6 +176,14 @@ plugin=org.kde.plasma.bluetooth
 immutability=1
 plugin=org.kde.plasma.weather
 
+[Containments][2][Applets][7][Applets][33]
+immutability=1
+plugin=org.kde.plasma.mediacontroller
+
+[Containments][2][Applets][7][Applets][35]
+immutability=1
+plugin=org.kde.plasma.clipboard
+
 [Containments][2][Applets][7][Applets][9]
 immutability=1
 plugin=org.kde.plasma.devicenotifier
@@ -171,11 +193,11 @@ DialogHeight=630
 DialogWidth=810
 
 [Containments][2][Applets][7][General]
-extraItems=org.kde.plasma.devicenotifier,org.kde.kupapplet,org.kde.plasma.brightness,org.kde.plasma.networkmanagement,org.kde.plasma.vault,org.kde.plasma.printmanager,org.kde.kscreen,org.kde.plasma.battery,org.kde.kdeconnect,org.kde.plasma.keyboardlayout,org.kde.plasma.mediacontroller,org.kde.plasma.bluetooth,org.kde.plasma.keyboardindicator,org.kde.plasma.clipboard,org.kde.plasma.manage-inputmethod,org.kde.plasma.notifications,org.kde.plasma.cameraindicator,org.kde.plasma.volume,org.kde.plasma.weather
-knownItems=org.kde.plasma.devicenotifier,org.kde.kupapplet,org.kde.plasma.brightness,org.kde.plasma.networkmanagement,org.kde.plasma.vault,org.kde.plasma.printmanager,org.kde.kscreen,org.kde.plasma.battery,org.kde.kdeconnect,org.kde.plasma.keyboardlayout,org.kde.plasma.mediacontroller,org.kde.plasma.bluetooth,org.kde.plasma.keyboardindicator,org.kde.plasma.clipboard,org.kde.plasma.manage-inputmethod,org.kde.plasma.notifications,org.kde.plasma.cameraindicator,org.kde.plasma.volume,org.kde.plasma.weather,org.kde.merkuro.contact.applet
+extraItems=org.kde.plasma.devicenotifier,org.kde.kupapplet,org.kde.plasma.brightness,org.kde.plasma.networkmanagement,org.kde.plasma.vault,org.kde.plasma.printmanager,org.kde.kscreen,org.kde.plasma.battery,org.kde.kdeconnect,org.kde.plasma.keyboardlayout,org.kde.plasma.mediacontroller,org.kde.plasma.bluetooth,org.kde.plasma.manage-inputmethod,org.kde.plasma.notifications,org.kde.plasma.cameraindicator,org.kde.plasma.volume,org.kde.plasma.weather,org.kde.plasma.keyboardindicator,org.kde.plasma.clipboard
+knownItems=org.kde.plasma.devicenotifier,org.kde.kupapplet,org.kde.plasma.brightness,org.kde.plasma.networkmanagement,org.kde.plasma.vault,org.kde.plasma.printmanager,org.kde.kscreen,org.kde.plasma.battery,org.kde.kdeconnect,org.kde.plasma.keyboardlayout,org.kde.plasma.mediacontroller,org.kde.plasma.bluetooth,org.kde.plasma.clipboard,org.kde.plasma.manage-inputmethod,org.kde.plasma.notifications,org.kde.plasma.cameraindicator,org.kde.plasma.volume,org.kde.plasma.weather,org.kde.plasma.keyboardindicator
 
 [Containments][2][General]
-AppletOrder=29;32;28;6;7;21
+AppletOrder=29;32;28;6;7;34;21
 
 [ScreenMapping]
 itemsOnDisabledScreens=

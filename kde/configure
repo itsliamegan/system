@@ -16,11 +16,18 @@ kwriteconfig6 --file kdeglobals --group KDE --key AutomaticLookAndFeel true
 kwriteconfig6 --file kdeglobals --group KDE --key DefaultLightLookAndFeel org.kde.breezetwilight.desktop
 kwriteconfig6 --file kdeglobals --group KDE --key AnimationDurationFactor 0.5
 kwriteconfig6 --file kdeglobals --group General --key AccentColor 71,95,133
+kwriteconfig6 --file kdeglobals --group General --key font "Inter,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+kwriteconfig6 --file kdeglobals --group General --key menuFont "Inter,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+kwriteconfig6 --file kdeglobals --group General --key toolBarFont "Inter,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+kwriteconfig6 --file kdeglobals --group General --key smallestReadableFont "Inter,8,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+kwriteconfig6 --file kdeglobals --group General --key fixed "Roboto Mono,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+kwriteconfig6 --file kdeglobals --group General --key XftSubPixel none
+kwriteconfig6 --file kdeglobals --group WM --key activeFont "Inter,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
 
 kwriteconfig6 --file kwinrc --group NightColor --key Active true
 kwriteconfig6 --file kwinrc --group NightColor --key NightTemperature 5500
 kwriteconfig6 --file kwinrc --group Effect-overview --key BorderActivate 9
-kwriteconfig6 --file kwinrc --group TabBox --key DelayTime 45
+kwriteconfig6 --file kwinrc --group TabBox --key DelayTime 0
 
 kwriteconfig6 --file kscreenlockerrc --group Greeter --key WallpaperPlugin org.kde.color
 kwriteconfig6 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.color --group General --key Color 71,95,133
@@ -30,6 +37,10 @@ kwriteconfig6 --file ksplashrc --group KSplash --key Theme None
 
 kwriteconfig6 --file klaunchrc --group BusyCursorSettings --key Bouncing false
 kwriteconfig6 --file klaunchrc --group FeedbackStyle --key BusyCursor false
+
+kwriteconfig6 --file powerdevilrc --group AC --group SuspendAndShutdown --key AutoSuspendIdleTimeoutSec 1800
+
+kwriteconfig6 --file klipperrc --group General --key KeepClipboardContents false
 
 kwriteconfig6 --file krunnerrc --group General --key FreeFloating true
 
@@ -44,3 +55,8 @@ kwriteconfig6 --file konsolerc --group "Toolbar mainToolBar" --key ToolButtonSty
 kwriteconfig6 --file konsolerc --group "Toolbar sessionToolbar" --key ToolButtonStyle TextOnly
 kwriteconfig6 --file konsolerc --group MainWindow --group "Toolbar mainToolBar" --key ToolButtonStyle TextOnly
 kwriteconfig6 --file konsolerc --group MainWindow --group "Toolbar sessionToolbar" --key ToolButtonStyle TextOnly
+
+kwriteconfig6 --file dolphinrc --group General --key GlobalViewProps false
+kwriteconfig6 --file dolphinrc --group General --key RememberOpenedTabs false
+kwriteconfig6 --file dolphinrc --group General --key ShowSelectionToggle false
+kwriteconfig6 --file dolphinrc --group MainWindow --key MenuBar Disabled
