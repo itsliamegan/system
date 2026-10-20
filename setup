@@ -29,7 +29,6 @@ configure() {
 	mkdir -p "$XDG_CONFIG_HOME/environment.d"
 	mkdir -p "$XDG_CONFIG_HOME/fontconfig"
 	mkdir -p "$XDG_CONFIG_HOME/git"
-	mkdir -p "$XDG_CONFIG_HOME/mise"
 	mkdir -p "$XDG_CONFIG_HOME/pi"
 	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
 	mkdir -p "$XDG_CONFIG_HOME/tmux"
@@ -68,7 +67,6 @@ configure() {
 	cp "$PWD/kde/plasma-org.kde.plasma.desktop-appletsrc" "$XDG_CONFIG_HOME/plasma-org.kde.plasma.desktop-appletsrc"
 	"$PWD/kde/configure"
 
-	ln -s "$PWD/langs/mise/config.toml" "$XDG_CONFIG_HOME/mise/config.toml"
 	ln -s "$PWD/langs/rust/rustfmt.toml" "$XDG_CONFIG_HOME/rustfmt/rustfmt.toml"
 
 	ln -s "$PWD/shell/.bashrc" "$HOME/.bashrc"
@@ -89,10 +87,6 @@ install() {
 	"$PWD/kde/install"
 	"$PWD/firefox/install"
 	"$PWD/thunderbird/install"
-	for tool in $(cat tools); do
-		tool=$(printf "%s" "$tool" | tr -d "\n")
-		curl -fsS "$tool" | sh
-	done
 	"$PWD/agents/claude/install"
 	"$PWD/git/install"
 	"$PWD/tailscale/install"

@@ -9,5 +9,5 @@ set -euo pipefail
 export CARGO_HOME="${CARGO_HOME:-$HOME/.local/share/cargo}"
 export RUSTUP_HOME="${RUSTUP_HOME:-$HOME/.local/share/rustup}"
 
-"$CARGO_HOME/bin/cargo" install --locked fd-find@10.5.0 ripgrep@15.2.0 sd@1.0.0
+"$CARGO_HOME/bin/cargo" install --locked fd-find@10.5.0 just@1.59.0 ripgrep@15.2.0 sd@1.0.0
 "$HOME/.local/bin/uv" tool install --upgrade 'yt-dlp[default]'
