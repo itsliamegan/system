@@ -11,9 +11,6 @@ set -euo pipefail
 
 cd "$(dirname "$(realpath "$0")")"
 
-XDG_CONFIG_HOME="$HOME/.config"
-XDG_DATA_HOME="$HOME/.local/share"
-
 usage() {
 	echo "setup - setup system packages and configuration files."
 	echo "usage: setup <install|configure>"
@@ -23,73 +20,26 @@ usage() {
 }
 
 configure() {
-	mkdir -p "$HOME/.claude"
-	mkdir -p "$HOME/.local"
+	load_environment
+
 	mkdir -p "$HOME/.local/bin"
-	mkdir -p "$XDG_CONFIG_HOME/agents"
-	mkdir -p "$XDG_CONFIG_HOME/emacs"
-	mkdir -p "$XDG_CONFIG_HOME/fontconfig"
-	mkdir -p "$XDG_CONFIG_HOME/git"
-	mkdir -p "$XDG_CONFIG_HOME/pi"
-	mkdir -p "$XDG_CONFIG_HOME/rustfmt"
-	mkdir -p "$XDG_CONFIG_HOME/tmux"
-	mkdir -p "$XDG_CONFIG_HOME/yt-dlp"
-	mkdir -p "$XDG_DATA_HOME/konsole"
-
-	ln -sf "$PWD/agents/AGENTS.md" "$XDG_CONFIG_HOME/agents/AGENTS.md"
-	ln -sf "$PWD/agents/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-	ln -sf "$PWD/agents/claude/settings.json" "$HOME/.claude/settings.json"
-	ln -sfn "$PWD/agents/conventions" "$XDG_CONFIG_HOME/agents/conventions"
-	ln -sf "$PWD/agents/pi/AGENTS.md" "$XDG_CONFIG_HOME/pi/AGENTS.md"
-	ln -sfn "$PWD/agents/pi/extensions" "$XDG_CONFIG_HOME/pi/extensions"
-	ln -sf "$PWD/agents/pi/keybindings.json" "$XDG_CONFIG_HOME/pi/keybindings.json"
-	ln -sf "$PWD/agents/pi/settings.json" "$XDG_CONFIG_HOME/pi/settings.json"
-	ln -sfn "$PWD/agents/pi/themes" "$XDG_CONFIG_HOME/pi/themes"
-
 	ln -sf "$PWD/bin/dl-music" "$HOME/.local/bin/dl-music"
 
-	ln -sf "$PWD/emacs/init.el" "$XDG_CONFIG_HOME/emacs/init.el"
-	ln -sfn "$PWD/emacs/themes" "$XDG_CONFIG_HOME/emacs/themes"
-
-	for profile in $(sed -n 's/^Path=//p' "$HOME/.mozilla/firefox/profiles.ini"); do
-		mkdir -p "$HOME/.mozilla/firefox/$profile/chrome"
-		ln -sf "$PWD/firefox/userChrome.css" "$HOME/.mozilla/firefox/$profile/chrome/userChrome.css"
-		ln -sf "$PWD/firefox/userContent.css" "$HOME/.mozilla/firefox/$profile/chrome/userContent.css"
-	done
-
-	ln -sfn "$PWD/fonts/archives" "$XDG_DATA_HOME/fonts"
-	ln -sf "$PWD/fonts/fonts.conf" "$XDG_CONFIG_HOME/fontconfig/fonts.conf"
-
-	ln -sf "$PWD/git/config" "$XDG_CONFIG_HOME/git/config"
-	ln -sf "$PWD/git/ignore" "$XDG_CONFIG_HOME/git/ignore"
-
-	ln -sf "$PWD/kde/konsole/Chalk.colorscheme" "$XDG_DATA_HOME/konsole/Chalk.colorscheme"
-	ln -sf "$PWD/kde/konsole/Profile.profile" "$XDG_DATA_HOME/konsole/Profile.profile"
-	cp "$PWD/kde/plasma-org.kde.plasma.desktop-appletsrc" "$XDG_CONFIG_HOME/plasma-org.kde.plasma.desktop-appletsrc"
+	"$PWD/agents/configure"
+	"$PWD/agents/claude/configure"
+	"$PWD/agents/pi/configure"
+	"$PWD/emacs/configure"
+	"$PWD/firefox/configure"
+	"$PWD/fonts/configure"
+	"$PWD/git/configure"
 	"$PWD/kde/configure"
-
-	ln -sf "$PWD/langs/rust/rustfmt.toml" "$XDG_CONFIG_HOME/rustfmt/rustfmt.toml"
-
-	ln -sf "$PWD/shell/.bashrc" "$HOME/.bashrc"
-	ln -sf "$PWD/shell/.inputrc" "$HOME/.inputrc"
-	ln -sf "$PWD/shell/.profile" "$HOME/.profile"
-	ln -sf "$PWD/shell/.xsessionrc" "$HOME/.xsessionrc"
-	ln -sf "$PWD/shell/tmux.conf" "$XDG_CONFIG_HOME/tmux/tmux.conf"
-	ln -sf "$PWD/shell/yt-dlp.conf" "$XDG_CONFIG_HOME/yt-dlp/config"
-
-	sudo install -m 0440 "$PWD/shell/disable-admin-flag" /etc/sudoers.d/disable-admin-flag
+	"$PWD/langs/rust/configure"
+	"$PWD/shell/configure"
 }
 
 install() {
 	sudo apt install -y $(xargs <packages)
-
-	# The install scripts take their paths from environment.d, which only
-	# applies at the next login.
-	mkdir -p "$XDG_CONFIG_HOME/environment.d"
-	ln -sf "$PWD/shell/environment.conf" "$XDG_CONFIG_HOME/environment.d/environment.conf"
-	set -a
-	eval "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
-	set +a
+	load_environment
 
 	"$PWD/kde/install"
 	"$PWD/firefox/install"
@@ -107,6 +57,16 @@ install() {
 	"$PWD/shell/install"
 	"$PWD/emacs/install"
 	"$PWD/emacs/servers"
+}
+
+# The domain scripts take their paths from environment.d, which only applies at
+# the next login.
+load_environment() {
+	mkdir -p "$HOME/.config/environment.d"
+	ln -sf "$PWD/shell/environment.conf" "$HOME/.config/environment.d/environment.conf"
+	set -a
+	eval "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
+	set +a
 }
 
 case "${1:-}" in

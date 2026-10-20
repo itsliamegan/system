@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# configure - link the shell, tmux, and yt-dlp configuration, and install the
+#             sudoers rule.
+#
+# usage: shell/configure
+
+set -euo pipefail
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
+mkdir -p "$XDG_CONFIG_HOME/tmux" "$XDG_CONFIG_HOME/yt-dlp"
+ln -sf "$DIRECTORY/.bashrc" "$HOME/.bashrc"
+ln -sf "$DIRECTORY/.inputrc" "$HOME/.inputrc"
+ln -sf "$DIRECTORY/.profile" "$HOME/.profile"
+ln -sf "$DIRECTORY/.xsessionrc" "$HOME/.xsessionrc"
+ln -sf "$DIRECTORY/tmux.conf" "$XDG_CONFIG_HOME/tmux/tmux.conf"
+ln -sf "$DIRECTORY/yt-dlp.conf" "$XDG_CONFIG_HOME/yt-dlp/config"
+
+sudo install -m 0440 "$DIRECTORY/disable-admin-flag" /etc/sudoers.d/disable-admin-flag

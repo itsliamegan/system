@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# configure - link Pi's instructions, extensions, keybindings, settings, and
+#             themes.
+#
+# usage: agents/pi/configure
+
+set -euo pipefail
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
+mkdir -p "$PI_CODING_AGENT_DIR"
+ln -sf "$DIRECTORY/AGENTS.md" "$PI_CODING_AGENT_DIR/AGENTS.md"
+ln -sfn "$DIRECTORY/extensions" "$PI_CODING_AGENT_DIR/extensions"
+ln -sf "$DIRECTORY/keybindings.json" "$PI_CODING_AGENT_DIR/keybindings.json"
+ln -sf "$DIRECTORY/settings.json" "$PI_CODING_AGENT_DIR/settings.json"
+ln -sfn "$DIRECTORY/themes" "$PI_CODING_AGENT_DIR/themes"

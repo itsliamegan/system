@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# configure - link Emacs's init file and themes.
+#
+# usage: emacs/configure
+
+set -euo pipefail
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
+mkdir -p "$XDG_CONFIG_HOME/emacs"
+ln -sf "$DIRECTORY/init.el" "$XDG_CONFIG_HOME/emacs/init.el"
+ln -sfn "$DIRECTORY/themes" "$XDG_CONFIG_HOME/emacs/themes"

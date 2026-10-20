@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# configure - link the font archives and fontconfig settings.
+#
+# usage: fonts/configure
+
+set -euo pipefail
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
+mkdir -p "$XDG_CONFIG_HOME/fontconfig" "$XDG_DATA_HOME"
+ln -sfn "$DIRECTORY/archives" "$XDG_DATA_HOME/fonts"
+ln -sf "$DIRECTORY/fonts.conf" "$XDG_CONFIG_HOME/fontconfig/fonts.conf"

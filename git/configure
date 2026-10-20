@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# configure - link Git's configuration and global ignore file.
+#
+# usage: git/configure
+
+set -euo pipefail
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
+mkdir -p "$XDG_CONFIG_HOME/git"
+ln -sf "$DIRECTORY/config" "$XDG_CONFIG_HOME/git/config"
+ln -sf "$DIRECTORY/ignore" "$XDG_CONFIG_HOME/git/ignore"

@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 
-# configure - write KDE Plasma settings with kwriteconfig6. run before the
-#             first Plasma login.
+# configure - link Konsole's color scheme and profile, and write KDE Plasma
+#             settings with kwriteconfig6. run before the first Plasma login.
 #
 # usage: kde/configure
 
 set -euo pipefail
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
+mkdir -p "$XDG_DATA_HOME/konsole"
+ln -sf "$DIRECTORY/konsole/Chalk.colorscheme" "$XDG_DATA_HOME/konsole/Chalk.colorscheme"
+ln -sf "$DIRECTORY/konsole/Profile.profile" "$XDG_DATA_HOME/konsole/Profile.profile"
+cp "$DIRECTORY/plasma-org.kde.plasma.desktop-appletsrc" "$XDG_CONFIG_HOME/plasma-org.kde.plasma.desktop-appletsrc"
 
 kwriteconfig6 --file kactivitymanagerdrc --group activities --key 647b0148-d092-444c-ad6d-5f7a864124ec Default
 kwriteconfig6 --file plasmashellrc --group PlasmaViews --group "Panel 2" --key floating 0

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# configure - link rustfmt's configuration.
+#
+# usage: langs/rust/configure
+
+set -euo pipefail
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
+mkdir -p "$XDG_CONFIG_HOME/rustfmt"
+ln -sf "$DIRECTORY/rustfmt.toml" "$XDG_CONFIG_HOME/rustfmt/rustfmt.toml"

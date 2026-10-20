@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# configure - link Claude Code's instructions and settings.
+#
+# usage: agents/claude/configure
+
+set -euo pipefail
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
+mkdir -p "$HOME/.claude"
+ln -sf "$DIRECTORY/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+ln -sf "$DIRECTORY/settings.json" "$HOME/.claude/settings.json"
