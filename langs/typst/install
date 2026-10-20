@@ -6,9 +6,6 @@
 
 set -euo pipefail
 
-VERSION="0.15.1"
+TYPST_VERSION="0.15"
 
-export CARGO_HOME="${CARGO_HOME:-$HOME/.local/share/cargo}"
-export RUSTUP_HOME="${RUSTUP_HOME:-$HOME/.local/share/rustup}"
-
-"$CARGO_HOME/bin/cargo" install --locked typst-cli@"$VERSION"
+cargo install --locked "typst-cli@~$TYPST_VERSION"
