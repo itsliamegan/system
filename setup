@@ -77,9 +77,7 @@ configure() {
 	ln -sf "$PWD/shell/tmux.conf" "$XDG_CONFIG_HOME/tmux/tmux.conf"
 	ln -sf "$PWD/shell/yt-dlp.conf" "$XDG_CONFIG_HOME/yt-dlp/config"
 
-	sudo cp "$PWD/shell/disable-admin-flag" /etc/sudoers.d/disable-admin-flag
-	sudo chown root:root /etc/sudoers.d/disable-admin-flag
-	sudo chmod 0440 /etc/sudoers.d/disable-admin-flag
+	sudo install -m 0440 "$PWD/shell/disable-admin-flag" /etc/sudoers.d/disable-admin-flag
 }
 
 install() {
