@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# install - install Claude Code and Claude Desktop from Anthropic's apt
+#           repositories.
+#
+# usage: agents/claude/install
+
+set -euo pipefail
+
+sudo install -d -m 0755 /etc/apt/keyrings
+sudo curl -fsSL https://downloads.claude.ai/keys/claude-code.asc -o /etc/apt/keyrings/claude.asc
+
+sudo install -m 0644 "$(dirname "$0")/claude-code.sources" /etc/apt/sources.list.d/claude-code.sources
+sudo install -m 0644 "$(dirname "$0")/claude-desktop.sources" /etc/apt/sources.list.d/claude-desktop.sources
+
+# Claude Desktop otherwise writes its own source on every install and upgrade,
+# which duplicates the one above.
+sudo install -m 0644 "$(dirname "$0")/claude-desktop.default" /etc/default/claude-desktop
+sudo rm -f /etc/apt/sources.list.d/claude-desktop.list
+
+sudo apt update
+sudo apt install -y claude-code claude-desktop
