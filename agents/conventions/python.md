@@ -33,6 +33,10 @@
   .format import html`, then `html.Format()`). Inside a variant module, import
   the base classes by name and subclass each under the same name (`from .format
   import Format`, then `class Format(Format)`).
+- When a family's variants share one module with their base class, import
+  that module and qualify each variant, and leave the family's name out of the
+  variant names (`from luna.test import capture`, then `capture.Always()`, not
+  `AlwaysCapture()`).
 - Apply this only when the variants are interchangeable implementations of one
   role. When each subclass is a distinct thing named for what it does, such as
   a command, name the class for it.
@@ -43,9 +47,13 @@
 
 - Do not name internal or private functions, methods, attributes, or variables
   with leading underscores.
-- Use leading underscores for unused variables.
-- Use leading underscores for variables that represent the internal state of a
-  `@property` that wraps them with the same name.
+- Name a value nothing will use `_`. Give it a leading underscore and a name,
+  such as `_headings`, when it is kept for a reason, such as a parameter a
+  signature requires or a value that will be used later.
+- Use leading underscores for variables that hold the internal state of a
+  `@property` or a method with the same name.
+- When a local variable would shadow a module imported under the same name,
+  add a trailing underscore (`capture_ = capture.Always()`).
 
 ## Classes
 
@@ -59,6 +67,9 @@
 - Use a plain `@dataclass` with field defaults when `__init__` would only
   assign its arguments. Use `init=False` and a custom `__init__` when the
   constructor checks or converts arguments.
+- When a class is made from a source, such as text, a file, or a driver, give
+  it a class method named for that source (`Config.parse`, `Manifest.load`,
+  `Site.read`) and keep `__init__` as the dataclass's.
 - Do not use `dataclasses.field` or `dataclasses.replace`. Call constructors
   explicitly.
 - Do not use `frozen=True`. Leave `eq` on unless there is a specific reason to

@@ -26,8 +26,11 @@ Before writing code, ask:
   functions that take the concept as their first argument.
 - Keep data with the object it belongs to. Do not pass a value as a separate
   argument alongside an object that should carry it.
-- When two attributes only make sense together, such as two halves of one
-  ordering, give them a class instead of parallel names.
+- When two attributes only make sense together and form a concept of their
+  own, such as two halves of one ordering, give them a class instead of
+  parallel names. A concept has a name in the domain, behavior, or a life
+  beyond one object's internals. Data that is only colocated, such as a pair
+  kept in one object's private state, can stay a tuple.
 - Represent structure as data. Build objects (statements, clauses, trees) and
   turn them into output in one place. Do not assemble strings or nested
   formats piece by piece where they are used.
@@ -36,6 +39,9 @@ Before writing code, ask:
 - Do not extract generic helpers early. Write an operation inline where it is
   used. Extract a helper only once the operation is shared across several
   places and deserves a name. Inline one-line wrappers.
+- Wrap a library's type when the project should own its interface, whether to
+  change the library's method names or to fix the ones it has now, so callers
+  stay unaffected if the library changes or is replaced.
 
 ### Ownership
 
@@ -87,6 +93,8 @@ Before writing code, ask:
   coincidentally similar.
 - Do not add API surface to protect an invariant nobody declared. Ask whether
   the invariant is wanted before paying for it.
+- Make only the part that varies pluggable, and give the extension point the
+  narrowest interface that covers the known variants.
 - Never model several shapes as one record with a kind field. Use a sum type
   over self-contained records, duplicating shared fields.
 - Break refactors into small steps that each build and pass tests on their
@@ -96,9 +104,12 @@ Before writing code, ask:
 
 - Avoid abbreviations. Use short, expressive, evocative names that make each
   value, function, type, or module's purpose clear.
+- Spell out words in local and loop variable names too (`directory`, not
+  `dir`).
 - Name things by their role in the domain. Use the field's established
   vocabulary and the vocabulary of any reference frameworks the project
-  names. Avoid words that mean something else in context.
+  names, including what they call variables and attributes, not only
+  classes. Avoid words that mean something else in context.
 - Before naming something, check what its siblings are called.
 - Avoid vague names such as `normalize`, `check`, `process`, `handle`,
   `entry`, `values`, or `problem`. If no precise name fits, the function is
@@ -182,8 +193,9 @@ Before writing code, ask:
   can live beside it.
 - Name a module for its main concept, in the singular.
 - Order files and classes top-down: the highest-level concept first, then
-  what it uses, breadth-first. Put supporting constants, type aliases, and
-  helpers after the code that uses them.
+  what it uses, breadth-first. Put module-level constants at the top, after
+  the imports. Put supporting type aliases and helpers after the code that
+  uses them.
 - When adding to a file, place the new code and the declarations beside it in
   top-down order, even if that moves existing lines.
 
@@ -202,6 +214,8 @@ Before writing code, ask:
 - Say what went wrong, plainly. Do not add usage examples or suggestions for
   how to fix it.
 - Phrase errors for the same kind of failure the same way across modules.
+- Release a resource in a `finally` that covers only the code after it was
+  acquired.
 
 ## Testing
 
@@ -214,6 +228,9 @@ Before writing code, ask:
   clear and separate.
 - Structure tests as a pyramid: detailed cases beside the module that owns the
   behavior, and fewer, broader cases at higher levels.
+- A higher-level test asserts only what its level decides and does not repeat
+  cases a lower level owns. It may depend on the lower level's real behavior
+  to do so.
 - Give each case its own test function, even when cases share setup. Do not
   loop over inputs inside a test. Combine assertions into one test only when
   they check the same case.
@@ -221,7 +238,12 @@ Before writing code, ask:
 - Do not test behavior that a library or language feature generates, such as
   dataclass equality or repr.
 - Do not test a module's dependencies or what importing it loads.
-- Use one small, consistent set of domain fixtures across test files.
-- Generate identifiers and similar values in each test and assert against the
-  generated value. Do not hard-code constants.
+- Set tests in the project's shared example domains and reuse their concepts
+  and names across test files. A project can have several domains, but an
+  individual test does not invent a new one.
+- Use explicit, readable names and values in test data, such as
+  `articles/intro`. Generate values only where a test needs them to be
+  unique.
+- Build each test's data in the test itself. Do not hide its construction
+  behind helper functions within a test file.
 - For examples of unsupported input, pick ones that will stay unsupported.
