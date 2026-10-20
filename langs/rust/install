@@ -6,13 +6,10 @@
 
 set -euo pipefail
 
-VERSION="1.99"
+RUST_VERSION="1.99"
 
-# environment.d only sets these after setup configure and a new login, but
-# rustup must install into them from the start.
-export CARGO_HOME="${CARGO_HOME:-$HOME/.local/share/cargo}"
-export RUSTUP_HOME="${RUSTUP_HOME:-$HOME/.local/share/rustup}"
-
-curl -fsS https://sh.rustup.rs | sh -s -- -y --no-modify-path --profile minimal --default-toolchain none
-"$CARGO_HOME/bin/rustup" toolchain install "$VERSION" --profile minimal --component rust-analyzer,rustfmt,clippy
-"$CARGO_HOME/bin/rustup" default "$VERSION"
+# The installer otherwise appends to the shell profile, which is a link into
+# this repository.
+curl -fsSL https://sh.rustup.rs | sh -s -- -y --no-modify-path --profile minimal --default-toolchain none
+rustup toolchain install "$RUST_VERSION" --profile minimal --component rust-analyzer,rustfmt,clippy
+rustup default "$RUST_VERSION"
