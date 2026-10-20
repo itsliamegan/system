@@ -3,7 +3,7 @@
 # configure - write KDE Plasma settings with kwriteconfig6. run before the
 #             first Plasma login.
 #
-# usage: configure
+# usage: kde/configure
 
 set -euo pipefail
 

@@ -6,14 +6,15 @@
 
 set -euo pipefail
 
-keyring="/usr/share/keyrings/tailscale-archive-keyring.gpg"
+DIRECTORY="$(dirname "$(realpath "$0")")"
+KEYRING="/usr/share/keyrings/tailscale-archive-keyring.gpg"
 
 # The tailscale-archive-keyring package owns the key once it is installed and
 # replaces it when Tailscale rotates keys, so only a new system downloads it.
-if [ ! -e "$keyring" ]; then
-	sudo curl -fsSL https://pkgs.tailscale.com/stable/debian/forky.noarmor.gpg -o "$keyring"
+if [ ! -e "$KEYRING" ]; then
+	sudo curl -fsSL -o "$KEYRING" https://pkgs.tailscale.com/stable/debian/sid.noarmor.gpg
 fi
-sudo install -m 0644 "$(dirname "$0")/tailscale.sources" /etc/apt/sources.list.d/tailscale.sources
+sudo install -m 0644 "$DIRECTORY/tailscale.sources" /etc/apt/sources.list.d/tailscale.sources
 
 sudo apt update
 sudo apt install -y tailscale tailscale-archive-keyring

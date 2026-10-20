@@ -7,15 +7,17 @@
 
 set -euo pipefail
 
-sudo install -d -m 0755 /etc/apt/keyrings
-sudo curl -fsSL https://downloads.claude.ai/keys/claude-code.asc -o /etc/apt/keyrings/claude.asc
+DIRECTORY="$(dirname "$(realpath "$0")")"
 
-sudo install -m 0644 "$(dirname "$0")/claude-code.sources" /etc/apt/sources.list.d/claude-code.sources
-sudo install -m 0644 "$(dirname "$0")/claude-desktop.sources" /etc/apt/sources.list.d/claude-desktop.sources
+sudo install -d -m 0755 /etc/apt/keyrings
+sudo curl -fsSL -o /etc/apt/keyrings/claude.asc https://downloads.claude.ai/keys/claude-code.asc
+
+sudo install -m 0644 "$DIRECTORY/claude-code.sources" /etc/apt/sources.list.d/claude-code.sources
+sudo install -m 0644 "$DIRECTORY/claude-desktop.sources" /etc/apt/sources.list.d/claude-desktop.sources
 
 # Claude Desktop otherwise writes its own source on every install and upgrade,
 # which duplicates the one above.
-sudo install -m 0644 "$(dirname "$0")/claude-desktop.default" /etc/default/claude-desktop
+sudo install -m 0644 "$DIRECTORY/claude-desktop.default" /etc/default/claude-desktop
 sudo rm -f /etc/apt/sources.list.d/claude-desktop.list
 
 sudo apt update

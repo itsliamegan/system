@@ -2,4 +2,4 @@ Types: deb
 URIs: https://cli.github.com/packages/
 Suites: stable
 Components: main
-Signed-By: /etc/apt/keyrings/githubcli-archive-keyring.gpg
+Signed-By: /etc/apt/keyrings/github-cli.gpg

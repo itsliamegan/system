@@ -6,13 +6,15 @@
 
 set -euo pipefail
 
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
 sudo install -d -m 0755 /etc/apt/keyrings
-sudo curl -fsSL https://packages.mozilla.org/apt/repo-signing-key.gpg -o /etc/apt/keyrings/mozilla.asc
-sudo install -m 0644 "$(dirname "$0")/mozilla.sources" /etc/apt/sources.list.d/mozilla.sources
+sudo curl -fsSL -o /etc/apt/keyrings/mozilla.asc https://packages.mozilla.org/apt/repo-signing-key.gpg
+sudo install -m 0644 "$DIRECTORY/mozilla.sources" /etc/apt/sources.list.d/mozilla.sources
 
 # Debian also ships firefox, and its versions sort above Mozilla's builds of the
 # same release.
-sudo install -m 0644 "$(dirname "$0")/firefox.pref" /etc/apt/preferences.d/firefox.pref
+sudo install -m 0644 "$DIRECTORY/firefox.pref" /etc/apt/preferences.d/firefox.pref
 
 sudo apt update
 sudo apt install -y firefox

@@ -6,9 +6,11 @@
 
 set -euo pipefail
 
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
 sudo install -d -m 0755 /etc/apt/keyrings
-sudo curl -fsSL https://repo.ivpn.net/stable/debian/generic.gpg -o /etc/apt/keyrings/ivpn.asc
-sudo install -m 0644 "$(dirname "$0")/ivpn.sources" /etc/apt/sources.list.d/ivpn.sources
+sudo curl -fsSL -o /etc/apt/keyrings/ivpn.asc https://repo.ivpn.net/stable/debian/generic.gpg
+sudo install -m 0644 "$DIRECTORY/ivpn.sources" /etc/apt/sources.list.d/ivpn.sources
 
 sudo apt update
 sudo apt install -y ivpn-ui

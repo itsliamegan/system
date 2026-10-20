@@ -6,4 +6,6 @@
 
 set -euo pipefail
 
-sudo apt install -y $(xargs <"$(dirname "$0")/packages")
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
+sudo apt install -y $(xargs <"$DIRECTORY/packages")
