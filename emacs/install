@@ -7,28 +7,29 @@
 
 set -euo pipefail
 
-VERSION="31.1"
+EMACS_VERSION="31.1"
 
-src_dir="$HOME/.local/src"
-prefix="$HOME/.local/opt/emacs-$VERSION"
-tarball="emacs-$VERSION.tar.xz"
+DIRECTORY="$(dirname "$(realpath "$0")")"
+SOURCE="$HOME/.local/src/emacs-$EMACS_VERSION"
+PREFIX="$HOME/.local/opt/emacs-$EMACS_VERSION"
 
-sudo apt install -y $(xargs <"$(dirname "$0")/packages")
+sudo apt install -y $(xargs <"$DIRECTORY/packages")
 
-mkdir -p "$src_dir" "$HOME/.local/bin" "$HOME/.local/share/applications"
-cd "$src_dir"
+mkdir -p "$HOME/.local/src" "$HOME/.local/bin" "$HOME/.local/share/applications"
 
-curl -fLO "https://ftpmirror.gnu.org/emacs/$tarball"
-curl -fLO "https://ftpmirror.gnu.org/emacs/$tarball.sig"
-curl -fLO "https://ftp.gnu.org/gnu/gnu-keyring.gpg"
-gpgv --keyring ./gnu-keyring.gpg "$tarball.sig" "$tarball"
+curl -fsSL -o "$SOURCE.tar.xz" "https://ftpmirror.gnu.org/emacs/emacs-$EMACS_VERSION.tar.xz"
+curl -fsSL -o "$SOURCE.tar.xz.sig" "https://ftpmirror.gnu.org/emacs/emacs-$EMACS_VERSION.tar.xz.sig"
+# The keyring comes from GNU's own server rather than the mirror, so that a
+# compromised mirror cannot replace both the tarball and the key.
+curl -fsSL -o "$HOME/.local/src/gnu-keyring.gpg" https://ftp.gnu.org/gnu/gnu-keyring.gpg
+gpgv --keyring "$HOME/.local/src/gnu-keyring.gpg" "$SOURCE.tar.xz.sig" "$SOURCE.tar.xz"
 
-rm -rf "emacs-$VERSION"
-tar -xJf "$tarball"
-cd "emacs-$VERSION"
+rm -rf "$SOURCE" "$PREFIX"
+tar -xJf "$SOURCE.tar.xz" -C "$HOME/.local/src"
+cd "$SOURCE"
 
 ./configure \
-	--prefix="$prefix" \
+	--prefix="$PREFIX" \
 	--with-pgtk \
 	--with-native-compilation \
 	--with-tree-sitter \
@@ -39,6 +40,6 @@ cd "emacs-$VERSION"
 make -j"$(nproc)"
 make install
 
-ln -sfn "$prefix" "$HOME/.local/opt/emacs"
+ln -sfn "$PREFIX" "$HOME/.local/opt/emacs"
 ln -sf "$HOME/.local/opt/emacs/bin/emacs" "$HOME/.local/bin/emacs"
 ln -sf "$HOME/.local/opt/emacs/share/applications/emacs.desktop" "$HOME/.local/share/applications/emacs.desktop"
