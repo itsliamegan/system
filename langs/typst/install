@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
-# install - install the Tinymist language server for Typst with Cargo.
+# install - install Typst and the Tinymist language server with Cargo.
 #
 # usage: langs/typst/install
 
 set -euo pipefail
 
-REVISION="5e62f1a9205b4c08a3892ecc89844cbadf8ae1bf"
+VERSION="0.15.1"
+TINYMIST_REVISION="5e62f1a9205b4c08a3892ecc89844cbadf8ae1bf"
 
 export CARGO_HOME="${CARGO_HOME:-$HOME/.local/share/cargo}"
 export RUSTUP_HOME="${RUSTUP_HOME:-$HOME/.local/share/rustup}"
 
-"$CARGO_HOME/bin/cargo" install --locked --git https://github.com/Myriad-Dreamin/tinymist --rev "$REVISION" tinymist-cli
+"$CARGO_HOME/bin/cargo" install --locked typst-cli@"$VERSION"
+"$CARGO_HOME/bin/cargo" install --locked --git https://github.com/Myriad-Dreamin/tinymist --rev "$TINYMIST_REVISION" tinymist-cli
