@@ -6,6 +6,6 @@
 
 set -euo pipefail
 
-TYPST_VERSION="0.15" # crates:typst-cli
+TYPST_VERSION="0.15"
 
 cargo install --locked "typst-cli@~$TYPST_VERSION"

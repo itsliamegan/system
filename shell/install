@@ -6,10 +6,10 @@
 
 set -euo pipefail
 
-FD_VERSION="10.5" # crates:fd-find
-JUST_VERSION="1.59" # crates:just
-RIPGREP_VERSION="15.2" # crates:ripgrep
-SD_VERSION="1.0" # crates:sd
+FD_VERSION="10.5"
+JUST_VERSION="1.59"
+RIPGREP_VERSION="15.2"
+SD_VERSION="1.0"
 
 cargo install --locked \
 	"fd-find@~$FD_VERSION" \

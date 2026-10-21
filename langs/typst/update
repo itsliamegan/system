@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# update - update the Typst pin in the install script to the newest release.
+#
+# usage: langs/typst/update
+
+set -euo pipefail
+
+cd "$(dirname "$(realpath "$0")")"
+
+# crates.io rejects requests that carry curl's default user agent.
+version="$(curl -fsSL --user-agent system-setup https://crates.io/api/v1/crates/typst-cli \
+	| jq -r .crate.max_stable_version \
+	| cut -d. -f1-2)"
+if [[ ! "$version" =~ ^[0-9.]+$ ]]; then
+	echo "update: no release found for typst-cli" >&2
+	exit 1
+fi
+
+sed -i "s/^TYPST_VERSION=\".*\"\$/TYPST_VERSION=\"$version\"/" install

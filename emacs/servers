@@ -6,12 +6,12 @@
 
 set -euo pipefail
 
-SVELTE_LANGUAGE_SERVER_VERSION="0.18" # npm:svelte-language-server
-TYPESCRIPT_VERSION="7.0" # npm:typescript
-TYPESCRIPT_LANGUAGE_SERVER_VERSION="6.0" # npm:typescript-language-server
-YAML_LANGUAGE_SERVER_VERSION="2.0" # npm:yaml-language-server
-RASSUMFRASSUM_VERSION="0.3" # pypi:rassumfrassum
-TINYMIST_VERSION="0.15.10" # github:Myriad-Dreamin/tinymist
+SVELTE_LANGUAGE_SERVER_VERSION="0.18"
+TYPESCRIPT_VERSION="7.0"
+TYPESCRIPT_LANGUAGE_SERVER_VERSION="6.0"
+YAML_LANGUAGE_SERVER_VERSION="2.0"
+RASSUMFRASSUM_VERSION="0.3"
+TINYMIST_VERSION="0.15.10"
 
 npm install -g \
 	"svelte-language-server@~$SVELTE_LANGUAGE_SERVER_VERSION" \

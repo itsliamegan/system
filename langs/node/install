@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-NODE_VERSION="26.12.0" # node
+NODE_VERSION="26.12.0"
 
 RELEASE="node-v$NODE_VERSION-linux-x64"
 TARBALL="$HOME/.local/src/$RELEASE.tar.xz"

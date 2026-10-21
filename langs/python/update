@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# update - update the uv and Python pins in the install script to the newest
+#          releases.
+#
+# usage: langs/python/update
+
+set -euo pipefail
+
+cd "$(dirname "$(realpath "$0")")"
+
+# The unversioned installer redirects to the newest release's installer.
+uv_version="$(curl -fsSL https://astral.sh/uv/install.sh | sed -n 's/^APP_VERSION="\(.*\)"$/\1/p')"
+if [[ ! "$uv_version" =~ ^[0-9.]+$ ]]; then
+	echo "update: no release found for uv" >&2
+	exit 1
+fi
+
+# The final filter skips prereleases, whose versions carry a suffix.
+python_version="$(uv python list --only-downloads --output-format json \
+	| jq -r '.[] | select(.implementation == "cpython" and .variant == "default") | .version' \
+	| grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' \
+	| sort -V | tail -n1 \
+	| cut -d. -f1-2)"
+if [[ ! "$python_version" =~ ^[0-9.]+$ ]]; then
+	echo "update: no release found for python" >&2
+	exit 1
+fi
+
+sed -i "s/^UV_VERSION=\".*\"\$/UV_VERSION=\"$uv_version\"/" install
+sed -i "s/^PYTHON_VERSION=\".*\"\$/PYTHON_VERSION=\"$python_version\"/" install

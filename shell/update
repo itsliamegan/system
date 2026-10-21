@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# update - update the crate pins in the install script to the newest
+#          releases.
+#
+# usage: shell/update
+
+set -euo pipefail
+
+cd "$(dirname "$(realpath "$0")")"
+
+pin() {
+	constant="$1"
+	crate="$2"
+
+	# crates.io rejects requests that carry curl's default user agent.
+	version="$(curl -fsSL --user-agent system-setup "https://crates.io/api/v1/crates/$crate" \
+		| jq -r .crate.max_stable_version \
+		| cut -d. -f1-2)"
+	if [[ ! "$version" =~ ^[0-9.]+$ ]]; then
+		echo "update: no release found for $crate" >&2
+		exit 1
+	fi
+
+	sed -i "s/^$constant=\".*\"\$/$constant=\"$version\"/" install
+}
+
+pin FD_VERSION fd-find
+pin JUST_VERSION just
+pin RIPGREP_VERSION ripgrep
+pin SD_VERSION sd

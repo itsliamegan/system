@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# update - update the Emacs and language server pins to the newest releases.
+#
+# usage: emacs/update
+
+set -euo pipefail
+
+cd "$(dirname "$(realpath "$0")")"
+
+pin() {
+	constant="$1"
+	package="$2"
+
+	version="$(curl -fsSL "https://registry.npmjs.org/$package/latest" \
+		| jq -r .version \
+		| cut -d. -f1-2)"
+	if [[ ! "$version" =~ ^[0-9.]+$ ]]; then
+		echo "update: no release found for $package" >&2
+		exit 1
+	fi
+
+	sed -i "s/^$constant=\".*\"\$/$constant=\"$version\"/" servers
+}
+
+emacs_version="$(curl -fsSL https://ftp.gnu.org/gnu/emacs/ \
+	| grep -oE 'emacs-[0-9.]+\.tar\.xz' \
+	| sed -E 's/^emacs-(.*)\.tar\.xz$/\1/' \
+	| sort -uV | tail -n1)"
+if [[ ! "$emacs_version" =~ ^[0-9.]+$ ]]; then
+	echo "update: no release found for emacs" >&2
+	exit 1
+fi
+
+sed -i "s/^EMACS_VERSION=\".*\"\$/EMACS_VERSION=\"$emacs_version\"/" install
+
+pin SVELTE_LANGUAGE_SERVER_VERSION svelte-language-server
+pin TYPESCRIPT_VERSION typescript
+pin TYPESCRIPT_LANGUAGE_SERVER_VERSION typescript-language-server
+pin YAML_LANGUAGE_SERVER_VERSION yaml-language-server
+
+rassumfrassum_version="$(curl -fsSL https://pypi.org/pypi/rassumfrassum/json \
+	| jq -r .info.version \
+	| cut -d. -f1-2)"
+if [[ ! "$rassumfrassum_version" =~ ^[0-9.]+$ ]]; then
+	echo "update: no release found for rassumfrassum" >&2
+	exit 1
+fi
+
+tinymist_version="$(curl -fsSL https://api.github.com/repos/Myriad-Dreamin/tinymist/releases/latest \
+	| jq -r '.tag_name | ltrimstr("v")')"
+if [[ ! "$tinymist_version" =~ ^[0-9.]+$ ]]; then
+	echo "update: no release found for tinymist" >&2
+	exit 1
+fi
+
+sed -i "s/^RASSUMFRASSUM_VERSION=\".*\"\$/RASSUMFRASSUM_VERSION=\"$rassumfrassum_version\"/" servers
+sed -i "s/^TINYMIST_VERSION=\".*\"\$/TINYMIST_VERSION=\"$tinymist_version\"/" servers

@@ -9,8 +9,8 @@ setting up and maintaining a system. These files are designed to work on Debian
 The `setup` script is the central entry point for all system configuration.
 `setup install` installs all the necessary packages. `setup configure` links
 configuration files and makes other tool-specific changes. `configure` depends
-on `install` having been run. `setup upgrade` updates the pinned versions
-declared across the install scripts to their newest releases.
+on `install` having been run. `setup update` updates the pinned versions in the
+install scripts to their newest releases, which `setup install` then installs.
 
 ## Layout
 
@@ -28,13 +28,14 @@ tool or a set of related tools. For example, the `emacs/` domain contains
 files, while the `git` domain contains `git` and its configuration files as well
 as the `gh` CLI.
 
-A domain directory can contain an install script, a configure script,
-configuration files, and/or sibling files for things like APT sources.
+A domain directory can contain an install script, a configure script, an update
+script, configuration files, and/or sibling files for things like APT sources.
 
 ```
 <domain>/
 	install   # installs the tool(s) and related packages
 	configure # sets up symlinks, configures daemons, etc.
+	update    # updates the version pins in the install scripts
 	packages  # lists sibling packages
 	...       # any other files, lists of packages, configurations, etc.
 ```

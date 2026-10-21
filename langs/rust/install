@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-RUST_VERSION="1.99" # rust
+RUST_VERSION="1.99"
 
 # The installer otherwise appends to the shell profile, which is a link into
 # this repository.

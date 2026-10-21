@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# update - update the Node pin in the install script to the newest release.
+#
+# usage: langs/node/update
+
+set -euo pipefail
+
+cd "$(dirname "$(realpath "$0")")"
+
+version="$(curl -fsSL https://nodejs.org/dist/index.json | jq -r '.[0].version | ltrimstr("v")')"
+if [[ ! "$version" =~ ^[0-9.]+$ ]]; then
+	echo "update: no release found for node" >&2
+	exit 1
+fi
+
+sed -i "s/^NODE_VERSION=\".*\"\$/NODE_VERSION=\"$version\"/" install

@@ -2,11 +2,11 @@
 
 # setup - setup system packages and configuration files.
 #
-# usage: setup <install|configure|upgrade [<script>...]>
+# usage: setup <install|configure|update>
 #
 # install - install system packages and tools
 # configure - symlink and write configuration files
-# upgrade - update the version pins in the scripts to the newest releases
+# update - update the version pins in the install scripts to the newest releases
 
 set -euo pipefail
 
@@ -14,11 +14,11 @@ cd "$(dirname "$(realpath "$0")")"
 
 usage() {
 	echo "setup - setup system packages and configuration files."
-	echo "usage: setup <install|configure|upgrade [<script>...]>"
+	echo "usage: setup <install|configure|update>"
 	echo ""
 	echo "install - install system packages and tools"
 	echo "configure - symlink and write configuration files"
-	echo "upgrade - update the version pins in the scripts to the newest releases"
+	echo "update - update the version pins in the install scripts to the newest releases"
 }
 
 configure() {
@@ -61,70 +61,15 @@ install() {
 	"$PWD/emacs/servers"
 }
 
-upgrade() {
+update() {
 	load_environment
 
-	mapfile -t pins < <(git grep -n -E '^[A-Z_]+_VERSION="[^"]*" # ' -- "${@:-.}")
-	for pin in "${pins[@]}"; do
-		IFS=: read -r script number declaration <<<"$pin"
-		[[ "$declaration" =~ ^([A-Z_]+)=\"([^\"]*)\"\ \#\ (.+)$ ]]
-		constant="${BASH_REMATCH[1]}"
-		current="${BASH_REMATCH[2]}"
-		source="${BASH_REMATCH[3]}"
-
-		# Cutting the release to the pin's number of components keeps a minor
-		# pin a minor pin.
-		IFS=. read -ra components <<<"$current"
-		latest="$(latest_version "$source" | cut -d. -f"1-${#components[@]}")"
-		if [ -z "$latest" ]; then
-			echo "setup: no release found for $source" >&2
-			exit 1
-		fi
-
-		newest="$(printf '%s\n' "$current" "$latest" | sort -V | tail -n1)"
-		if [ "$newest" != "$current" ]; then
-			printf '%s  %s  %s → %s\n' "$script" "$constant" "$current" "$latest"
-			sed -i "${number}s/=\"[^\"]*\"/=\"$latest\"/" "$script"
-		fi
-	done
-}
-
-latest_version() {
-	source="$1"
-	name="${source#*:}"
-
-	case "$source" in
-		crates:*)
-			# crates.io rejects requests that carry curl's default user agent.
-			curl -fsSL --user-agent system-setup "https://crates.io/api/v1/crates/$name" | jq -r .crate.max_stable_version;;
-		npm:*)
-			curl -fsSL "https://registry.npmjs.org/$name/latest" | jq -r .version;;
-		pypi:*)
-			curl -fsSL "https://pypi.org/pypi/$name/json" | jq -r .info.version;;
-		github:*)
-			curl -fsSL "https://api.github.com/repos/$name/releases/latest" | jq -r '.tag_name | ltrimstr("v")';;
-		gnu:*)
-			curl -fsSL "https://ftp.gnu.org/gnu/$name/" \
-				| grep -oE "$name-[0-9.]+\.tar\.xz" \
-				| sed -E "s/^$name-(.*)\.tar\.xz\$/\1/" \
-				| sort -uV | tail -n1;;
-		node)
-			curl -fsSL https://nodejs.org/dist/index.json | jq -r '.[0].version | ltrimstr("v")';;
-		python)
-			uv python list --only-downloads --output-format json \
-				| jq -r '.[] | select(.implementation == "cpython" and .variant == "default") | .version' \
-				| grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' \
-				| sort -V | tail -n1;;
-		rust)
-			curl -fsSL https://static.rust-lang.org/dist/channel-rust-stable.toml \
-				| sed -n '/^\[pkg\.rust\]$/{n;s/^version = "\([^ ]*\) .*/\1/p}';;
-		uv)
-			# The unversioned installer redirects to the newest release's installer.
-			curl -fsSL https://astral.sh/uv/install.sh | sed -n 's/^APP_VERSION="\(.*\)"$/\1/p';;
-		*)
-			echo "setup: unknown version source: $source" >&2
-			exit 1;;
-	esac
+	"$PWD/langs/rust/update"
+	"$PWD/langs/python/update"
+	"$PWD/langs/node/update"
+	"$PWD/langs/typst/update"
+	"$PWD/shell/update"
+	"$PWD/emacs/update"
 }
 
 # The domain scripts take their paths from environment.d, which only applies at
@@ -140,6 +85,6 @@ load_environment() {
 case "${1:-}" in
 	install) install;;
 	configure) configure;;
-	upgrade) shift; upgrade "$@";;
+	update) update;;
 	*) usage;;
 esac

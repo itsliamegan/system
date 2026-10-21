@@ -8,6 +8,7 @@ tool is installed from, and how versions are pinned.
 - `bash -n <script>` checks a script's syntax. There are no tests.
 - `<domain>/install` installs one domain
 - `<domain>/configure` configures one domain
+- `<domain>/update` updates one domain's version pins
 - `setup configure` links configuration files into place, and `setup install`
   installs everything. Both are safe to rerun, but `setup install` takes a long
   time because it rebuilds Emacs and reinstalls every tool. Prefer the narrowest
