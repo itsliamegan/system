@@ -99,6 +99,8 @@ Ignore this section if you are not [Claude Code](https://code.claude.com).
   narrowing.
 - When recommending between options, say which is simpler to implement and to
   model.
+- When comparing design options, show each with a short code sample of the
+  changed call sites, not only prose.
 - When an implementation is temporary, weigh each option's cost in both the
   interim and the intended implementation, and let the contract follow the
   long-term one.
