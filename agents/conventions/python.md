@@ -19,6 +19,9 @@
   that must be constructed, with `value or default`. Do not write
   `if value is None:` blocks for this.
 - Defer a short call with a `lambda` rather than `functools.partial`.
+- Return from inside a `with` block rather than assigning the result and
+  returning it after the block or from an `else`. The block still closes
+  before the function returns.
 - Add type annotations for public APIs and non-obvious values when the project
   uses typing; do not introduce a new typing style into an established codebase.
 - Do not annotate `-> None`.
@@ -64,6 +67,8 @@
   role is obvious where it is declared. Use `Protocol` only where a function
   must accept unrelated types.
 - Prefer a dataclass to a hand-written `__init__` and `__repr__`.
+- Use a dataclass for values. Write services, which hold configuration and do
+  work, as plain classes.
 - Use a plain `@dataclass` with field defaults when `__init__` would only
   assign its arguments. Use `init=False` and a custom `__init__` when the
   constructor checks or converts arguments.
@@ -80,3 +85,7 @@
 - Shape docstrings as PEP 257 does. Put a short one on one line with its
   quotes. Start a longer one with a one-line summary on the opening quote's
   line, then a blank line, then the detail, and close it on a line of its own.
+- Write a function's or method's summary line in the imperative (`Return the
+  form and its errors.`) and a class's in the third person (`Parses request
+  input into typed values.`).
+- Leave a blank line between a function's or method's docstring and its body.

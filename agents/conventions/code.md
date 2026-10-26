@@ -111,6 +111,8 @@ Before writing code, ask:
   names, including what they call variables and attributes, not only
   classes. Avoid words that mean something else in context.
 - Before naming something, check what its siblings are called.
+- Name a collection class for what it holds, in the plural (`Sessions`,
+  `Migrations`).
 - Avoid vague names such as `normalize`, `check`, `process`, `handle`,
   `entry`, `values`, or `problem`. If no precise name fits, the function is
   probably doing more than one thing.
