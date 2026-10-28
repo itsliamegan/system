@@ -27,9 +27,9 @@ tar -xJf "$TARBALL" -C "$PREFIX" --strip-components=1
 ln -sf "$PREFIX/zotero" "$HOME/.local/bin/zotero"
 ln -sf "$PREFIX/zotero.desktop" "$HOME/.local/share/applications/zotero.desktop"
 
-mkdir -p "$XDG_DATA_HOME/zotero/styles" "$XDG_DATA_HOME/pandoc/csl"
+mkdir -p "$HOME/Documents/Zotero/styles" "$XDG_DATA_HOME/pandoc/csl"
 for style in $(<"$DIRECTORY/styles"); do
 	curl -fsSL -o "$XDG_DATA_HOME/pandoc/csl/$style.csl" \
 		"https://raw.githubusercontent.com/citation-style-language/styles/$STYLES_COMMIT/$style.csl"
-	cp "$XDG_DATA_HOME/pandoc/csl/$style.csl" "$XDG_DATA_HOME/zotero/styles/$style.csl"
+	cp "$XDG_DATA_HOME/pandoc/csl/$style.csl" "$HOME/Documents/Zotero/styles/$style.csl"
 done

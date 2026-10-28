@@ -9,6 +9,7 @@ set -euo pipefail
 
 DIRECTORY="$(dirname "$(realpath "$0")")"
 PROFILES="$HOME/.zotero/zotero"
+BIBLIOGRAPHY="$HOME/Documents/Zotero/Bibliography.json"
 
 # Zotero creates its first profile when it first starts.
 if [[ ! -f "$PROFILES/profiles.ini" ]]; then
@@ -21,8 +22,23 @@ for profile in $(sed -n 's/^Path=//p' "$PROFILES/profiles.ini"); do
 	# Zotero only accepts absolute paths.
 	{
 		cat "$DIRECTORY/user.js"
-		printf 'user_pref("extensions.zotero.dataDir", "%s");\n' "$XDG_DATA_HOME/zotero"
+		printf 'user_pref("extensions.zotero.dataDir", "%s");\n' "$HOME/Documents/Zotero"
 		printf 'user_pref("extensions.zotero.baseAttachmentPath", "%s");\n' "$HOME/Documents"
+
+		# Better BibTeX keeps each auto-export in a preference named for its
+		# encoded path. It encodes "." as well, which jq's @uri leaves alone.
+		printf 'user_pref("extensions.zotero.translators.better-bibtex.autoExport.%s", %s);\n' \
+			"$(jq -rn --arg path "$BIBLIOGRAPHY" '$path | @uri' | sed 's/\./%2e/g')" \
+			"$(jq -cn --arg path "$BIBLIOGRAPHY" '{
+				path: $path,
+				translatorID: "f4b52ab0-f878-4556-85a0-c7aeedd09dfc",
+				type: "library",
+				id: 1,
+				status: "done",
+				error: "",
+				recursive: false,
+				enabled: true
+			} | tojson')"
 	} >"$PROFILES/$profile/user.js"
 
 	# Better BibTeX updates itself once installed. It must arrive after
