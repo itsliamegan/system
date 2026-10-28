@@ -37,6 +37,7 @@ configure() {
 	"$PWD/kde/configure"
 	"$PWD/langs/rust/configure"
 	"$PWD/shell/configure"
+	"$PWD/zotero/configure"
 }
 
 install() {
@@ -46,6 +47,7 @@ install() {
 	"$PWD/kde/install"
 	"$PWD/firefox/install"
 	"$PWD/thunderbird/install"
+	"$PWD/zotero/install"
 	"$PWD/agents/claude/install"
 	"$PWD/git/install"
 	"$PWD/tailscale/install"
@@ -69,6 +71,7 @@ update() {
 	"$PWD/langs/node/update"
 	"$PWD/langs/typst/update"
 	"$PWD/shell/update"
+	"$PWD/zotero/update"
 	"$PWD/emacs/update"
 }
 

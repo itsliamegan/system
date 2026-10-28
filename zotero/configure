@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# configure - write Zotero's preferences into every profile and add Better
+#             BibTeX to any profile that lacks it.
+#
+# usage: zotero/configure
+
+set -euo pipefail
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+PROFILES="$HOME/.zotero/zotero"
+
+# Zotero creates its first profile when it first starts.
+if [[ ! -f "$PROFILES/profiles.ini" ]]; then
+	echo "configure: no Zotero profile in $PROFILES" >&2
+	exit 0
+fi
+
+for profile in $(sed -n 's/^Path=//p' "$PROFILES/profiles.ini"); do
+	# The data and linked attachment directories are appended here because
+	# Zotero only accepts absolute paths.
+	{
+		cat "$DIRECTORY/user.js"
+		printf 'user_pref("extensions.zotero.dataDir", "%s");\n' "$XDG_DATA_HOME/zotero"
+		printf 'user_pref("extensions.zotero.baseAttachmentPath", "%s");\n' "$HOME/Documents"
+	} >"$PROFILES/$profile/user.js"
+
+	# Better BibTeX updates itself once installed. It must arrive after
+	# user.js, because Zotero disables add-ons it finds in the profile unless
+	# user.js has already allowed them.
+	if [[ ! -f "$PROFILES/$profile/extensions/better-bibtex@iris-advies.com.xpi" ]]; then
+		mkdir -p "$PROFILES/$profile/extensions"
+		curl -fsSL -o "$PROFILES/$profile/extensions/better-bibtex@iris-advies.com.xpi" \
+			"$(curl -fsSL https://api.github.com/repos/retorquere/zotero-better-bibtex/releases/latest \
+				| jq -r '.assets[] | select(.name | endswith(".xpi")) | .browser_download_url')"
+	fi
+done

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# install - install the latest Zotero to ~/.local/opt and the citation styles
+#           for Zotero and pandoc.
+#
+# usage: zotero/install
+
+set -euo pipefail
+
+STYLES_COMMIT="e98c3b8a5371ad571abcf2192b75dfdd392243f2"
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+TARBALL="$HOME/.local/src/zotero.tar.xz"
+# Zotero updates itself in place, so its prefix is unversioned and owned by
+# the user.
+PREFIX="$HOME/.local/opt/zotero"
+
+mkdir -p "$HOME/.local/src" "$HOME/.local/bin" "$HOME/.local/share/applications"
+
+curl -fsSL -o "$TARBALL" "https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64"
+
+rm -rf "$PREFIX"
+mkdir -p "$PREFIX"
+tar -xJf "$TARBALL" -C "$PREFIX" --strip-components=1
+"$PREFIX/set_launcher_icon"
+
+ln -sf "$PREFIX/zotero" "$HOME/.local/bin/zotero"
+ln -sf "$PREFIX/zotero.desktop" "$HOME/.local/share/applications/zotero.desktop"
+
+mkdir -p "$XDG_DATA_HOME/zotero/styles" "$XDG_DATA_HOME/pandoc/csl"
+for style in $(<"$DIRECTORY/styles"); do
+	curl -fsSL -o "$XDG_DATA_HOME/pandoc/csl/$style.csl" \
+		"https://raw.githubusercontent.com/citation-style-language/styles/$STYLES_COMMIT/$style.csl"
+	cp "$XDG_DATA_HOME/pandoc/csl/$style.csl" "$XDG_DATA_HOME/zotero/styles/$style.csl"
+done

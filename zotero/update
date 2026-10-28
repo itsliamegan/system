@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# update - update the citation styles pin in the install script to the newest
+#          commit.
+#
+# usage: zotero/update
+
+set -euo pipefail
+
+cd "$(dirname "$(realpath "$0")")"
+
+commit="$(curl -fsSL https://api.github.com/repos/citation-style-language/styles/commits/master \
+	| jq -r .sha)"
+if [[ ! "$commit" =~ ^[0-9a-f]{40}$ ]]; then
+	echo "update: no commit found for citation-style-language/styles" >&2
+	exit 1
+fi
+
+sed -i "s/^STYLES_COMMIT=\".*\"\$/STYLES_COMMIT=\"$commit\"/" install
