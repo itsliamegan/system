@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
 # configure - link the backup services and timers into the systemd user
-#             directory and enable the timers.
+#             directory, link the data set files beside the secrets, and
+#             enable the timers.
 #
 # usage: backup/configure
 #
-# The services read secrets that stay out of this repository. On each machine,
-# copy them from the password manager into files readable only by you:
+# Each data set is backed up by its own instance of the backup services, named
+# for the data set's restic tag, such as backup-local@archive.service. The
+# instance reads <tag>.env, which sets BACKUP_PATH, the directory to back up
+# relative to the home directory, and KEEP, the forget policy. Each instance has
+# its own timer file, so each data set has its own schedule.
+#
+# The services read secrets that stay out of this repository:
 #
 #   ~/.config/backup/password     the restic password, shared by both
 #                                 repositories
@@ -16,26 +22,38 @@
 #                                 AWS_SECRET_ACCESS_KEY=<application key>
 #
 # A new disk or bucket needs its repository created by hand with `restic init`.
-# Check that the disk is mounted first, because /mnt/data exists on the system
-# drive even when the disk is not mounted there.
+# Check that the disk is mounted first.
 
 set -euo pipefail
 
 DIRECTORY="$(dirname "$(realpath "$0")")"
-SECRETS="$XDG_CONFIG_HOME/backup"
+CONFIG="$XDG_CONFIG_HOME/backup"
 UNITS="$XDG_CONFIG_HOME/systemd/user"
 
-mkdir -p "$SECRETS"
-chmod 700 "$SECRETS"
+mkdir -p "$CONFIG"
+# The directory holds the secrets, so only you can read it.
+chmod 700 "$CONFIG"
+ln -sf "$DIRECTORY/documents.env" "$CONFIG/documents.env"
+ln -sf "$DIRECTORY/archive.env" "$CONFIG/archive.env"
 
 mkdir -p "$UNITS"
-for unit in "$DIRECTORY"/*.service "$DIRECTORY"/*.timer; do
-	ln -sf "$unit" "$UNITS/$(basename "$unit")"
-done
+ln -sf "$DIRECTORY/backup-failed@.service" "$UNITS/backup-failed@.service"
+ln -sf "$DIRECTORY/backup-local@.service" "$UNITS/backup-local@.service"
+ln -sf "$DIRECTORY/backup-local@documents.timer" "$UNITS/backup-local@documents.timer"
+ln -sf "$DIRECTORY/backup-local@archive.timer" "$UNITS/backup-local@archive.timer"
+ln -sf "$DIRECTORY/backup-local-check.service" "$UNITS/backup-local-check.service"
+ln -sf "$DIRECTORY/backup-local-check.timer" "$UNITS/backup-local-check.timer"
+ln -sf "$DIRECTORY/backup-offsite@.service" "$UNITS/backup-offsite@.service"
+ln -sf "$DIRECTORY/backup-offsite@documents.timer" "$UNITS/backup-offsite@documents.timer"
+ln -sf "$DIRECTORY/backup-offsite@archive.timer" "$UNITS/backup-offsite@archive.timer"
+ln -sf "$DIRECTORY/backup-offsite-check.service" "$UNITS/backup-offsite-check.service"
+ln -sf "$DIRECTORY/backup-offsite-check.timer" "$UNITS/backup-offsite-check.timer"
 
 systemctl --user daemon-reload
 systemctl --user enable --now \
-	backup-local.timer \
+	backup-local@documents.timer \
+	backup-local@archive.timer \
 	backup-local-check.timer \
-	backup-offsite.timer \
+	backup-offsite@documents.timer \
+	backup-offsite@archive.timer \
 	backup-offsite-check.timer

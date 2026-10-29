@@ -1,21 +1,21 @@
 [Unit]
-Description=Back up documents to the local repository
+Description=Back up %i to the local repository
 OnFailure=backup-failed@%n.service
 
 [Service]
 Type=oneshot
 Environment=RESTIC_REPOSITORY=/mnt/data/restic
 Environment=RESTIC_PASSWORD_FILE=%h/.config/backup/password
+EnvironmentFile=%h/.config/backup/%i.env
 ExecStart=%h/.local/bin/restic backup \
 	--retry-lock 1h \
-	--tag documents \
+	--tag %i \
 	--group-by host,tags \
-	%h/Documents
+	--skip-if-unchanged \
+	%h/${BACKUP_PATH}
 ExecStart=%h/.local/bin/restic forget \
 	--retry-lock 1h \
-	--tag documents \
+	--tag %i \
 	--group-by host,tags \
 	--prune \
-	--keep-within-daily 30d \
-	--keep-within-monthly 2y \
-	--keep-yearly unlimited
+	$KEEP
