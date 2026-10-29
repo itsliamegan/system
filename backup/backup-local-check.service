@@ -1,0 +1,9 @@
+[Unit]
+Description=Check the local repository and read back all its data
+OnFailure=backup-failed@%n.service
+
+[Service]
+Type=oneshot
+Environment=RESTIC_REPOSITORY=/mnt/data/restic
+Environment=RESTIC_PASSWORD_FILE=%h/.config/backup/password
+ExecStart=%h/.local/bin/restic check --retry-lock 1h --read-data

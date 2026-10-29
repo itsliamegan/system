@@ -1,0 +1,28 @@
+[Unit]
+Description=Back up documents to the offsite repository
+OnFailure=backup-failed@%n.service
+# A run that starts at login can fail because the network is not up yet, so it
+# gets a few retries before it counts as failed.
+StartLimitIntervalSec=1h
+StartLimitBurst=4
+
+[Service]
+Type=oneshot
+Restart=on-failure
+RestartSec=5min
+RestartMode=direct
+Environment=RESTIC_PASSWORD_FILE=%h/.config/backup/password
+EnvironmentFile=%h/.config/backup/offsite.env
+ExecStart=%h/.local/bin/restic backup \
+	--retry-lock 1h \
+	--tag documents \
+	--group-by host,tags \
+	%h/Documents
+ExecStart=%h/.local/bin/restic forget \
+	--retry-lock 1h \
+	--tag documents \
+	--group-by host,tags \
+	--prune \
+	--keep-within-daily 30d \
+	--keep-within-monthly 2y \
+	--keep-yearly unlimited

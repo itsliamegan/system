@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# update - update the restic pin in the install script to the newest release.
+#
+# usage: backup/update
+
+set -euo pipefail
+
+cd "$(dirname "$(realpath "$0")")"
+
+version="$(curl -fsSL https://api.github.com/repos/restic/restic/releases/latest \
+	| jq -r '.tag_name | ltrimstr("v")')"
+if [[ ! "$version" =~ ^[0-9.]+$ ]]; then
+	echo "update: no release found for restic" >&2
+	exit 1
+fi
+
+sed -i "s/^RESTIC_VERSION=\".*\"\$/RESTIC_VERSION=\"$version\"/" install

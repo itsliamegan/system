@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# configure - link the backup services and timers into the systemd user
+#             directory and enable the timers.
+#
+# usage: backup/configure
+#
+# The services read secrets that stay out of this repository. On each machine,
+# copy them from the password manager into files readable only by you:
+#
+#   ~/.config/backup/password     the restic password, shared by both
+#                                 repositories
+#   ~/.config/backup/offsite.env  the B2 repository and its application key:
+#                                 RESTIC_REPOSITORY=s3:https://s3.<region>.backblazeb2.com/<bucket>
+#                                 AWS_ACCESS_KEY_ID=<key ID>
+#                                 AWS_SECRET_ACCESS_KEY=<application key>
+#
+# A new disk or bucket needs its repository created by hand with `restic init`.
+# Check that the disk is mounted first, because /mnt/data exists on the system
+# drive even when the disk is not mounted there.
+
+set -euo pipefail
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+SECRETS="$XDG_CONFIG_HOME/backup"
+UNITS="$XDG_CONFIG_HOME/systemd/user"
+
+mkdir -p "$SECRETS"
+chmod 700 "$SECRETS"
+
+mkdir -p "$UNITS"
+for unit in "$DIRECTORY"/*.service "$DIRECTORY"/*.timer; do
+	ln -sf "$unit" "$UNITS/$(basename "$unit")"
+done
+
+systemctl --user daemon-reload
+systemctl --user enable --now \
+	backup-local.timer \
+	backup-local-check.timer \
+	backup-offsite.timer \
+	backup-offsite-check.timer

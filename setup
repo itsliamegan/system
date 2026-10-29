@@ -30,6 +30,7 @@ configure() {
 	"$PWD/agents/configure"
 	"$PWD/agents/claude/configure"
 	"$PWD/agents/pi/configure"
+	"$PWD/backup/configure"
 	"$PWD/emacs/configure"
 	"$PWD/firefox/configure"
 	"$PWD/fonts/configure"
@@ -59,6 +60,7 @@ install() {
 	"$PWD/agents/pi/install"
 	"$PWD/langs/typst/install"
 	"$PWD/shell/install"
+	"$PWD/backup/install"
 	"$PWD/emacs/install"
 	"$PWD/emacs/servers"
 }
@@ -71,6 +73,7 @@ update() {
 	"$PWD/langs/node/update"
 	"$PWD/langs/typst/update"
 	"$PWD/shell/update"
+	"$PWD/backup/update"
 	"$PWD/zotero/update"
 	"$PWD/emacs/update"
 }
