@@ -3,3 +3,5 @@ message: "Write '%s' in sentence case."
 level: error
 scope: heading
 match: $sentence
+exceptions:
+  - Journal
