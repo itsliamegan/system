@@ -35,12 +35,14 @@ mkdir -p "$CONFIG"
 chmod 700 "$CONFIG"
 ln -sf "$DIRECTORY/documents.env" "$CONFIG/documents.env"
 ln -sf "$DIRECTORY/archive.env" "$CONFIG/archive.env"
+ln -sf "$DIRECTORY/photos.env" "$CONFIG/photos.env"
 
 mkdir -p "$UNITS"
 ln -sf "$DIRECTORY/backup-failed@.service" "$UNITS/backup-failed@.service"
 ln -sf "$DIRECTORY/backup-local@.service" "$UNITS/backup-local@.service"
 ln -sf "$DIRECTORY/backup-local@documents.timer" "$UNITS/backup-local@documents.timer"
 ln -sf "$DIRECTORY/backup-local@archive.timer" "$UNITS/backup-local@archive.timer"
+ln -sf "$DIRECTORY/backup-local@photos.timer" "$UNITS/backup-local@photos.timer"
 ln -sf "$DIRECTORY/backup-local-check.service" "$UNITS/backup-local-check.service"
 ln -sf "$DIRECTORY/backup-local-check.timer" "$UNITS/backup-local-check.timer"
 ln -sf "$DIRECTORY/backup-offsite@.service" "$UNITS/backup-offsite@.service"
@@ -53,6 +55,7 @@ systemctl --user daemon-reload
 systemctl --user enable --now \
 	backup-local@documents.timer \
 	backup-local@archive.timer \
+	backup-local@photos.timer \
 	backup-local-check.timer \
 	backup-offsite@documents.timer \
 	backup-offsite@archive.timer \
