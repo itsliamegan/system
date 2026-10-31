@@ -133,8 +133,6 @@ Before writing code, ask:
   the type name.
 - Name a function for the narrowest question it answers. Do not let one
   function silently answer a wider question than its name says.
-- Keep plan and roadmap vocabulary out of identifiers. Name an operation for
-  what it does, not for the step that introduced it.
 - During a rename, change only the sites that are genuinely the same concept,
   not ones that coincidentally share a name or shape.
 
@@ -171,19 +169,19 @@ Before writing code, ask:
 
 ## Comments
 
+These rules say what to comment and where. `writing.md` covers how comments
+and docstrings are written.
+
 - Scale comment density with intricacy: none for code that reads plainly,
   generous for intricate code that has settled.
 - Write code bare while it is still churning. Put explanations of in-flux code
   in the conversation instead.
-- Never reference design documents, plans, or section numbers from code. State
-  the reason itself.
 - Do not cross-reference other functions in comments. Say what this code is
   and let the reader find its callers.
 - Comment the line that can fail or depends on a hidden assumption, not the
   line that plainly does what it says.
 - Put a comment that explains one branch of a conditional inside that branch,
   not above the condition.
-- Write plain sentences joined with "because" and "but", not em-dashes.
 - Keep comments on enum variants or cases to one short line saying what the
   case is.
 - Never leave uncertainty or TODOs in code comments. Raise them in the
