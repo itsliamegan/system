@@ -1,0 +1,6 @@
+extends: occurrence
+message: "Do not chain relative clauses."
+level: error
+scope: sentence
+max: 1
+token: ', which\b'

@@ -1,0 +1,4 @@
+engine: tree-sitter
+scopes:
+  - expr: '[(line_comment) (block_comment)] @comment'
+    type: md

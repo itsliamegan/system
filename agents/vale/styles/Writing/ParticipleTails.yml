@@ -1,0 +1,7 @@
+extends: existence
+message: "Do not end a sentence with a participle clause: '%s'."
+level: error
+ignorecase: true
+nonword: true
+tokens:
+  - ', (?:highlighting|underscoring|showcasing|ensuring|reflecting|emphasizing|fostering|signaling)\b'

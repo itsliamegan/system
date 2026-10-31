@@ -1,0 +1,10 @@
+extends: existence
+message: "State the point without '%s'."
+level: error
+ignorecase: true
+tokens:
+  - worth (?:noting|flagging|mentioning)
+  - it'?s important to note
+  - it should be noted
+  - notably
+  - honest(?:ly)?

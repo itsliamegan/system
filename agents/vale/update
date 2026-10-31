@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# update - update the Vale pin in the install script to the newest release.
+#
+# usage: agents/vale/update
+
+set -euo pipefail
+
+cd "$(dirname "$(realpath "$0")")"
+
+version="$(curl -fsSL https://api.github.com/repos/vale-cli/vale/releases/latest \
+	| jq -r '.tag_name | ltrimstr("v")')"
+if [[ ! "$version" =~ ^[0-9.]+$ ]]; then
+	echo "update: no release found for vale" >&2
+	exit 1
+fi
+
+sed -i "s/^VALE_VERSION=\".*\"\$/VALE_VERSION=\"$version\"/" install

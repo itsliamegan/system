@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# configure - link the Vale configuration and styles that agents check their
+#             prose with.
+#
+# usage: agents/vale/configure
+
+set -euo pipefail
+
+DIRECTORY="$(dirname "$(realpath "$0")")"
+
+mkdir -p "$XDG_CONFIG_HOME/agents/vale"
+ln -sf "$DIRECTORY/vale.ini" "$XDG_CONFIG_HOME/agents/vale/vale.ini"
+ln -sfn "$DIRECTORY/styles" "$XDG_CONFIG_HOME/agents/vale/styles"

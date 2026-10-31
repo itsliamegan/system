@@ -1,0 +1,7 @@
+extends: existence
+message: "Write 'is' or 'has' in place of '%s'."
+level: error
+ignorecase: true
+tokens:
+  - (?:serves|served|stands|stood) as
+  - boasts?

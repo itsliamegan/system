@@ -1,0 +1,5 @@
+extends: existence
+message: "Do not stack genitives: '%s'."
+level: error
+raw:
+  - \b\w+'s \w+'s\b

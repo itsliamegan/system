@@ -1,0 +1,6 @@
+extends: existence
+message: "Name the alternative only if someone proposed it."
+level: error
+ignorecase: true
+tokens:
+  - instead of

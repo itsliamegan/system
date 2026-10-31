@@ -1,0 +1,24 @@
+extends: existence
+message: "'%s' is a listed word."
+level: error
+ignorecase: true
+tokens:
+  - additionally
+  - crucial(?:ly)?
+  - delv(?:e|es|ed|ing)
+  - enhanc(?:e|es|ed|ing|ement|ements)
+  - foster(?:s|ed|ing)?
+  - garner(?:s|ed|ing)?
+  - interplay
+  - intricate(?:ly)?
+  - landscapes?
+  - leverag(?:e|es|ed|ing)
+  - pivotal
+  - robust(?:ly|ness)?
+  - seamless(?:ly)?
+  - showcas(?:e|es|ed|ing)
+  - tapestry
+  - testament
+  - underscor(?:e|es|ed|ing)
+  - utiliz(?:e|es|ed|ing|ation)
+  - vibrant

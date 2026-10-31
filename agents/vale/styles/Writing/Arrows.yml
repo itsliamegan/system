@@ -1,0 +1,9 @@
+extends: existence
+message: "Write '%s' as words."
+level: error
+nonword: true
+tokens:
+  - '→'
+  - '⇒'
+  - '->'
+  - '=>'

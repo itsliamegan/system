@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# install - install a Vale release to ~/.local/opt.
+#
+# usage: agents/vale/install
+
+set -euo pipefail
+
+VALE_VERSION="3.25.1"
+
+RELEASE="vale_${VALE_VERSION}_Linux_64-bit"
+CHECKSUMS="vale_${VALE_VERSION}_checksums.txt"
+DOWNLOAD="$HOME/.local/src/$RELEASE.tar.gz"
+PREFIX="$HOME/.local/opt/vale-$VALE_VERSION"
+
+mkdir -p "$HOME/.local/src" "$HOME/.local/bin"
+
+curl -fsSL -o "$DOWNLOAD" "https://github.com/vale-cli/vale/releases/download/v$VALE_VERSION/$RELEASE.tar.gz"
+curl -fsSL -o "$HOME/.local/src/$CHECKSUMS" "https://github.com/vale-cli/vale/releases/download/v$VALE_VERSION/$CHECKSUMS"
+
+cd "$HOME/.local/src"
+grep " $RELEASE.tar.gz\$" "$CHECKSUMS" | sha256sum -c -
+
+rm -rf "$PREFIX"
+mkdir -p "$PREFIX/bin"
+tar -xzf "$DOWNLOAD" -C "$PREFIX/bin" vale
+
+ln -sfn "$PREFIX" "$HOME/.local/opt/vale"
+ln -sf "$HOME/.local/opt/vale/bin/vale" "$HOME/.local/bin/vale"

@@ -1,0 +1,6 @@
+extends: existence
+message: "Use straight quotes and apostrophes."
+level: error
+nonword: true
+tokens:
+  - '[‘’“”]'

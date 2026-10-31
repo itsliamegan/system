@@ -1,0 +1,7 @@
+extends: existence
+message: "Use 'X, not Y' only to correct a likely reading."
+level: suggestion
+ignorecase: true
+nonword: true
+tokens:
+  - ', not\b'

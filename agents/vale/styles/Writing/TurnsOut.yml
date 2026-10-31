@@ -1,0 +1,6 @@
+extends: existence
+message: "State the fact without 'it turns out'."
+level: error
+ignorecase: true
+tokens:
+  - it turns out
