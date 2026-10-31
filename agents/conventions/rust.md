@@ -2,11 +2,8 @@
 
 ## Code style
 
-- Run `cargo fmt` and ensure `cargo fmt --check` is clean before considering any
-  change done.
-- Never use `matches!()`. Write an explicit `match` or `if let` instead. Be wary
-  of any macro that takes a pattern or other non-expression syntax as an
-  argument.
+- Be wary of any macro that takes a pattern or other non-expression syntax as
+  an argument. Write an explicit `match` or `if let` instead.
 - Prefer an explicit `match` that names each reachable case over a compact
   boolean condition, even when the match is longer or an arm looks redundant.
 - Do not fuse a match guard onto a question the matched value cannot answer.

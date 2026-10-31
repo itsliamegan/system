@@ -1,0 +1,3 @@
+disallowed-macros = [
+	{ path = "std::matches", reason = "Write an explicit match or if let." },
+]

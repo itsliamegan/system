@@ -2,8 +2,6 @@
 
 ## Code style
 
-- Follow the existing project's formatter, linter, supported Python version, and
-  local conventions first.
 - When a signature, call, or collection literal does not fit on one line, put
   each parameter, argument, or element on its own line with a trailing comma, so
   the formatter keeps it expanded. Do not leave several on a single continuation
@@ -11,20 +9,21 @@
 - Write clear Python. Prefer simple, explicit control flow over terse idioms,
   and use the standard library where appropriate.
 - Build collections and compute results with explicit `for` loops rather than
-  comprehensions, `any`, `all`, `map`, or `filter`. A generator expression
-  passed directly to a call, such as `", ".join(...)`, is fine.
+  comprehensions, `any`, `all`, `next`, `map`, or `filter`. A generator
+  expression passed directly to another call, such as `", ".join(...)`, is
+  fine.
 - Write an immutable literal default, such as a string or a number, in the
   signature (`format: str = "%b %-d, %Y"`).
 - Default other optional arguments, such as mutable collections and objects
   that must be constructed, with `value or default`. Do not write
   `if value is None:` blocks for this.
-- Defer a short call with a `lambda` rather than `functools.partial`.
 - Return from inside a `with` block rather than assigning the result and
   returning it after the block or from an `else`. The block still closes
   before the function returns.
 - Add type annotations for public APIs and non-obvious values when the project
   uses typing; do not introduce a new typing style into an established codebase.
 - Do not annotate `-> None`.
+- Write forward references in annotations without quotes (`-> Document`).
 - Do not use positional-only `/` markers.
 - Build paths with `Path(a, b)` rather than the `/` operator.
 - Import names explicitly (`from .codec import Codec`) when they make sense on
@@ -75,16 +74,11 @@
 - When a class is made from a source, such as text, a file, or a driver, give
   it a class method named for that source (`Config.parse`, `Manifest.load`,
   `Site.read`) and keep `__init__` as the dataclass's.
-- Do not use `dataclasses.field` or `dataclasses.replace`. Call constructors
-  explicitly.
 - Do not use `frozen=True`. Leave `eq` on unless there is a specific reason to
   turn it off.
 - Pass flags and optional parts to constructors as keyword arguments.
 - Give a class a docstring when its contract is not plain from its members.
   State the contract in short, plain sentences.
-- Shape docstrings as PEP 257 does. Put a short one on one line with its
-  quotes. Start a longer one with a one-line summary on the opening quote's
-  line, then a blank line, then the detail, and close it on a line of its own.
 - Write a function's or method's summary line in the imperative (`Return the
   form and its errors.`) and a class's in the third person (`Parses request
   input into typed values.`).

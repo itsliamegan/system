@@ -2,11 +2,7 @@
 
 ## Code style
 
-- Do not use semicolons.
-- Prefer double quotes for strings wherever possible.
-- Prefer explicit conditionals over ternaries wherever possible.
 - Separate class methods with a blank line.
-- Always use curly braces for `if`, `for`, and `while` statements.
 
 ## Declarations
 
