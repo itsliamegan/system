@@ -5,6 +5,11 @@
     "sessionUrl": false
   },
   "model": "opus",
+  "permissions": {
+    "deny": [
+      "Bash(sudo *)"
+    ]
+  },
   "worktree": {
     "bgIsolation": "none"
   },
@@ -18,10 +23,14 @@
   "modelSettings": {
     "claude-sonnet-5": {
       "effortLevel": "medium"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "medium"
     }
   },
   "promptSuggestionEnabled": false,
+  "awaySummaryEnabled": false,
+  "autoMemoryEnabled": false,
   "theme": "dark-ansi",
-  "agentPushNotifEnabled": true,
-  "awaySummaryEnabled": false
+  "agentPushNotifEnabled": true
 }
