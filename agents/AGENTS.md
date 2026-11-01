@@ -88,8 +88,9 @@ Ignore this section if you are not [Pi](https://pi.dev).
 - Before reporting work as done, run the tests, formatter, linter, and type
   checker that the project's Commands list, and fix what they report.
 - Before reporting work as done, also run
-  `vale --config ~/.config/agents/vale/vale.ini` on the files you changed.
-  Before committing or opening a pull request, pipe the message through
+  `vale --config ~/.config/agents/vale/vale.ini` on the files you changed,
+  except plans and notes in `.agents/` and files in the Journal. Before
+  committing or opening a pull request, pipe the message through
   `vale --config ~/.config/agents/vale/vale.ini --path=message.md`. Judge only
   findings in text you wrote, and change those that break `writing.md`.
 - Never create a commit unless I have explicitly confirmed that commit in the
@@ -113,8 +114,8 @@ Conventions are in `~/.config/agents/conventions/`.
 - Before creating or modifying code, read `code.md` and the file for the
   language you are writing, such as `python.md`.
 - Before proposing options, a design, or a plan, read `planning.md`.
-- Before writing a comment, a docstring, documentation, a commit message, a
-  pull request description, or user-facing text, read `writing.md`.
+- Before your first reply, read `writing.md`. It covers chat, plans, notes,
+  and text that ships with code.
 - My knowledge base is the Journal, `~/Documents/Journal`. When a conversation
   concerns a text, a concept, writing, a software project, or one of my running
   lists, read `~/Documents/Journal/Meta/RULES.md` before reading or writing

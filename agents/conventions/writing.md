@@ -2,7 +2,8 @@
 
 These apply to text that ships with code: comments, docstrings, READMEs and
 other documentation, commit messages, pull request descriptions, and
-user-facing error and help text. They do not apply to chat or to the Journal.
+user-facing error and help text. Sentences and Formatting also apply to chat
+and to plans and notes in `.agents/`. None of these apply to the Journal.
 
 ## Content
 
