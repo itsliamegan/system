@@ -28,7 +28,6 @@ and to plans and notes in `.agents/`. None of these apply to the Journal.
   Code can be the subject of a sentence when the verb is literal ("the parser
   rejects a bad date"). Do not use figurative verbs ("rides along", "holds
   it", "stands on").
-- Keep each sentence to 25 words or fewer.
 - Do not join two sentences with a comma. Use a period, or join them with
   "because", "but", or "so". Do not use em-dashes.
 - Do not stack genitives ("the site's config's base URL") or chain relative
