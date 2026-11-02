@@ -110,6 +110,9 @@ Before writing code, ask:
   vocabulary and the vocabulary of any reference frameworks the project
   names, including what they call variables and attributes, not only
   classes. Avoid words that mean something else in context.
+- Name a class with a noun that has a meaning of its own, such as
+  `Container` or `Router`. Do not turn the verb a class performs into a noun
+  with "-er" (`Rescuer`), because the name only restates the verb.
 - Before naming something, check what its siblings are called.
 - Name a collection class for what it holds, in the plural (`Sessions`,
   `Migrations`).

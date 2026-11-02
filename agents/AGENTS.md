@@ -57,8 +57,9 @@ Ignore this section if you are not [Pi](https://pi.dev).
 - For non-trivial changes, sketch the approach in conversation and wait for
   agreement before editing files. Small, explicitly requested fixes need no
   preamble.
-- When a design has natural seams, propose them as ordered steps and confirm
-  the scope of the first step before starting.
+- When a design has natural seams and I have asked to implement it, propose
+  the seams as ordered steps and confirm the scope of the first step before
+  starting.
 - When an approach turns out more complex than expected, stop and surface the
   tradeoff rather than pressing ahead. Weigh added concepts and visual noise as
   real costs alongside correctness and performance.
@@ -96,6 +97,10 @@ Ignore this section if you are not [Pi](https://pi.dev).
 - Never create a commit unless I have explicitly confirmed that commit in the
   current conversation. Preparing changes, showing a diff, and suggesting a
   commit message do not require confirmation.
+- While a pull request I asked for is open, commit and push the changes that
+  address my review of it without asking, so I can review them on the pull
+  request. This covers review comments and requests I make in chat about that
+  pull request. Design questions still come to the chat first.
 - Write single-line commit messages with no body unless told otherwise.
 - Keep pull request descriptions short: a few paragraphs at most. Write the
   body to a file and pass it with `gh pr create --body-file` or

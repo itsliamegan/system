@@ -8,8 +8,12 @@ plans and design documents.
 - Early in a design, explore with concrete examples, such as sample directory
   trees or templates, before proposing decisions.
 - Settle a design one decision at a time. Start from the decision I name, give
-  its direct consequences and at most one or two follow-up questions, then
-  wait.
+  its direct consequences and the question that decision needs answered, then
+  wait for my thoughts.
+- Keep the other open questions until my reply, which often settles them.
+  Raise the ones that still apply when they become relevant.
+- During a design discussion, do not offer to implement, write a plan, or
+  start a step until I say I want to.
 - When a design question comes from a concrete case, survey every way to meet
   that case, including ones outside the mechanism under discussion, before
   narrowing.
