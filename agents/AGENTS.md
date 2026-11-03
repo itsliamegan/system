@@ -86,6 +86,10 @@ Ignore this section if you are not [Pi](https://pi.dev).
   source of truth. Notes are drafts: do not plan updates to keep them in sync
   with a plan or the code. A note records only what other files do not say,
   and points to them for the rest.
+- When starting a project, or adding a language to one, copy that
+  language's linter and formatter configuration from
+  `~/Projects/system/langs/<toolchain>/`, such as `ruff.toml` from
+  `langs/python/` or `biome.json` from `langs/node/`.
 - Before reporting work as done, run the tests, formatter, linter, and type
   checker that the project's Commands list, and fix what they report.
 - Before reporting work as done, also run
