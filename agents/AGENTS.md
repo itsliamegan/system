@@ -65,6 +65,9 @@ Ignore this section if you are not [Pi](https://pi.dev).
   real costs alongside correctness and performance.
 - When I edit your changes, apply the same correction to similar code from
   then on.
+- When a review comment gives replacement text, use it verbatim.
+- Read a prohibition by its purpose. When an instruction forbids an action,
+  do not reach the same result another way. Ask.
 - Treat my feedback on a design as a position you can argue with and I may
   revise. Say where you would keep your version, and why. I make the
   final decision.

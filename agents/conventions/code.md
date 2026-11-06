@@ -62,6 +62,9 @@ Before writing code, ask:
 - When several modules solve the same problem, solve it once in a shared
   place.
 - Give equivalent operations the same name and shape everywhere.
+- Before writing a concern inline, check whether the framework or the
+  project's reference project has a mechanism for it, such as a guard, a
+  component, or a command, and use it.
 
 ### Public interfaces
 

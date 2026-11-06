@@ -1,9 +1,10 @@
 # Writing conventions
 
 These apply to text that ships with code: comments, docstrings, READMEs and
-other documentation, commit messages, pull request descriptions, and
-user-facing error and help text. Sentences and Formatting also apply to chat
-and to plans and notes in `.agents/`. None of these apply to the Journal.
+other documentation, commit messages, pull request descriptions, interface
+text, and user-facing error and help text. Sentences and Formatting also apply
+to chat and to plans and notes in `.agents/`. None of these apply to the
+Journal.
 
 ## Content
 
@@ -14,6 +15,7 @@ and to plans and notes in `.agents/`. None of these apply to the Journal.
 - Use one word per concept, as `code.md` Naming says. Do not vary a term for
   style.
 - Put code names in backticks.
+- In instructions for agents, call the human "the user".
 
 ## Docstrings
 
@@ -21,6 +23,18 @@ and to plans and notes in `.agents/`. None of these apply to the Journal.
   the contract: what a caller can rely on that the signature does not show.
 - Leave out usage advice, lists of raised errors, and incidental reasons.
 - The form of the summary line for each language is in its conventions file.
+
+## Interface text
+
+These apply to interfaces for users who know how to operate them.
+
+- A page has a heading and its controls. Leave out introductions,
+  instructions, and text that restates what a control does.
+- Label a control with the shortest phrase that names its action, such as
+  "Pair".
+- Show a failure as a heading alone, such as "Link expired", unless the user
+  needs a next step that the page does not offer.
+- Add a link or control only when the page needs it.
 
 ## Sentences
 
