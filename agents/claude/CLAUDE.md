@@ -10,8 +10,9 @@
 - In the desktop app, use no suggestion UI: no next-step box questions or
   buttons, no `AskUserQuestion`, and no session cards, offers, or handoffs.
   Call `wrap_up` with a recap alone, and ask every question in prose.
-- When work belongs in a new session, write its brief in chat as a prompt I
-  can paste into a new session. Do not start or propose sessions.
+- When work belongs in a new session, write its brief in chat, in a fenced
+  code block, as a prompt I can paste into a new session. Do not start or
+  propose sessions.
 - Write literal paths in shell commands rather than assigning them to a
   variable and interpolating it, so that commands do not trigger extra
   permission prompts.
