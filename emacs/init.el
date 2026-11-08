@@ -35,6 +35,9 @@
 (setq custom-theme-directory (expand-file-name "themes" user-emacs-directory))
 (add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
 
+;; Load the themes' shared library from the same subdirectory.
+(add-to-list 'load-path (expand-file-name "themes" user-emacs-directory))
+
 ;; Store backups in the system temporary directory.
 (setq backup-directory-alist `(("." . ,temporary-file-directory)))
 
@@ -66,8 +69,8 @@
 ;; Set appropriate theme based on system theme.
 (setq theme (if (string= (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")
                          "\'prefer-dark\'\n")
-                'modus-vivendi
-              'modus-operandi))
+                'canvas-dark
+              'canvas-light))
 
 ;; Use an accessible, high-contrast theme.
 (load-theme theme t)
@@ -441,6 +444,28 @@ the front and back of the string."
          (default-directory (project-root project))
          (vterm-buffer-name (format "*vterm %s*" (project-name project))))
     (vterm vterm-buffer-name)))
+
+;; -----
+;; Prose
+;; -----
+
+(defun split-sentences ()
+  "Split the paragraph at point into one paragraph per sentence."
+  (interactive)
+  (save-excursion
+    (forward-paragraph)
+    (skip-chars-backward " \t\n")
+    (let ((end (point-marker)))
+      (backward-paragraph)
+      (skip-chars-forward " \t\n")
+      (let ((start (point)))
+        ;; Join the lines first, so a sentence broken across lines is one unit.
+        (while (re-search-forward "[ \t]*\n[ \t]*" end t)
+          (replace-match " "))
+        (goto-char start)
+        (while (progn (forward-sentence) (< (point) end))
+          (delete-horizontal-space)
+          (insert "\n\n"))))))
 
 ;; -----------
 ;; Keybindings
