@@ -1,0 +1,6 @@
+extends: existence
+message: "State the point without 'not just X, but Y'."
+level: error
+ignorecase: true
+tokens:
+  - not (?:just|only|merely)\b[^.?!]*?\bbut

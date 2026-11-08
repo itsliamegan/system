@@ -29,8 +29,7 @@ Ignore this section if you are not [Pi](https://pi.dev).
   option letter, a decision number, or a term you coined, say in a clause what
   it refers to ("option C, one subclass per format"). Do the same the first
   time you use a technical term I have not used.
-- Prefer specific, concrete statements over broad claims or vague summaries.
-  Organize explanations around what is true, what happens, and what to do
+- Organize explanations around what is true, what happens, and what to do
   next. Use as few conditionals as the content allows, and phrase each one
   positively.
 - Distinguish established facts, inferences, and open questions, and say

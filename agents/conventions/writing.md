@@ -38,20 +38,34 @@ These apply to interfaces for users who know how to operate them.
 
 ## Sentences
 
+- Prefer specific, concrete statements to broad claims. Say what something
+  does, with a mechanism or a number. Cut a sentence that would stay true if
+  its subject were swapped for another.
+- Name the source of a claim, or state it as your own. Do not write "experts
+  say" or "some argue".
 - Use the active voice and name the actor: "the loader parses the file".
   Code can be the subject of a sentence when the verb is literal ("the parser
   rejects a bad date"). Do not use figurative verbs ("rides along", "holds
-  it", "stands on").
+  it", "stands on"). Do not write aphorisms or fragments for effect.
 - Do not join two sentences with a comma. Use a period, or join them with
   "because", "but", or "so". Do not use em-dashes.
-- Do not stack genitives ("the site's config's base URL") or chain relative
-  clauses ("a value, which the loader reads, which…").
+- Do not use a colon to set up a point ("The fix: …").
+- Split a sentence the reader has to reread. Do not stack genitives ("the
+  site's config's base URL") or chain relative clauses ("a value, which the
+  loader reads, which…").
 - Write whole sentences, with their articles and verbs. Do not use arrows or
-  other symbols in place of words.
+  other symbols in place of words. Spell out abbreviations the reader may not
+  know.
+- List as many items as there are. Write "from X to Y" only for a range on one
+  scale.
+- Hedge a claim once. Do not stack qualifiers ("could potentially").
+- Replace an adverb that props up a verb with a stronger verb or a number.
+  "Significantly faster" becomes "twice as fast".
 - Write "is" or "has", not "serves as", "stands as", "boasts", or "features".
 - Do not end a sentence with a participle clause (", ensuring…",
   ", highlighting…", ", reflecting…").
 - Use "X, not Y" only when it corrects a reading the reader is likely to hold.
+- Do not write "not just X, but Y". State Y.
 - Do not mark importance: no "worth noting", "it's important to note",
   "notably", "crucially", "honest", or "honestly".
 - Do not write "it turns out". State the fact.
@@ -64,8 +78,9 @@ These apply to interfaces for users who know how to operate them.
 - Write headings in sentence case.
 - Use straight quotes and apostrophes.
 - Do not start a line with a bold label that restates it ("**Performance:**
-  Performance improved…"). A bold lead-in that names the item and is followed
-  by new detail is fine.
+  Performance improved…"). A bold lead-in that names the item, ends with a
+  period, and is followed by new detail is fine.
+- Bold only a lead-in or a term where it is defined. Do not use emoji.
 
 ## Commit messages and pull requests
 
