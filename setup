@@ -39,6 +39,7 @@ configure() {
 	"$PWD/kde/configure"
 	"$PWD/langs/rust/configure"
 	"$PWD/shell/configure"
+	"$PWD/tailscale/configure"
 	"$PWD/zotero/configure"
 }
 

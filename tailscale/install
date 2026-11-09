@@ -17,4 +17,9 @@ fi
 sudo install -m 0644 "$DIRECTORY/tailscale.sources" /etc/apt/sources.list.d/tailscale.sources
 
 sudo apt update
-sudo apt install -y tailscale tailscale-archive-keyring
+# The systray's startup option writes its autostart entry with
+# desktop-file-install.
+sudo apt install -y tailscale tailscale-archive-keyring desktop-file-utils
+
+# The operator can control tailscaled without root, which the systray needs.
+sudo tailscale set --operator="$USER"

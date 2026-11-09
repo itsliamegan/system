@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# configure - start Tailscale's systray at login.
+#
+# usage: tailscale/configure
+
+set -euo pipefail
+
+tailscale configure systray --enable-startup=freedesktop
