@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# configure - link Konsole's color scheme and profile, and write KDE Plasma
-#             settings with kwriteconfig6. run before the first Plasma login.
+# configure - link Konsole's color scheme and profile, write Dolphin's places,
+#             and write KDE Plasma settings with kwriteconfig6. run before the
+#             first Plasma login.
 #
 # usage: kde/configure
 
@@ -13,6 +14,7 @@ mkdir -p "$XDG_DATA_HOME/konsole"
 ln -sf "$DIRECTORY/konsole/Chalk.colorscheme" "$XDG_DATA_HOME/konsole/Chalk.colorscheme"
 ln -sf "$DIRECTORY/konsole/Profile.profile" "$XDG_DATA_HOME/konsole/Profile.profile"
 cp "$DIRECTORY/plasma-org.kde.plasma.desktop-appletsrc" "$XDG_CONFIG_HOME/plasma-org.kde.plasma.desktop-appletsrc"
+sed "s|@HOME@|$HOME|g" "$DIRECTORY/user-places.xbel" >"$XDG_DATA_HOME/user-places.xbel"
 
 kwriteconfig6 --file kactivitymanagerdrc --group activities --key 647b0148-d092-444c-ad6d-5f7a864124ec Default
 kwriteconfig6 --file plasmashellrc --group PlasmaViews --group "Panel 2" --key floating 0
@@ -50,6 +52,7 @@ kwriteconfig6 --file powerdevilrc --group AC --group SuspendAndShutdown --key Au
 kwriteconfig6 --file klipperrc --group General --key KeepClipboardContents false
 
 kwriteconfig6 --file krunnerrc --group General --key FreeFloating true
+kwriteconfig6 --file krunnerrc --group Plugins --group Favorites --key plugins krunner_services,baloosearch,krunner_sessions,krunner_powerdevil,krunner_systemsettings
 
 kwriteconfig6 --file kxkbrc --group Layout --key Options ctrl:nocaps,compose:rctrl
 kwriteconfig6 --file kxkbrc --group Layout --key ResetOldOptions true
