@@ -26,6 +26,12 @@
 
 set -euo pipefail
 
+# Backups run only on rhino, which holds the local repository disk.
+if [ "$(hostname)" != rhino ]; then
+	echo "backup/configure: backups run only on rhino"
+	exit 0
+fi
+
 DIRECTORY="$(dirname "$(realpath "$0")")"
 CONFIG="$XDG_CONFIG_HOME/backup"
 UNITS="$XDG_CONFIG_HOME/systemd/user"

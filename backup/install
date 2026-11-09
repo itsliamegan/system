@@ -7,6 +7,12 @@
 
 set -euo pipefail
 
+# Backups run only on rhino, which holds the local repository disk.
+if [ "$(hostname)" != rhino ]; then
+	echo "backup/install: backups run only on rhino"
+	exit 0
+fi
+
 RESTIC_VERSION="0.19.1"
 
 DIRECTORY="$(dirname "$(realpath "$0")")"
