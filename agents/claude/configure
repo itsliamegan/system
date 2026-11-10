@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# configure - link Claude Code's instructions and settings.
+# configure - link Claude Code's instructions, settings, and skills.
 #
 # usage: agents/claude/configure
 
@@ -11,3 +11,4 @@ DIRECTORY="$(dirname "$(realpath "$0")")"
 mkdir -p "$HOME/.claude"
 ln -sf "$DIRECTORY/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 ln -sf "$DIRECTORY/settings.json" "$HOME/.claude/settings.json"
+ln -sfn "$(dirname "$DIRECTORY")/skills" "$HOME/.claude/skills"
