@@ -21,9 +21,10 @@ import mutagen
 from luna.cli import Command, Program, argument, option
 from mutagen.mp4 import MP4, MP4Cover
 from yt_dlp import YoutubeDL
+from yt_dlp.cookies import extract_cookies_from_browser
 from yt_dlp.postprocessor.common import PostProcessor
 from yt_dlp.utils import sanitize_filename
-from ytmusicapi import YTMusic
+from ytmusicapi import YTMusic, setup
 from ytmusicapi.exceptions import YTMusicServerError
 
 
@@ -34,8 +35,9 @@ class DownloadAlbum(Command):
     url: str = argument(help="album playlist URL or ID")
 
     def run(self) -> int:
+        music = YoutubeMusic.sign_in()
         playlist = Playlist.parse(self.url)
-        album = Album.find(playlist)
+        album = Album.find(music, playlist)
         if album is None:
             report(f"not a YouTube Music album: {playlist.id}")
             return 1
@@ -66,13 +68,14 @@ class DownloadSong(Command):
     )
 
     def run(self) -> int:
-        song = Song.find(self.url)
+        music = YoutubeMusic.sign_in()
+        song = Song.find(music, self.url)
         if song is None:
             report(f"video not found: {self.url}")
             return 1
 
         playlist = Playlist.parse(self.album)
-        album = Album.find(playlist)
+        album = Album.find(music, playlist)
         if album is None:
             report(f"not a YouTube Music album: {playlist.id}")
             return 1
@@ -88,21 +91,104 @@ class DownloadSong(Command):
                 report(f"{album.title} has no track {self.track}")
                 return 1
 
-        # The template is literal apart from the extension, so escape "%".
-        name = sanitize_filename(track.title).replace("%", "%%")
         return download(
             album,
             f"https://music.youtube.com/watch?v={song.id}",
-            f"{track.number:02d} {name}.%(ext)s",
+            track.output_template(),
             TagTrack(album, track),
         )
+
+
+class DownloadPlaylist(Command):
+    """
+    Download a YouTube Music playlist into the library.
+
+    Each song is saved and tagged as a track of its album, and the playlist is
+    written to the Playlists folder as an M3U file of those tracks. Songs that
+    are not on an album are reported and left out.
+    """
+
+    name = "playlist"
+    url: str = argument(help="playlist URL or ID")
+
+    def run(self) -> int:
+        music = YoutubeMusic.sign_in()
+        playlist = Playlist.parse(self.url)
+        details = music.get_playlist(playlist.id, limit=None)
+
+        albums: dict[str, Album] = {}
+        paths: list[Path] = []
+        complete = True
+        for song in details["tracks"]:
+            # Videos that aren't music have no album, or one with no ID that
+            # names the video's duration.
+            if song["album"] is None or song["album"]["id"] is None:
+                report(f"not on an album: {song['title']}")
+                complete = False
+                continue
+
+            browse_id = song["album"]["id"]
+            if browse_id not in albums:
+                albums[browse_id] = Album.load(music, browse_id)
+            album = albums[browse_id]
+
+            track = album.track_with_video(song["videoId"]) or album.track_titled(
+                song["title"],
+            )
+            if track is None:
+                report(f"no track titled {song['title']!r} on {album.title}")
+                complete = False
+                continue
+
+            tagger = TagTrack(album, track)
+            status = download(
+                album,
+                f"https://music.youtube.com/watch?v={song['videoId']}",
+                track.output_template(),
+                tagger,
+            )
+            paths.extend(tagger.tagged)
+            if status != 0:
+                complete = False
+
+        directory = Path("Playlists")
+        directory.mkdir(exist_ok=True)
+        lines = ["#EXTM3U"]
+        for path in paths:
+            relative = path.absolute().relative_to(directory.absolute(), walk_up=True)
+            lines.append(str(relative))
+        file = Path(directory, f"{sanitize_filename(details['title'])}.m3u8")
+        file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+        if complete:
+            return 0
+        else:
+            return 1
 
 
 class DownloadMusic(Program):
     """Download music from YouTube Music with metadata and cover art."""
 
     name = "dl-music"
-    commands = (DownloadAlbum, DownloadSong)
+    commands = (DownloadAlbum, DownloadSong, DownloadPlaylist)
+
+
+class YoutubeMusic(YTMusic):
+    @classmethod
+    def sign_in(cls) -> YoutubeMusic:
+        # Use the YouTube Music session in Firefox.
+        jar = extract_cookies_from_browser("firefox")
+        cookies = "; ".join(
+            f"{cookie.name}={cookie.value}"
+            for cookie in jar
+            if cookie.domain.endswith(".youtube.com")
+        )
+        # ytmusicapi computes the authorization header for each request from
+        # the cookies, but recognizes browser headers by this placeholder.
+        headers = setup(
+            headers_raw=f"cookie: {cookies}\nx-goog-authuser: 0\nauthorization: SAPISIDHASH",
+        )
+        return cls(headers)
 
 
 def download(album: Album, url: str, template: str, tagger: TagTrack) -> int:
@@ -133,7 +219,7 @@ def download(album: Album, url: str, template: str, tagger: TagTrack) -> int:
         downloader.add_post_processor(tagger, when="after_move")
         status = downloader.download([url])
 
-    if tagger.tagged == 0:
+    if not tagger.tagged:
         report("no tracks were downloaded")
         return 1
     elif tagger.failed > 0:
@@ -153,7 +239,7 @@ class TagTrack(PostProcessor):
         # A fixed track when downloading a stand-in video; otherwise each
         # track comes from its position in the album's playlist.
         self.track = track
-        self.tagged = 0
+        self.tagged: list[Path] = []
         self.failed = 0
 
     def run(self, information: dict[str, Any]) -> tuple[list[str], dict[str, Any]]:
@@ -165,13 +251,17 @@ class TagTrack(PostProcessor):
             return [], information
 
         if self.track is None:
-            track = Track(information["playlist_index"], information["title"])
+            track = Track(
+                information["playlist_index"],
+                information["title"],
+                information["id"],
+            )
         else:
             track = self.track
 
         Tags(self.album, track).apply(audio)
         audio.save()
-        self.tagged += 1
+        self.tagged.append(path)
         return [], information
 
 
@@ -202,23 +292,30 @@ class Album:
     artist: str
     title: str
     year: str
-    tracks: list[str]
+    tracks: list[Track]
     cover: Cover
 
     @classmethod
-    def find(cls, playlist: Playlist) -> Album | None:
-        music = YTMusic()
+    def find(cls, music: YTMusic, playlist: Playlist) -> Album | None:
         browse_id = music.get_album_browse_id(playlist.id)
         if browse_id is None:
             return None
 
-        details = fetch_album(music, browse_id)
+        album = cls.load(music, browse_id)
         # Unknown IDs resolve to an unrelated album instead of failing.
-        if details.get("audioPlaylistId") != playlist.id:
+        if album.playlist != playlist:
             return None
 
+        return album
+
+    @classmethod
+    def load(cls, music: YTMusic, browse_id: str) -> Album:
+        details = fetch_album(music, browse_id)
+        playlist = Playlist(details["audioPlaylistId"])
         artist = ", ".join(artist["name"] for artist in details["artists"])
-        tracks = [track["title"] for track in details["tracks"]]
+        tracks = []
+        for number, track in enumerate(details["tracks"], start=1):
+            tracks.append(Track(number, track["title"], track["videoId"]))
         # Thumbnail URLs end in a sizing suffix such as "=w544-h544-l90-rj";
         # replacing it requests the cover at another size, as a JPEG.
         thumbnail = details["thumbnails"][-1]["url"]
@@ -228,14 +325,20 @@ class Album:
 
     def track(self, number: int) -> Track | None:
         if 1 <= number <= len(self.tracks):
-            return Track(number, self.tracks[number - 1])
+            return self.tracks[number - 1]
         else:
             return None
 
+    def track_with_video(self, video: str) -> Track | None:
+        for track in self.tracks:
+            if track.video == video:
+                return track
+        return None
+
     def track_titled(self, title: str) -> Track | None:
-        for number, candidate in enumerate(self.tracks, start=1):
-            if candidate.casefold() == title.casefold():
-                return Track(number, candidate)
+        for track in self.tracks:
+            if track.title.casefold() == title.casefold():
+                return track
         return None
 
 
@@ -257,6 +360,12 @@ def fetch_album(music: YTMusic, browse_id: str) -> dict[str, Any]:
 class Track:
     number: int
     title: str
+    video: str | None
+
+    def output_template(self) -> str:
+        # The template is literal apart from the extension, so escape "%".
+        name = sanitize_filename(self.title).replace("%", "%%")
+        return f"{self.number:02d} {name}.%(ext)s"
 
 
 @dataclass
@@ -278,7 +387,7 @@ class Song:
     title: str
 
     @classmethod
-    def find(cls, url: str) -> Song | None:
+    def find(cls, music: YTMusic, url: str) -> Song | None:
         parsed = urlparse(url)
         query = parse_qs(parsed.query)
         if "v" in query:
@@ -289,7 +398,7 @@ class Song:
             video = url
 
         try:
-            tracks = YTMusic().get_watch_playlist(video, limit=1)["tracks"]
+            tracks = music.get_watch_playlist(video, limit=1)["tracks"]
         except YTMusicServerError:
             return None
         if not tracks or tracks[0]["videoId"] != video:
