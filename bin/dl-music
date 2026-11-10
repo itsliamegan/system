@@ -121,7 +121,6 @@ def download(album: Album, url: str, template: str, tagger: TagTrack) -> int:
         # says generic MP4, but players that detect the type from a file's
         # contents only accept the audio brand.
         "postprocessor_args": {"fixupm4a": ["-brand", "M4A "]},
-        "cookiesfrombrowser": ("firefox",),
         "js_runtimes": {"node": {}},
         "paths": {"home": str(directory)},
         "outtmpl": {"default": template},
