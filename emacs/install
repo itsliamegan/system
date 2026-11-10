@@ -43,3 +43,11 @@ make install
 ln -sfn "$PREFIX" "$HOME/.local/opt/emacs"
 ln -sf "$HOME/.local/opt/emacs/bin/emacs" "$HOME/.local/bin/emacs"
 ln -sf "$HOME/.local/opt/emacs/share/applications/emacs.desktop" "$HOME/.local/share/applications/emacs.desktop"
+
+# The launcher names its icon as a theme icon, which KDE looks up only in the
+# user and system icon directories.
+for icon in "$HOME"/.local/opt/emacs/share/icons/hicolor/*/apps/emacs.*; do
+	target="$HOME/.local/share/icons/${icon#"$HOME/.local/opt/emacs/share/icons/"}"
+	mkdir -p "$(dirname "$target")"
+	ln -sf "$icon" "$target"
+done
