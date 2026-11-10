@@ -124,6 +124,7 @@ Conventions are in `~/.config/agents/conventions/`.
 
 - Before creating or modifying code, read `code.md` and the file for the
   language you are writing, such as `python.md`.
+- Before writing or reviewing tests, read `testing.md`.
 - Before proposing options, a design, or a plan, read `planning.md`.
 - Before your first reply, read `writing.md`. It covers chat, plans, notes,
   and text that ships with code.
