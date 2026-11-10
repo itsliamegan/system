@@ -102,7 +102,13 @@ Ignore this section if you are not [Pi](https://pi.dev).
   findings in text you wrote, and change those that break `writing.md`.
 - Never create a commit unless I have explicitly confirmed that commit in the
   current conversation. Preparing changes, showing a diff, and suggesting a
-  commit message do not require confirmation.
+  commit message do not require confirmation. A confirmation covers only the
+  changes it names. Amending or rebasing commits I have confirmed needs no
+  further confirmation.
+- Make each commit one coherent change, and propose a split when the changes
+  in progress hold several. Stage a commit by path or hunk so that unrelated
+  working-tree changes stay out of it, and run the checks on the staged
+  content alone.
 - While a pull request I asked for is open, commit and push the changes that
   address my review of it without asking, so I can review them on the pull
   request. This covers review comments and requests I make in chat about that
