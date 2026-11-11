@@ -9,6 +9,6 @@ set -euo pipefail
 
 DIRECTORY="$(dirname "$(realpath "$0")")"
 
-mkdir -p "$XDG_CONFIG_HOME/agents/vale"
-ln -sf "$DIRECTORY/vale.ini" "$XDG_CONFIG_HOME/agents/vale/vale.ini"
-ln -sfn "$DIRECTORY/styles" "$XDG_CONFIG_HOME/agents/vale/styles"
+mkdir -p "$HOME/.agents/vale"
+ln -sf "$DIRECTORY/vale.ini" "$HOME/.agents/vale/vale.ini"
+ln -sfn "$DIRECTORY/styles" "$HOME/.agents/vale/styles"

@@ -1,4 +1,4 @@
-@~/.config/agents/AGENTS.md
+@~/.agents/AGENTS.md
 
 ## Claude Code
 

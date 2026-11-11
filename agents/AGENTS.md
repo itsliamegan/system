@@ -95,10 +95,10 @@ Ignore this section if you are not [Pi](https://pi.dev).
 - Before reporting work as done, run the tests, formatter, linter, and type
   checker that the project's Commands list, and fix what they report.
 - Before reporting work as done, also run
-  `vale --config ~/.config/agents/vale/vale.ini` on the files you changed,
+  `vale --config ~/.agents/vale/vale.ini` on the files you changed,
   except plans and notes in `.agents/` and files in the Journal. Before
   committing or opening a pull request, pipe the message through
-  `vale --config ~/.config/agents/vale/vale.ini --path=message.md`. Judge only
+  `vale --config ~/.agents/vale/vale.ini --path=message.md`. Judge only
   findings in text you wrote, and change those that break `writing.md`.
 - Never create a commit unless I have explicitly confirmed that commit in the
   current conversation. Preparing changes, showing a diff, and suggesting a
@@ -126,7 +126,7 @@ Ignore this section if you are not [Pi](https://pi.dev).
 
 ## Conventions and the Journal
 
-Conventions are in `~/.config/agents/conventions/`.
+Conventions are in `~/.agents/conventions/`.
 
 - Before creating or modifying code, read `code.md` and the file for the
   language you are writing, such as `python.md`.

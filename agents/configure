@@ -9,9 +9,7 @@ set -euo pipefail
 
 DIRECTORY="$(dirname "$(realpath "$0")")"
 
-mkdir -p "$XDG_CONFIG_HOME/agents"
-ln -sf "$DIRECTORY/AGENTS.md" "$XDG_CONFIG_HOME/agents/AGENTS.md"
-ln -sfn "$DIRECTORY/conventions" "$XDG_CONFIG_HOME/agents/conventions"
-
 mkdir -p "$HOME/.agents"
+ln -sf "$DIRECTORY/AGENTS.md" "$HOME/.agents/AGENTS.md"
+ln -sfn "$DIRECTORY/conventions" "$HOME/.agents/conventions"
 ln -sfn "$DIRECTORY/skills" "$HOME/.agents/skills"
