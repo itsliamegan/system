@@ -11,4 +11,8 @@ DIRECTORY="$(dirname "$(realpath "$0")")"
 mkdir -p "$HOME/.claude"
 ln -sf "$DIRECTORY/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 ln -sf "$DIRECTORY/settings.json" "$HOME/.claude/settings.json"
-ln -sfn "$(dirname "$DIRECTORY")/skills" "$HOME/.claude/skills"
+
+mkdir -p "$HOME/.claude/skills"
+for skill in "$(dirname "$DIRECTORY")"/skills/*/; do
+	ln -sfn "${skill%/}" "$HOME/.claude/skills/$(basename "$skill")"
+done
