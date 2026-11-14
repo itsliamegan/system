@@ -8,6 +8,8 @@
 
 - Use `let` for variable declarations by default.
 - Use `const` only when explicitly declaring a module-level or class-level constant.
+- Declare instance fields without initializers, and assign each one in the
+  constructor. Static constants keep their initializers.
 
 ## Control flow
 

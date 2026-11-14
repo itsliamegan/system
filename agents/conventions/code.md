@@ -128,6 +128,9 @@ Before writing code, ask:
   `declared_column`.
 - Write boolean names as predicates (`is_collection`). An adjective that
   already reads as one (`invalid`) needs no prefix.
+- Name a timestamp for the event it records, with a suffix for the kind of
+  time it holds, such as `_at` for an instant (`published_at`) or `_on` for a
+  date (`published_on`).
 - Use one word per concept, consistently, whether the value is read or
   written. Reserve a different word for a genuinely different concept.
 - Name a new member of an existing family (error variants, constants,
@@ -171,6 +174,18 @@ Before writing code, ask:
   change, including rarely touched error paths.
 - Keep argument and field order consistent across parallel types: the
   receiver first, and data fields before behavior fields.
+- Order a class's fields as the data it owns, values derived from that data,
+  work in progress, and collaborators. Within each group, put a parent concept
+  before its children.
+- Order a record's fields as its identity, its own data, its timestamps, then
+  its references to other records.
+- List collaborators in the order that the object composing them declares
+  them, with sources from outside the system last.
+- Give constructor parameters the order of the fields they set, and assign
+  fields in declaration order.
+- When a constructor links objects together, write it in two paragraphs. The
+  first creates the linked objects as local variables, in the order they
+  depend on each other. The second assigns every field in declaration order.
 - When methods, tests, or other lists mirror a type's fields, keep them in
   the fields' order, as `script` before `style` follows `scripts` before
   `styles`.

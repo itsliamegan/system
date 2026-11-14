@@ -2,6 +2,8 @@
 
 - Always use modern Svelte features and runes (such as `$props`, `$state`, `$derived`).
 - Use `$effect` handlers and the new effect handler syntax.
+- Declare a `$state` or `$derived` class field with its type only, and assign
+  the rune in the constructor, as in `this.count = $state(0)`.
 
 ## Conditionals in markup
 

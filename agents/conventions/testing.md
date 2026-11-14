@@ -54,8 +54,10 @@ These apply in every language. `code.md` covers the code under test.
 - Use explicit, readable names and values in test data, such as
   `articles/intro`. Generate values only where a test needs them to be
   unique.
-- Build each test's data in the test itself. Do not hide its construction
-  behind helper functions within a test file.
+- Build every object a test uses in the test itself. Do not hide its
+  construction behind helpers, or share a prepared dataset across tests or
+  files. A shared helper may only set up the environment, such as opening the
+  app.
 - For examples of unsupported input, pick ones that will stay unsupported.
 
 ## Dependencies
@@ -63,6 +65,9 @@ These apply in every language. `code.md` covers the code under test.
 - Mock only external boundaries or nondeterministic dependencies; do not mock
   the unit under test merely to assert how it is implemented.
 - Prefer a fake that implements the real interface to a mock.
+- Call a working in-memory implementation of an interface a fake, even when it
+  has controls for tests such as making a call fail. Call stand-in data a
+  fixture.
 - Inject the clock and the random seed. Never sleep to wait for asynchronous
   work. Log the seed of a randomized test so that a failure reproduces from
   the log alone.
