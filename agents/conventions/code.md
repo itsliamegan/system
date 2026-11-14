@@ -191,7 +191,8 @@ Before writing code, ask:
   fields in declaration order.
 - When a constructor links objects together, write it in two paragraphs. The
   first creates the linked objects as local variables, in the order they
-  depend on each other. The second assigns every field in declaration order.
+  depend on each other. The second assigns every field in declaration order,
+  creating any object that nothing else takes inline.
 - When methods, tests, or other lists mirror a type's fields, keep them in
   the fields' order, as `script` before `style` follows `scripts` before
   `styles`.
