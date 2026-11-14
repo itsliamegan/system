@@ -48,6 +48,8 @@ Before writing code, ask:
 - Keep each object to its own layer. Do not reach into another object's
   private state; give it an accessor. Do not let a module take on a
   neighbor's concern.
+- Keep display order out of the model. A collection holds its items in no
+  particular order, and the screen or output that lists them sorts them.
 - Route variants through the general path. Express a variant in terms of the
   general operation (an existence check as a limited select) rather than
   adding a parallel method beside it. If the general path cannot express the
