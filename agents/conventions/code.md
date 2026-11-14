@@ -58,6 +58,12 @@ Before writing code, ask:
   command or an entry point, constructs the objects and values that depend on
   it and hands them to what needs them. Nothing below is told which context
   it is in, looks up what it needs, or builds it through a hook.
+- Pass a collaborator to the methods that use it. Hold it in a field only
+  when a derived value reads it or the object's main work depends on it, such
+  as a source the object fetches from.
+- When a method's name carries another object's name, as in
+  `refresh_subscriptions` or `add_show`, move the method to that object and
+  have it take its collaborators as parameters.
 
 ### Consistency
 
