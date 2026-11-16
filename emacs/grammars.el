@@ -7,6 +7,7 @@
         (html "https://github.com/tree-sitter/tree-sitter-html")
         (css "https://github.com/tree-sitter/tree-sitter-css")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+        (jsdoc "https://github.com/tree-sitter/tree-sitter-jsdoc")
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (svelte "https://github.com/tree-sitter-grammars/tree-sitter-svelte" "master" "src")))
