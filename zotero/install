@@ -7,7 +7,7 @@
 
 set -euo pipefail
 
-STYLES_COMMIT="3c3995baaa0c4fe1e5c6328027ff6d985c07bfde"
+STYLES_COMMIT="bcae404e9f8130cc2b94b0749d53514212a15a4a"
 
 DIRECTORY="$(dirname "$(realpath "$0")")"
 TARBALL="$HOME/.local/src/zotero.tar.xz"
