@@ -12,6 +12,9 @@
   comprehensions, `any`, `all`, `next`, `map`, or `filter`. A generator
   expression passed directly to another call, such as `", ".join(...)`, is
   fine.
+- Write a `match` over an enum's members in a function with a declared return
+  type, returning from every arm and with no `case _`. The type checker then
+  reports a missing member as an implicit `None` return.
 - Write an immutable literal default, such as a string or a number, in the
   signature (`format: str = "%b %-d, %Y"`).
 - Default other optional arguments, such as mutable collections and objects
@@ -27,8 +30,8 @@
 - Do not use positional-only `/` markers.
 - Build paths with `Path(a, b)` rather than the `/` operator.
 - Import names explicitly (`from .codec import Codec`) when they make sense on
-  their own. When a module is a collection of helpers whose names lean on the
-  module for context, import the module and qualify each call (`from luna
+  their own. When a module's functions lean on the module's name for context,
+  however few they are, import the module and qualify each call (`from luna
   import inflect`, then `inflect.title(name)`).
 - Module imports also suit a family whose variants live in their own modules
   and share role names. Import the variant module and qualify the class (`from

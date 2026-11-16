@@ -7,6 +7,8 @@ plans and design documents.
 
 - Early in a design, explore with concrete examples, such as sample directory
   trees or templates, before proposing decisions.
+- Describe a new problem and wait for my thoughts before proposing a
+  solution, so that we can work one out together.
 - Settle a design one decision at a time. Start from the decision I name, give
   its direct consequences and the question that decision needs answered, then
   wait for my thoughts.

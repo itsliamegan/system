@@ -21,7 +21,10 @@ Journal.
 
 - Start with a short summary line. Add an extended part only when it states
   the contract: what a caller can rely on that the signature does not show.
-- Leave out usage advice, lists of raised errors, and incidental reasons.
+- Leave out usage advice, lists of raised errors, incidental reasons, and what
+  the name and members already say.
+- State a contract in terms of the parameters or fields it concerns, named in
+  backticks.
 - The form of the summary line for each language is in its conventions file.
 
 ## Interface text

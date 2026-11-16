@@ -9,6 +9,8 @@ These apply in every language. `code.md` covers the code under test.
   likely to catch, and say in the conversation which significant behavior
   you left untested.
 - Test observable behavior and public contracts, not implementation details.
+- Do not extract or expose code so a test can reach it. Test the behavior
+  through the public path, or leave it untested and say so.
 - Prioritize regressions, consequential boundaries, and error paths.
 - Do not test behavior that a library or language feature generates, such as
   dataclass equality or repr.

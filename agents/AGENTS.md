@@ -70,6 +70,8 @@ Ignore this section if you are not [Pi](https://pi.dev).
 - Treat my feedback on a design as a position you can argue with and I may
   revise. Say where you would keep your version, and why. I make the
   final decision.
+- A prompt for a later session describes the problem and includes only the
+  solution I gave, so that the later session works out the rest with me.
 - After a substantial chunk of work, propose a convention edit only for a
   correction that recurred or that applies beyond the current project.
 
@@ -109,6 +111,8 @@ Ignore this section if you are not [Pi](https://pi.dev).
   in progress hold several. Stage a commit by path or hunk so that unrelated
   working-tree changes stay out of it, and run the checks on the staged
   content alone.
+- Work in my checkout. Do not create worktrees, including to check staged
+  content.
 - While a pull request I asked for is open, commit and push the changes that
   address my review of it without asking, so I can review them on the pull
   request. This covers review comments and requests I make in chat about that
@@ -130,6 +134,8 @@ Conventions are in `~/.agents/conventions/`.
 
 - Before creating or modifying code, read `code.md` and the file for the
   language you are writing, such as `python.md`.
+- Before creating or modifying code in an application built on Helios, also
+  read `helios.md`.
 - Before writing or reviewing tests, read `testing.md`.
 - Before proposing options, a design, or a plan, read `planning.md`.
 - Before your first reply, read `writing.md`. It covers chat, plans, notes,

@@ -24,6 +24,9 @@ Before writing code, ask:
 - Put behavior on the concept it concerns, as a method, class method, or
   static method (`Condition.parse`, `Fragment.join`). Avoid module-level
   functions that take the concept as their first argument.
+- Give a class only methods that apply to every one of its instances. When a
+  method applies to only some of them, such as reordering a collection that is
+  sometimes unordered, the class is the wrong home for the method.
 - Keep data with the object it belongs to. Do not pass a value as a separate
   argument alongside an object that should carry it.
 - When two attributes only make sense together and form a concept of their
@@ -38,7 +41,9 @@ Before writing code, ask:
   fine. Avoid mixins and domain inheritance hierarchies.
 - Do not extract generic helpers early. Write an operation inline where it is
   used. Extract a helper only once the operation is shared across several
-  places and deserves a name. Inline one-line wrappers.
+  places and deserves a name. Inline a method, function, or local variable
+  that has one use, whatever its length, unless its name states a concept the
+  code would otherwise lack. Calls from tests do not count as uses.
 - Wrap a library's type when the project should own its interface, whether to
   change the library's method names or to fix the ones it has now, so callers
   stay unaffected if the library changes or is replaced.
@@ -48,6 +53,12 @@ Before writing code, ask:
 - Keep each object to its own layer. Do not reach into another object's
   private state; give it an accessor. Do not let a module take on a
   neighbor's concern.
+- Check each rule once, in the layer that owns it. That layer refuses with a
+  typed error, and the layers above translate the refusal rather than checking
+  before they call.
+- Keep an encoding that exists only to carry values across a boundary out of
+  the domain. The code at that boundary writes and reads it in one place, and
+  the domain keeps the values in their own types.
 - Keep display order out of the model. A collection holds its items in no
   particular order, and the screen or output that lists them sorts them.
 - Route variants through the general path. Express a variant in terms of the
@@ -62,8 +73,9 @@ Before writing code, ask:
   when a derived value reads it or the object's main work depends on it, such
   as a source the object fetches from.
 - When a method's name carries another object's name, as in
-  `refresh_subscriptions` or `add_show`, move the method to that object and
-  have it take its collaborators as parameters.
+  `refresh_subscriptions` or `add_show`, consider moving the method to that
+  object, with its collaborators as parameters. When the method finds one of
+  those objects or works across several, consider a class that holds them.
 
 ### Consistency
 
@@ -199,8 +211,8 @@ Before writing code, ask:
 
 ## Comments
 
-These rules say what to comment and where. `writing.md` covers how comments
-and docstrings are written.
+These rules say what to comment and where, in code, stylesheets, and
+templates. `writing.md` covers how comments and docstrings are written.
 
 - Scale comment density with intricacy: none for code that reads plainly,
   generous for intricate code that has settled.
@@ -210,6 +222,8 @@ and docstrings are written.
   and let the reader find its callers.
 - Comment the line that can fail or depends on a hidden assumption, not the
   line that plainly does what it says.
+- Do not head a block with a comment that says what it is or what it
+  styles. Its names say that.
 - Put a comment that explains one branch of a conditional inside that branch,
   not above the condition.
 - Keep comments on enum variants or cases to one short line saying what the
@@ -233,6 +247,11 @@ and docstrings are written.
 
 - Let types carry correctness. Annotate parameters with what they actually
   accept. Do not accept `object` or `Any` and then check the type at runtime.
+- Answer a question about a state or a variant with an explicit match that
+  names each case, even when the match is longer or an arm looks redundant.
+  Adding a case then fails the type check wherever a question does not handle
+  it. Do not compare a case's stored value, or test a broader condition such
+  as "not running" in place of the cases it covers.
 - Validate only failures the type checker cannot catch and that would
   otherwise fail confusingly or silently. For each runtime check, be able to
   say which bug it prevents.
@@ -244,5 +263,8 @@ and docstrings are written.
 - Say what went wrong, plainly. Do not add usage examples or suggestions for
   how to fix it.
 - Phrase errors for the same kind of failure the same way across modules.
+- Have an error type take the values it names and word its own message, so
+  every site that raises it is one line and cannot word it differently. Keep a
+  value on the error only when something reads it.
 - Release a resource in a `finally` that covers only the code after it was
   acquired.

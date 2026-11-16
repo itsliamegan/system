@@ -4,12 +4,8 @@
 
 - Be wary of any macro that takes a pattern or other non-expression syntax as
   an argument. Write an explicit `match` or `if let` instead.
-- Prefer an explicit `match` that names each reachable case over a compact
-  boolean condition, even when the match is longer or an arm looks redundant.
 - Do not fuse a match guard onto a question the matched value cannot answer.
   Match on the value alone and nest a separate `if` inside the arm.
-- A wildcard arm should do real work, not stand in for a case declared
-  impossible.
 - In code still in flux, use bare `panic!()` and `.unwrap()`, not
   `unreachable!("...")` or `.expect("...")`. A line comment above a bare panic
   stating the assumption it rests on is welcome.
